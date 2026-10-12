@@ -1,0 +1,23 @@
+{
+  "method": "ga_gd",
+  "hyperparameters": {
+    "steps": 100,
+    "ascent_lr": 5e-05,
+    "descent_lr": 2e-05,
+    "batch_size": 4,
+    "max_grad_norm": 1.0,
+    "min_steps": 10000,
+    "target_loss_ratio": 2.0,
+    "early_stop_patience": 5,
+    "collapse_loss": 20.0,
+    "probe_every": 10,
+    "probe_samples": 32
+  },
+  "steps_configured": 100,
+  "steps_taken": 87,
+  "stop_reason": "collapse_guard",
+  "final_forget_loss": 18.248842239379883,
+  "final_retain_loss": 21.880603790283203,
+  "trajectory_path": "evidence/ds_bookmia/ga_gd/ascent_5.0e-5/seed44/ga_gd/trajectory.json",
+  "save_path": "evidence/ds_bookmia/ga_gd/ascent_5.0e-5/seed44/ga_gd/unlearned_model"
+}

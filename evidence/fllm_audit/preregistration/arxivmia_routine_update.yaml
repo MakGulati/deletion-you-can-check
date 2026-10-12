@@ -1,0 +1,111 @@
+# ROUTINE-UPDATE CONTROL (Component D of the FLLM audit).
+#
+# Governed by configs/preregistration_v3_fllm.yaml, section
+# component_d_routine_update, which freezes every number in the
+# `routine_update` block below. They may NOT be adjusted to make a detector
+# succeed or fail; if the update violates the utility threshold, that is
+# reported as a property of the update.
+#
+# Everything else matches arxivmia_confirm.yaml verbatim, so these runs sit in
+# the same table as the v2 controls with the same populations, the same scoring
+# and the same negative counts.
+
+training_mode: lora
+device: cuda
+seed: 42
+
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  torch_dtype: bfloat16
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "zhliu/ArxivMIA"
+  split: train
+  text_field: text
+  train_samples: 2000
+  test_samples: 1000
+  forget_ratio: 0.2
+  max_length: 512
+
+# The original fine-tuning schedule, kept here unchanged for provenance. The
+# routine update does NOT use it -- routine_update.update_training_config()
+# substitutes the block below.
+training:
+  epochs: 6
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  max_grad_norm: 1.0
+
+# A small, ordinary, utility-preserving maintenance operation. Frozen.
+routine_update:
+  learning_rate: 5.0e-5     # well below the 2.0e-4 fine-tuning rate
+  epochs: 3
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  warmup_steps: 0           # ~18 optimiser steps; a warmup would swallow them
+  max_grad_norm: 1.0
+  # test_tail = the ArxivMIA records beyond the test scoring cap. With the cap
+  # at 300 below, that is test[300:500]: never scored by any run in this study,
+  # disjoint from forget, from retain (both the scored tail and the Fisher
+  # curvature head) and from the scored test prefix. Enforced by fingerprint at
+  # run time, not assumed.
+  source: test_tail
+  n_samples: 200
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+  # This cap is load-bearing twice over: it fixes the scored populations at
+  # forget 200 / retain 600 / test 300, AND it defines where the update's
+  # disjoint tail begins.
+  max_samples_per_population:
+    test: 300
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  loss_vs_finetuned:
+    enabled: true
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    reference: finetuned_pre_unlearning
+  fuma:
+    enabled: true
+    denominator_source: shadow_bf16
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    enabled: true
+    method: fisher
+    damping: 1.0e-3
+    fisher_rank: 200
+    fisher_device: cpu
+    beta: 1.0
+
+evaluation:
+  seeds: [42, 43, 44]
+  n_bootstrap: 1000
+
+paths:
+  checkpoints: "./ds_checkpoints"
+  results: "./fllm_audit/routine_update"

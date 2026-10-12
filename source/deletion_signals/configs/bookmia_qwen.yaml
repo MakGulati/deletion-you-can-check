@@ -1,0 +1,167 @@
+# REPLICATION -- BookMIA + Qwen2.5-1.5B QLoRA.
+#
+# A second dataset AND a second model family, so the FLLM package's external
+# validity rests on more than one corpus and one tokenizer. Everything not
+# listed below is deliberately identical to arxivmia_confirm.yaml: same LoRA
+# rank and targets, same population sizes, same training schedule, same
+# unlearning step counts, same criteria. A replication that also changed the
+# protocol would not be one.
+#
+# THREE differences from the ArxivMIA configuration, each with a reason:
+#
+# 1. FUMA and Fisher-SIF are OFF. Both are already declared negative results --
+#    SIF tracked grad_norm_sq at rho = 0.9999 and FUMA was the weakest detector
+#    in every ArxivMIA table -- and the bf16 shadow model FUMA needs peaked at
+#    11.5 GB on Llama-1B at 205 tokens. At 1.25x the parameters and 2.5x the
+#    sequence length it would not fit in 24 GB. Scoping decision, not a saving.
+#
+# 2. BookMIA supplies 4935 members and 4935 non-members, against ArxivMIA's
+#    1000/1000. The routine-update control can therefore draw FRESH MEMBER-POOL
+#    records, which removes the confound ArxivMIA forced on it -- there, the
+#    only disjoint records were non-members, so the update also shifted the
+#    model toward the non-member distribution.
+#
+# 3. EVERY BookMIA snippet exceeds max_length. Mean length is 710 tokens and
+#    100% are longer than 512, so every scored sample is truncated. This is a
+#    real limitation of the replication and is reported as one; it is not a
+#    property of the method under test, and it applies identically to every
+#    method, control and detector, so within-dataset comparisons remain
+#    matched.
+
+training_mode: lora
+device: cuda
+seed: 42
+
+model:
+  name: "Qwen/Qwen2.5-1.5B"
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  torch_dtype: bfloat16
+
+# Identical to the ArxivMIA study. Qwen2 uses the same attention projection
+# names as Llama, so the adapter scope is genuinely the same scope.
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "swj0419/BookMIA"
+  split: train
+  text_field: snippet
+  train_samples: 1000     # -> 200 forget + 800 retain, as on ArxivMIA
+  test_samples: 1000      # -> 300 scored, the rest unscored
+  forget_ratio: 0.2
+  max_length: 512
+
+# EFFECTIVE batch size 32, identical to ArxivMIA -- but reached as 4x8 rather
+# than 8x4. Qwen2.5's vocabulary is 151936 against Llama-3.2's 128256, so the
+# logits tensor at batch 8 x 512 tokens is ~2.5 GB in float32 and the backward
+# OOMs on a 24 GB card. Halving the micro-batch and doubling accumulation leaves
+# the optimiser seeing the same 32 examples per step and the same number of
+# steps; only the memory layout changes. This is not a protocol change.
+training:
+  epochs: 6
+  batch_size: 4
+  gradient_accumulation_steps: 8
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  max_grad_norm: 1.0
+
+unlearning:
+  ga_gd:
+    steps: 100
+    ascent_lr: 2.0e-5     # per-cell override: weak and aggressive arms
+    descent_lr: 2.0e-5
+    batch_size: 4
+    min_steps: 10000      # early stopping disabled; it fires on the swept quantity
+    collapse_loss: 20.0
+    probe_every: 10
+    probe_samples: 32
+  npo:
+    steps: 100
+    # TRANSFERRED, NOT TUNED: the ArxivMIA best-forgetting setting, fixed in
+    # advance. No NPO search is run on BookMIA, so there is no selection
+    # freedom to declare.
+    learning_rate: 1.0e-4
+    batch_size: 4
+    beta: 0.1
+    retain_weight: 1.0
+    log_ratio_reduction: sum
+    max_grad_norm: 1.0
+    collapse_loss: 20.0
+    probe_every: 10
+    probe_samples: 32
+  scrub:
+    steps: 100
+    learning_rate: 1.0e-5
+    batch_size: 4
+    kl_temperature: 4.0
+    forget_kl_weight: 0.1
+    forget_entropy_weight: 0.5
+    retain_ce_weight: 1.0
+    retain_kl_weight: 1.0
+
+# The clean routine update: fresh MEMBER-pool records, which BookMIA has and
+# ArxivMIA did not. Same objective, learning rate and step count as the
+# ArxivMIA control, so the two are comparable operations.
+routine_update:
+  learning_rate: 5.0e-5
+  epochs: 3
+  # 4x8 = the same effective batch of 32 the ArxivMIA update used, for the same
+  # memory reason as the fine-tuning block above.
+  batch_size: 4
+  gradient_accumulation_steps: 8
+  warmup_steps: 0
+  max_grad_norm: 1.0
+  source: member_tail       # requires the member-pool slice beyond the split
+  n_samples: 200
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+  # With SIF off there is no curvature holdout, so retain is scored whole:
+  # forget 200, retain 800, test 300.
+  max_samples_per_population:
+    test: 300
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  loss_vs_finetuned:
+    enabled: true
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    reference: finetuned_pre_unlearning
+  fuma:
+    enabled: false          # see note 1 in the header
+    denominator_source: none
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    enabled: false          # see note 1 in the header
+    method: gradient
+    damping: 1.0e-3
+    fisher_rank: 200
+    fisher_device: cpu
+    beta: 1.0
+
+evaluation:
+  seeds: [42, 43, 44]
+  methods: [ga_gd, npo]
+  n_bootstrap: 1000
+
+paths:
+  checkpoints: "./ds_bookmia/checkpoints"
+  results: "./ds_bookmia"

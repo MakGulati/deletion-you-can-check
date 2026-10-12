@@ -1,0 +1,18 @@
+{
+  "git_commit": "artifact-snapshot",
+  "python": "3.12.13",
+  "python_executable": "python3",
+  "platform": "Linux-6.1.0-52-amd64-x86_64-with-glibc2.36",
+  "argv": [
+    "-c"
+  ],
+  "torch_version": "2.11.0+cu128",
+  "cuda_available": true,
+  "gpu": "NVIDIA RTX A5000",
+  "transformers_version": "5.14.1",
+  "peft_version": "0.20.0",
+  "datasets_version": "5.0.1",
+  "numpy_version": "2.5.1",
+  "scipy_version": "1.18.0",
+  "sklearn_version": "1.9.0"
+}

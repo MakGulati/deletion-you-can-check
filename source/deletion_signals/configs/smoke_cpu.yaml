@@ -1,0 +1,96 @@
+# Tiny CPU configuration for the end-to-end smoke test.
+#
+# Small enough to run on a laptop in a couple of minutes. It exercises every
+# code path -- fine-tune, unlearn, the bf16 shadow model, all four score
+# families, the offline evaluator -- at a scale where none of the numbers mean
+# anything. It is a correctness check, not an experiment.
+
+training_mode: lora
+device: cpu
+seed: 42
+
+model:
+  name: "EleutherAI/pythia-160m-deduped"
+  # bitsandbytes 4-bit needs CUDA; on CPU the backbone stays unquantised, which
+  # also means the FUMA denominator is obtainable from the model itself.
+  load_in_4bit: false
+  torch_dtype: float32
+
+lora:
+  r: 4
+  alpha: 8
+  dropout: 0.0
+  target_modules: ["query_key_value"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "swj0419/WikiMIA"
+  split: WikiMIA_length32
+  train_samples: 24
+  test_samples: 12
+  forget_ratio: 0.5
+  max_length: 64
+
+training:
+  epochs: 1
+  batch_size: 2
+  gradient_accumulation_steps: 1
+  learning_rate: 1.0e-4
+  warmup_steps: 0
+  max_grad_norm: 1.0
+
+unlearning:
+  ga_gd:
+    steps: 4
+    ascent_lr: 1.0e-4
+    descent_lr: 1.0e-4
+    batch_size: 2
+    min_steps: 100        # keep early stopping out of the smoke path
+    collapse_loss: 1.0e9  # and the collapse guard too
+  scrub:
+    steps: 2
+    learning_rate: 1.0e-4
+    batch_size: 2
+    kl_temperature: 2.0
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 64
+  max_samples_per_population: 6
+  unlearning_direction: param_diff
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    reference: finetuned_pre_unlearning
+  fuma:
+    enabled: true
+    # The backbone is already unquantised on CPU, so both halves of the ratio
+    # come from the scored model and no shadow copy is needed.
+    denominator_source: same_model
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    enabled: true
+    method: gradient
+    damping: 1.0e-3
+    beta: 1.0
+
+evaluation:
+  seeds: [42]
+  methods: [ga_gd]
+  n_bootstrap: 50
+  fpr_targets: [0.01, 0.05]
+
+paths:
+  checkpoints: "./ds_smoke/checkpoints"
+  results: "./ds_smoke/results"

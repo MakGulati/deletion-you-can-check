@@ -1,0 +1,26 @@
+{
+  "control": "null_refit",
+  "description": "false-positive floor: fine-tuned from the pretrained base on the FULL member set, differing from theta_finetuned only in training randomness. Nothing was deleted, so any deletion signal here is produced by run-to-run variation between independently trained models.",
+  "seed": 44,
+  "training_seed": 1044,
+  "training_populations": [
+    "forget",
+    "retain"
+  ],
+  "n_training_samples": 1000,
+  "counts": {
+    "forget": 200,
+    "retain": 800,
+    "test": 1000
+  },
+  "finetuned_checkpoint": "evidence/ds_checkpoints/finetuned_seed44",
+  "split_source": "manifest",
+  "split_manifest": "evidence/results/seed44/splits.json",
+  "training": {
+    "epochs": 6,
+    "optimizer_steps": 186,
+    "planned_optimizer_steps": 187,
+    "final_loss": 2.245839834213257,
+    "save_path": "evidence/ds_confirm/controls/null_refit/seed44/model"
+  }
+}

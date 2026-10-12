@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+# Run outputs: checkpoints, per-sample tables and evaluation reports.
+ds_results*/
+ds_checkpoints*/
+ds_smoke/

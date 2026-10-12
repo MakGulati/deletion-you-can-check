@@ -1,0 +1,346 @@
+# CONFIRMATORY PREREGISTRATION v2 -- three-axis unlearning audit on ArxivMIA
+# =========================================================================
+#
+# Machine-readable and authoritative. `deletion_signals.audit` reads its
+# thresholds from THIS FILE rather than from constants in code, so a threshold
+# cannot drift from the document that declares it. Changing any number here
+# changes a verdict, and belongs in a commit that says so.
+#
+# Scope: ArxivMIA + Llama-3.2-1B QLoRA only. No cross-dataset claim is licensed
+# by anything measured under this preregistration.
+#
+# Status of the earlier evidence: the runs in `results/` and `ds_sweep/` are
+# EXPLORATORY. They generated the hypotheses tested here and cannot confirm
+# them. Confirmatory runs go to `ds_confirm/` and are never mixed with them in
+# a headline table.
+#
+# Written before any confirmatory run existed. The thresholds below were set by
+# inspecting the scales of the exploratory runs -- that inspection is recorded
+# in docs/PREREGISTRATION_V2.md so a reader can check that each number is a
+# real bar rather than one drawn around the answer.
+
+schema_version: 2
+dataset: zhliu/ArxivMIA
+model: meta-llama/Llama-3.2-1B
+seeds: [42, 43, 44]
+replication_unit: seed
+output_root: ds_confirm
+
+# ---------------------------------------------------------------- the question
+#
+# Can an unlearning method make ArxivMIA forgotten records cease looking like
+# training members, preserve retained/test utility, and nevertheless leave a
+# detectable deletion-set fingerprint?
+#
+# The three axes are evaluated JOINTLY. No setting may be called successful on
+# membership AUC alone.
+
+axes:
+
+  membership_removal:
+    question: Do forgotten records still look like training members?
+    score: loss_ratio
+    task: forget_vs_unseen          # D_forget vs D_test; "forget_vs_test" in prose
+    # Two-sided EQUIVALENCE region around chance, not an upper bound. An AUC of
+    # 0.05 is not "membership gone", it is an inverted membership signal that is
+    # just as strong. Exploratory scales: 0.001-0.004 when the model remembers,
+    # 0.475-0.479 after global collapse, across-seed SD 0.001-0.004.
+    equivalence_region: [0.45, 0.55]
+    supporting_tasks: [member_vs_unseen, retain_vs_unseen]
+
+  utility_preservation:
+    question: Does the model remain useful?
+    populations: [retain, test]
+    # Token-weighted perplexity under the audited model, over the same
+    # population under theta_finetuned.
+    max_perplexity_ratio: 1.10
+    # For controls the comparison is between two INDEPENDENTLY trained models,
+    # where run-to-run variation is not zero. The null refit measures that
+    # variation and its mean + 2 SD is reported beside this threshold rather
+    # than replacing it.
+    calibrate_against_null_refit: true
+
+  selective_forgetting:
+    question: Did the forget set change more than the retain set, and enough?
+    # Retraining-Normalised Forgetting Fraction: movement measured in units of
+    # the deletion effect exact retraining produces on the FORGET set.
+    #
+    #   denominator D = L_retrain(forget) - L_finetuned(forget)
+    #   RNFF(P)       = [ L_post(P) - L_finetuned(P) ] / D
+    #
+    # token-weighted over population P, per seed, with L_retrain from that
+    # seed's own exact-retraining control.
+    #
+    # THE SAME DENOMINATOR IS USED FOR BOTH POPULATIONS, and that is not a
+    # simplification -- it is the only well-posed choice. Normalising D_retain
+    # by its own retraining change fails, because exact retraining TRAINS on
+    # D_retain, so that denominator is ~0 by construction and the ratio is
+    # undefined in the ordinary case. A specificity clause built on it would
+    # never fire, including for a destroyed model, which is the one case it
+    # exists to catch. With the shared denominator both numbers read on one
+    # scale, "fraction of the intended deletion effect": RNFF_forget is how much
+    # was achieved, RNFF_retain is what it cost in the same units.
+    #
+    # This REPLACES the forget/retain loss ratio used in the exploratory
+    # preregistration. That ratio reads 1.049 for the best viable GA+GD setting
+    # and 1.005 for a globally destroyed model -- it cannot tell "barely forgot"
+    # from "destroyed everything", because both losses sit near 2.0. RNFF
+    # separates them by construction: destruction moves retain as much as
+    # forget, so RNFF_retain rises with RNFF_forget and the specificity clause
+    # fails.
+    metric: rnff
+    min_forget: 0.50
+    max_retain: 0.20
+    # Both clauses must be MEASURED. An absent RNFF means the denominator was
+    # unavailable, so specificity is unknown -- and unknown is not satisfied.
+    require_both_measured: true
+    # Denominator note: the FORM of this criterion is fixed here, before any
+    # confirmatory run. Its denominator is a measurement supplied by the exact
+    # retraining control (Block A), which runs before the methods it scores.
+    denominator_source: exact_retrain_control
+
+# ------------------------------------------------------------------- detectors
+#
+# The primary forget_vs_retain detector is declared HERE, in advance.
+# Orientations for every score live in configs/orientations.yaml and are not
+# restated; this file adds only the access class and the role.
+#
+# access classes -- what the auditor must hold:
+#   unlearned        the audited (post-deletion) checkpoint
+#   finetuned        the pre-deletion checkpoint
+#   base             the pretrained base checkpoint
+#   gradients        per-sample backward passes through the audited model
+#   curvature        an estimated Fisher/Hessian over a held-out slice
+#   lora_structure   knowledge of which parameters are adapters
+#
+# A complex white-box detector may be claimed as advantageous ONLY if it beats
+# simpler detectors of EQUAL OR WEAKER access. `raw_cosine` (unlearned +
+# finetuned + gradients) must therefore beat `loss_ratio_vs_finetuned`
+# (unlearned + finetuned) to support any gradient-specific claim.
+
+primary_detector: loss_ratio_vs_finetuned
+primary_task: forget_vs_retain
+
+detectors:
+  loss_unlearned:
+    access: [unlearned]
+    role: weakest-access baseline
+  loss_ratio:
+    access: [unlearned, base]
+    role: difficulty-calibrated membership baseline
+  loss_delta:
+    access: [unlearned, base]
+    role: additive form of loss_ratio
+  loss_ratio_vs_finetuned:
+    access: [unlearned, finetuned]
+    role: PRINCIPAL SIMPLE BASELINE -- two-checkpoint calibrated loss
+  loss_delta_vs_finetuned:
+    access: [unlearned, finetuned]
+    role: additive form of the principal baseline
+  grad_norm_sq:
+    access: [unlearned, gradients]
+    role: raw gradient magnitude
+  grad_ratio:
+    access: [unlearned, finetuned, gradients]
+    role: calibrated gradient magnitude
+  log_grad_ratio:
+    access: [unlearned, finetuned, gradients]
+    role: log form of grad_ratio
+  raw_cosine:
+    access: [unlearned, finetuned, gradients]
+    role: signed directional alignment
+  alignment_cos_sq:
+    access: [unlearned, finetuned, gradients]
+    role: sign-invariant directional alignment
+  sif:
+    access: [unlearned, gradients, curvature]
+    role: >-
+      self-influence ablation. Reported with its Spearman correlation against
+      grad_norm_sq, which was 0.9999 in the exploratory runs: at Fisher rank 200
+      the curvature term is inert and SIF is the gradient norm rescaled. Kept as
+      a declared negative result, not as an independent detector.
+  combined_log_score:
+    access: [unlearned, finetuned, gradients, curvature]
+    role: the original combined score
+  fuma_lora_ratio:
+    access: [unlearned, gradients, lora_structure]
+    role: FUMA-style adapter/backbone gradient ratio
+
+# ------------------------------------------------------- the joint decision rule
+
+decision_rule:
+  # A setting is a candidate successful operating point only if ALL of these
+  # hold on EVERY seed. Per-criterion results are reported whether or not the
+  # conjunction holds; a criterion met alone is never reported as success.
+  candidate_operating_point:
+    - membership_removal_within_equivalence_region
+    - utility_preserved_on_retain_and_test
+    - selective_forgetting_achieved
+  all_seeds_required: true
+
+  deletion_detectable:
+    task: forget_vs_retain
+    # Judged on `primary_detector`. Every other detector is reported beside it,
+    # and none can rescue a setting the primary one fails.
+    judged_on: primary_detector
+    min_auc: 0.70
+    bootstrap_ci_lower_above: 0.50
+    # The third clause. A detector scoring 0.65 on an EXACTLY RETRAINED model is
+    # reading run-to-run training randomness, not deletion. Every detector must
+    # clear its own false-positive floor, measured on the null refit control.
+    must_exceed_null_refit: true
+    null_refit_margin_sds: 2.0
+
+# ------------------------------------------------------------- classifications
+#
+# Mechanical, so the verdict is not a judgement made while looking at numbers.
+# Evaluated per setting, per method.
+
+classifications:
+  persistent_fingerprint:
+    requires: [membership_removed, utility_preserved, selective_forgetting, deletion_detectable]
+    statement: >-
+      Successful approximate unlearning removed conventional membership evidence
+      while leaving a checkpoint-based deletion-set fingerprint.
+  incomplete_forgetting:
+    requires: [utility_preserved]
+    forbids: [membership_removed]
+    statement: >-
+      The model remains useful, but forgotten records still look like training
+      members. Nothing was deleted in any auditable sense.
+  global_destruction:
+    requires: [membership_removed]
+    forbids: [utility_preserved]
+    statement: >-
+      Membership evidence disappeared, but retained or test utility exceeded the
+      damage threshold. Membership-only evaluation would have falsely certified
+      this as successful unlearning.
+  successful_deletion_no_fingerprint:
+    requires: [membership_removed, utility_preserved, selective_forgetting]
+    forbids: [deletion_detectable]
+    statement: >-
+      Deletion succeeded on all three axes and left no detectable fingerprint.
+  inconclusive:
+    statement: >-
+      No setting satisfied the jointly preregistered criteria, or uncertainty
+      prevents classification. A statement about what was tested, not about what
+      is true.
+
+# Global destruction is NEVER reinterpreted as successful forgetting.
+prohibited_inferences:
+  - reinterpreting global_destruction as successful unlearning
+  - declaring success from membership AUC alone
+  - post-hoc max(AUC, 1-AUC) on any score
+  - claiming a gradient detector is advantageous over a detector with weaker access
+    unless it beats it under the paired across-seed comparison
+  - excluding collapsed or failed runs from summary tables
+
+# ------------------------------------------------------------------- controls
+
+controls:
+  exact_retrain:
+    description: >-
+      Fine-tune from the pretrained base on D_retain only, matching the original
+      fine-tuning procedure in every other respect, using the same seed and the
+      same split manifest. The gold-standard negative control: this is what
+      deletion looks like when it is real.
+    training_data: retain_only
+    training_seed_offset: 0
+  null_refit:
+    description: >-
+      Fine-tune from the pretrained base on the FULL member set -- forget
+      included -- differing from theta_finetuned only in training randomness.
+      NOTHING is deleted, so any forget_vs_retain signal is a false positive
+      produced by run-to-run variation between two independently trained models.
+      This is the floor every detector must clear on the exact-retrain control.
+    training_data: full
+    training_seed_offset: 1000
+
+  displacement_definition:
+    # The subtle part, stated explicitly because it is easy to get wrong.
+    #
+    # For an unlearning method, ghat = theta_post - theta_finetuned is a SMALL
+    # displacement: a short optimisation that started at theta_finetuned.
+    #
+    # For a control, theta_post is an INDEPENDENT fine-tune. The same
+    # subtraction is still exactly what the auditor holds -- the pre-deletion
+    # model and the published model -- but it is not small, and it contains the
+    # deletion effect plus all the randomness of a separate training run. A
+    # nonzero forget_vs_retain AUC on the exact-retrain control is therefore
+    # UNINTERPRETABLE ON ITS OWN, which is why the null refit exists: it has the
+    # same two-independent-models structure with nothing deleted.
+    #
+    #   exact_retrain: ghat = theta_retrain(retain only) - theta_finetuned(full)
+    #   null_refit:    ghat = theta_refit(full, new RNG) - theta_finetuned(full)
+    #
+    # The contrast between them isolates deletion from training randomness.
+    ghat: theta_post - theta_finetuned
+    both_controls_required: true
+
+# -------------------------------------------------- declared conflicts of interest
+#
+# Both of these choices were made AFTER seeing exploratory results. Recording
+# them is the only thing that keeps this document a preregistration rather than
+# a description.
+
+declared_conflicts:
+
+  - item: primary_detector = loss_ratio_vs_finetuned
+    disclosure: >-
+      Chosen after the exploratory strength sweep showed it matching or beating
+      raw_cosine at both viable settings (paired within-seed difference
+      -0.003 +/- 0.004 at 1e-5 and -0.006 +/- 0.004 at 2e-5) while requiring
+      strictly weaker access -- two forward passes rather than a backward pass
+      and the displacement vector. Naming it primary is the conservative choice
+      under the matched-access rule: it puts the bar at the cheapest adequate
+      detector, and any gradient-specific claim must clear it. The exploratory
+      runs cannot confirm it; the confirmatory runs test it on data that did not
+      select it.
+
+  - item: raw_cosine was promoted to headline in the exploratory phase
+    disclosure: >-
+      Promoted after reaching 0.982 +/- 0.006 on the primary task in the first
+      three seeds -- recorded with its date in the change log of
+      configs/orientations.yaml. It enters this study as a hypothesis under
+      test, not as an established result, and its exploratory numbers are never
+      cited as confirmation.
+
+  - item: RNFF replaced the forget/retain loss ratio
+    disclosure: >-
+      Changed after the exploratory sweep showed the ratio giving 1.049 for the
+      best viable setting and 1.005 for a globally destroyed one. The
+      replacement is justified by that failure of the instrument, not by any
+      result it produces; RNFF had produced no number at the time it was
+      adopted, and its thresholds were set from the member/non-member loss gap
+      under theta_finetuned (+0.388 / +0.453 / +0.343 nats across seeds), which
+      is a property of the data rather than of any method's performance.
+
+# ------------------------------------------------------------------ statistics
+
+statistics:
+  unit: seed
+  n_seeds: 3
+  report_per_seed: true
+  lead_with: [mean, sd, paired_differences, effect_sizes]
+  p_values: secondary
+  note: >-
+    At n=3 distributional assumptions cannot be validated. Wilcoxon signed-rank
+    cannot reach p<0.05 below six pairs. Paired within-seed differences and
+    across-seed SDs are the evidence; p-values are reported with that caveat and
+    are the basis of no claim.
+  bootstrap:
+    n_resamples: 1000
+    confidence: 0.95
+    unit: sample
+    caveat: within-run precision only; not across-model variation
+
+# --------------------------------------------------------------- threat model
+
+threat_model:
+  framing: white-box deletion audit
+  available_to: [model owner, regulator, authorised verifier]
+  not_claimed_as: black-box membership inference attack
+  requirement: >-
+    Every headline result states the auditor's exact access. Any detector whose
+    access class includes `finetuned` requires the pre-deletion checkpoint and
+    cannot be mounted by a party holding only the released model.

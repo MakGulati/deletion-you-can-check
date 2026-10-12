@@ -1,0 +1,31 @@
+{
+  "method": "ga_gd_stabilized",
+  "hyperparameters": {
+    "steps": 100,
+    "ascent_lr": 5e-05,
+    "descent_lr": 2e-05,
+    "batch_size": 4,
+    "max_grad_norm": 1.0,
+    "collapse_loss": 20.0,
+    "probe_every": 5,
+    "probe_samples": 32,
+    "kl_temperature": 2.0,
+    "retain_kl_weight": 0.0,
+    "trust_region_radius": 0.747,
+    "utility_guard_ratio": 0.0
+  },
+  "stabilizers": {
+    "retain_kl_weight": 0.0,
+    "trust_region_radius": 0.747,
+    "max_grad_norm": 1.0,
+    "utility_guard_ratio": null
+  },
+  "steps_configured": 100,
+  "steps_taken": 100,
+  "stop_reason": "completed",
+  "n_trust_region_projections": 69,
+  "final_forget_loss": 4.041172027587891,
+  "final_retain_loss": 3.865934371948242,
+  "trajectory_path": "evidence/ds_confirm/stabilize/c2_trust_region/seed42/ga_gd_stabilized/trajectory.json",
+  "save_path": "evidence/ds_confirm/stabilize/c2_trust_region/seed42/ga_gd_stabilized/unlearned_model"
+}

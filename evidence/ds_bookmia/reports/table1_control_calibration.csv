@@ -1,0 +1,6 @@
+condition,n_seeds,deletion,retain_ppl_ratio,test_ppl_ratio,rnff_forget,rnff_retain,primary_detector_auc
+finetuned_reference,3,none (this is the origin),1.0,1.0,0.0,0.0,
+null_refit,3,none; only the training RNG changed,0.9980861123060278,1.000716858598081,-0.007859215098470346,-0.01107710844231975,0.4980875
+routine_update,3,none; an ordinary maintenance update was applied,1.0115420815016616,0.9910960252184488,0.06337981150913428,0.06306974922690102,0.4987479166666667
+exact_retrain,3,exact -- the forget set was never trained on,1.0321350789383967,0.9934527018575552,1.0,0.17390224165146914,0.98961875
+exact_retrain_routine_update,3,"exact, followed by the identical maintenance update",1.041175688858574,0.9868239785485282,0.9472232828943197,0.22176976968727372,0.9819041666666667

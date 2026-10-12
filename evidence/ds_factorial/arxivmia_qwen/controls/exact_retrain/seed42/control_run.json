@@ -1,0 +1,25 @@
+{
+  "control": "exact_retrain",
+  "description": "gold standard: fine-tuned from the pretrained base on D_retain only, so the forget set was never seen. This is what deletion looks like when it is real.",
+  "seed": 42,
+  "training_seed": 42,
+  "training_populations": [
+    "retain"
+  ],
+  "n_training_samples": 800,
+  "counts": {
+    "forget": 200,
+    "retain": 800,
+    "test": 1000
+  },
+  "finetuned_checkpoint": "evidence/ds_factorial/arxivmia_qwen/checkpoints/finetuned_seed42",
+  "split_source": "manifest",
+  "split_manifest": "evidence/ds_factorial/arxivmia_qwen/finetune/seed42/splits.json",
+  "training": {
+    "epochs": 6,
+    "optimizer_steps": 150,
+    "planned_optimizer_steps": 150,
+    "final_loss": 2.470151662826538,
+    "save_path": "evidence/ds_factorial/arxivmia_qwen/controls/exact_retrain/seed42/model"
+  }
+}

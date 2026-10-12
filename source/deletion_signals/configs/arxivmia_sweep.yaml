@@ -1,0 +1,142 @@
+# GA+GD unlearning-strength sweep: ArxivMIA + Llama-3.2-1B QLoRA.
+#
+# Identical to arxivmia_lora.yaml except for the four blocks marked SWEEP below,
+# so the 1e-5 cell reproduces the committed three-seed baseline. There is no
+# include mechanism in this config loader -- a config file is merged onto
+# DEFAULTS and nothing else -- so the shared settings are repeated verbatim
+# rather than inherited. If arxivmia_lora.yaml changes, this file must change
+# with it or the sweep stops being comparable to the baseline.
+#
+# The question this configuration exists to answer: as unlearning strengthens
+# and the membership evidence disappears, does the signed cosine still identify
+# the deletion set while retained-data utility survives? The decision rule and
+# its thresholds are fixed in advance in docs/PREREGISTRATION.md.
+#
+# ascent_lr is the swept knob and is set per cell on the command line:
+#   --set unlearning.ga_gd.ascent_lr=5e-5
+
+training_mode: lora
+device: cuda
+seed: 42
+
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  torch_dtype: bfloat16
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "zhliu/ArxivMIA"
+  split: train
+  text_field: text
+  train_samples: 2000     # capped to the 1000 members the dataset has
+  test_samples: 1000
+  forget_ratio: 0.2
+  max_length: 512
+
+training:
+  epochs: 6
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  max_grad_norm: 1.0
+
+unlearning:
+  ga_gd:
+    # SWEEP. Steps and the descent rate are held fixed so ascent_lr is the only
+    # thing that varies across cells; a cell that also changed the step count
+    # would confound strength with duration.
+    steps: 100
+    ascent_lr: 1.0e-5     # swept: {1e-5, 2e-5, 5e-5, 1e-4, 2e-4}
+    descent_lr: 2.0e-5
+    batch_size: 4
+    # Early stopping disabled. It fires on a forget/retain loss ratio, which is
+    # precisely the quantity the sweep varies: leaving it on would clamp every
+    # strong cell back to the same stopping point and the sweep would measure
+    # nothing. min_steps above the step count is what disables it.
+    min_steps: 10000
+    # Raised from 5.0 so the guard catches divergence rather than the intended
+    # effect. A trip is a data point, not a failed run: it is the "utility
+    # collapses before membership disappears" branch of the decision rule, and
+    # stop_reason records it.
+    collapse_loss: 20.0
+  scrub:
+    # Present so the config validates and can be run, but out of scope for this
+    # sweep: SCRUB showed no directional advantage and the raw_cosine mechanism
+    # is argued from gradient ascent specifically.
+    steps: 100
+    learning_rate: 1.0e-5
+    batch_size: 4
+    kl_temperature: 4.0
+    forget_kl_weight: 0.1
+    forget_entropy_weight: 0.5
+    retain_ce_weight: 1.0
+    retain_kl_weight: 1.0
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+  # SWEEP. 15 runs at the full population sizes would cost far more than the
+  # question needs. D_test is capped because it is the largest population and
+  # the only one that serves solely as the membership control; forget and
+  # retain, which carry the primary comparison, are left whole. Scored
+  # populations become forget 200, retain 600 (after the 200-sample Fisher
+  # holdout) and test 300.
+  #
+  # Note this CANNOT be done with data.test_samples: build_splits draws the test
+  # set from the same RNG stream before it shuffles the members, so a different
+  # test count reshuffles forget and retain too and the run would stop sharing a
+  # split with the baseline.
+  max_samples_per_population:
+    test: 300
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  # SWEEP. The second loss reference: L_unlearned / L_finetuned isolates what
+  # unlearning did, where loss_calibrated measures membership. Both are needed
+  # here, because the sweep's whole question is whether a deletion signal
+  # survives once the membership signal is gone.
+  loss_vs_finetuned:
+    enabled: true
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    reference: finetuned_pre_unlearning
+  fuma:
+    enabled: true
+    denominator_source: shadow_bf16
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    enabled: true
+    method: fisher
+    damping: 1.0e-3
+    fisher_rank: 200
+    fisher_device: cpu
+    beta: 1.0
+
+evaluation:
+  seeds: [42, 43, 44]
+  methods: [ga_gd]
+  n_bootstrap: 1000
+
+paths:
+  checkpoints: "./ds_checkpoints"
+  results: "./ds_sweep"

@@ -1,0 +1,2998 @@
+{
+  "component": "FLLM audit -- tables and verdicts",
+  "timestamp": "2026-08-09T17:48:45.932154+00:00",
+  "preregistration": "deletion_signals/configs/preregistration_v3_fllm.yaml",
+  "thresholds": {
+    "membership_equivalence_region": [
+      0.45,
+      0.55
+    ],
+    "max_perplexity_ratio": 1.1,
+    "rnff_min_forget": 0.5,
+    "rnff_max_retain": 0.2,
+    "deletion_min_auc": 0.7
+  },
+  "classification_order": [
+    "failed_run",
+    "successful_selective_deletion",
+    "deletion_without_preserved_utility",
+    "global_destruction",
+    "incomplete_forgetting",
+    "inconclusive"
+  ],
+  "classification_rule": "a total function of four measured criteria and the stopping reason, evaluated in a fixed precedence; an unmeasured criterion is not a satisfied one, and a setting whose seeds disagree is reported as inconclusive rather than averaged",
+  "classified": {
+    "runs": [
+      {
+        "seed": 42,
+        "method": "exact_retrain",
+        "setting": "exact_retrain",
+        "classification": "successful_selective_deletion",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": true,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": true,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "membership evidence is inside the chance-equivalence region, the forget set moved far enough relative to exact retraining, the retain set did not, and utility is intact"
+      },
+      {
+        "seed": 43,
+        "method": "exact_retrain",
+        "setting": "exact_retrain",
+        "classification": "successful_selective_deletion",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": true,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": true,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "membership evidence is inside the chance-equivalence region, the forget set moved far enough relative to exact retraining, the retain set did not, and utility is intact"
+      },
+      {
+        "seed": 44,
+        "method": "exact_retrain",
+        "setting": "exact_retrain",
+        "classification": "successful_selective_deletion",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": true,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": true,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "membership evidence is inside the chance-equivalence region, the forget set moved far enough relative to exact retraining, the retain set did not, and utility is intact"
+      },
+      {
+        "seed": 42,
+        "method": "exact_retrain_routine_update",
+        "setting": "exact_retrain_routine_update",
+        "classification": "successful_selective_deletion",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": true,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": true,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "membership evidence is inside the chance-equivalence region, the forget set moved far enough relative to exact retraining, the retain set did not, and utility is intact"
+      },
+      {
+        "seed": 43,
+        "method": "exact_retrain_routine_update",
+        "setting": "exact_retrain_routine_update",
+        "classification": "inconclusive",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "no preregistered label applies"
+      },
+      {
+        "seed": 44,
+        "method": "exact_retrain_routine_update",
+        "setting": "exact_retrain_routine_update",
+        "classification": "successful_selective_deletion",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": true,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": true,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "membership evidence is inside the chance-equivalence region, the forget set moved far enough relative to exact retraining, the retain set did not, and utility is intact"
+      },
+      {
+        "seed": 42,
+        "method": "ga_gd",
+        "setting": "ascent_lr=2.6e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "ga_gd",
+        "setting": "ascent_lr=2.6e-05",
+        "classification": "incomplete_forgetting",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": true,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "the model remains useful, but forgotten records still look like training members"
+      },
+      {
+        "seed": 44,
+        "method": "ga_gd",
+        "setting": "ascent_lr=2.6e-05",
+        "classification": "incomplete_forgetting",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "the model remains useful, but forgotten records still look like training members"
+      },
+      {
+        "seed": 42,
+        "method": "ga_gd",
+        "setting": "ascent_lr=5e-05",
+        "classification": "failed_run",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": false
+        },
+        "conjunction": false,
+        "stop_reason": "collapse_guard",
+        "unevaluable_criteria": [],
+        "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+      },
+      {
+        "seed": 43,
+        "method": "ga_gd",
+        "setting": "ascent_lr=5e-05",
+        "classification": "failed_run",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": false
+        },
+        "conjunction": false,
+        "stop_reason": "collapse_guard",
+        "unevaluable_criteria": [],
+        "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+      },
+      {
+        "seed": 44,
+        "method": "ga_gd",
+        "setting": "ascent_lr=5e-05",
+        "classification": "failed_run",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": false
+        },
+        "conjunction": false,
+        "stop_reason": "collapse_guard",
+        "unevaluable_criteria": [],
+        "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+      },
+      {
+        "seed": 42,
+        "method": "npo",
+        "setting": "lr=0.0001, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "npo",
+        "setting": "lr=0.0001, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "npo",
+        "setting": "lr=0.0001, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 42,
+        "method": "npo",
+        "setting": "lr=1e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "npo",
+        "setting": "lr=1e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "npo",
+        "setting": "lr=1e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 42,
+        "method": "npo",
+        "setting": "lr=2.8e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "npo",
+        "setting": "lr=2.8e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "npo",
+        "setting": "lr=2.8e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 42,
+        "method": "npo",
+        "setting": "lr=2e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "npo",
+        "setting": "lr=2e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "npo",
+        "setting": "lr=2e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 42,
+        "method": "npo",
+        "setting": "lr=5e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "npo",
+        "setting": "lr=5e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "npo",
+        "setting": "lr=5e-05, beta=0.1",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 42,
+        "method": "null_refit",
+        "setting": "null_refit",
+        "classification": "incomplete_forgetting",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "the model remains useful, but forgotten records still look like training members"
+      },
+      {
+        "seed": 43,
+        "method": "null_refit",
+        "setting": "null_refit",
+        "classification": "incomplete_forgetting",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "the model remains useful, but forgotten records still look like training members"
+      },
+      {
+        "seed": 44,
+        "method": "null_refit",
+        "setting": "null_refit",
+        "classification": "incomplete_forgetting",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "the model remains useful, but forgotten records still look like training members"
+      },
+      {
+        "seed": 42,
+        "method": "routine_update",
+        "setting": "routine_update",
+        "classification": "incomplete_forgetting",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "the model remains useful, but forgotten records still look like training members"
+      },
+      {
+        "seed": 43,
+        "method": "routine_update",
+        "setting": "routine_update",
+        "classification": "incomplete_forgetting",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "the model remains useful, but forgotten records still look like training members"
+      },
+      {
+        "seed": 44,
+        "method": "routine_update",
+        "setting": "routine_update",
+        "classification": "incomplete_forgetting",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": true,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": null,
+        "unevaluable_criteria": [],
+        "reason": "the model remains useful, but forgotten records still look like training members"
+      },
+      {
+        "seed": 42,
+        "method": "scrub",
+        "setting": "forget_kl=1, lr=1e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "scrub",
+        "setting": "forget_kl=1, lr=1e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "scrub",
+        "setting": "forget_kl=1, lr=1e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 42,
+        "method": "scrub",
+        "setting": "forget_kl=1, lr=5e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "scrub",
+        "setting": "forget_kl=1, lr=5e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "scrub",
+        "setting": "forget_kl=1, lr=5e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 42,
+        "method": "scrub",
+        "setting": "forget_kl=4, lr=1e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "scrub",
+        "setting": "forget_kl=4, lr=1e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "scrub",
+        "setting": "forget_kl=4, lr=1e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 42,
+        "method": "scrub",
+        "setting": "forget_kl=4, lr=5e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": false,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 43,
+        "method": "scrub",
+        "setting": "forget_kl=4, lr=5e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      },
+      {
+        "seed": 44,
+        "method": "scrub",
+        "setting": "forget_kl=4, lr=5e-05",
+        "classification": "global_destruction",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": true
+        },
+        "conjunction": false,
+        "stop_reason": "completed",
+        "unevaluable_criteria": [],
+        "reason": "utility exceeded the damage threshold and the movement was not specific enough: collateral movement on the retain set exceeded the preregistered specificity budget. The magnitude of the damage is in the utility and RNFF columns, not in this label"
+      }
+    ],
+    "settings": [
+      {
+        "method": "exact_retrain",
+        "setting": "exact_retrain",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 3,
+          "selective_forgetting": 3,
+          "utility_preserved": 3,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 3,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "successful_selective_deletion",
+          "43": "successful_selective_deletion",
+          "44": "successful_selective_deletion"
+        },
+        "classification": "successful_selective_deletion",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "None"
+        ]
+      },
+      {
+        "method": "exact_retrain_routine_update",
+        "setting": "exact_retrain_routine_update",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 3,
+          "selective_forgetting": 2,
+          "utility_preserved": 3,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 2,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "successful_selective_deletion",
+          "43": "inconclusive",
+          "44": "successful_selective_deletion"
+        },
+        "classification": "inconclusive",
+        "seeds_agree": false,
+        "classification_note": "seeds disagree (inconclusive, successful_selective_deletion); reported as inconclusive rather than averaged into a verdict",
+        "stop_reasons": [
+          "None"
+        ]
+      },
+      {
+        "method": "ga_gd",
+        "setting": "ascent_lr=2.6e-05",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 1,
+          "utility_preserved": 2,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "incomplete_forgetting",
+          "44": "incomplete_forgetting"
+        },
+        "classification": "inconclusive",
+        "seeds_agree": false,
+        "classification_note": "seeds disagree (global_destruction, incomplete_forgetting); reported as inconclusive rather than averaged into a verdict",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "ga_gd",
+        "setting": "ascent_lr=5e-05",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 3,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 0
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 3,
+        "failed_run_count": 3,
+        "per_seed_classification": {
+          "42": "failed_run",
+          "43": "failed_run",
+          "44": "failed_run"
+        },
+        "classification": "failed_run",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "collapse_guard"
+        ]
+      },
+      {
+        "method": "npo",
+        "setting": "lr=0.0001, beta=0.1",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "npo",
+        "setting": "lr=1e-05, beta=0.1",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "npo",
+        "setting": "lr=2.8e-05, beta=0.1",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "npo",
+        "setting": "lr=2e-05, beta=0.1",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "npo",
+        "setting": "lr=5e-05, beta=0.1",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "null_refit",
+        "setting": "null_refit",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 3,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "incomplete_forgetting",
+          "43": "incomplete_forgetting",
+          "44": "incomplete_forgetting"
+        },
+        "classification": "incomplete_forgetting",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "None"
+        ]
+      },
+      {
+        "method": "routine_update",
+        "setting": "routine_update",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 3,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "incomplete_forgetting",
+          "43": "incomplete_forgetting",
+          "44": "incomplete_forgetting"
+        },
+        "classification": "incomplete_forgetting",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "None"
+        ]
+      },
+      {
+        "method": "scrub",
+        "setting": "forget_kl=1, lr=1e-05",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "scrub",
+        "setting": "forget_kl=1, lr=5e-05",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 0,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "scrub",
+        "setting": "forget_kl=4, lr=1e-05",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 1,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      },
+      {
+        "method": "scrub",
+        "setting": "forget_kl=4, lr=5e-05",
+        "n_seeds": 3,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "marginal_pass_counts": {
+          "membership_removed": 2,
+          "selective_forgetting": 0,
+          "utility_preserved": 0,
+          "collapse_guard_not_triggered": 3
+        },
+        "conjunction_pass_count": 0,
+        "collapse_count": 0,
+        "failed_run_count": 0,
+        "per_seed_classification": {
+          "42": "global_destruction",
+          "43": "global_destruction",
+          "44": "global_destruction"
+        },
+        "classification": "global_destruction",
+        "seeds_agree": true,
+        "classification_note": "",
+        "stop_reasons": [
+          "completed"
+        ]
+      }
+    ]
+  },
+  "table1_control_calibration": [
+    {
+      "condition": "finetuned_reference",
+      "n_seeds": 3,
+      "deletion": "none (this is the origin)",
+      "membership_auc": null,
+      "retain_ppl_ratio": 1.0,
+      "test_ppl_ratio": 1.0,
+      "rnff_forget": 0.0,
+      "rnff_retain": 0.0,
+      "primary_detector_auc": null,
+      "note": "theta_finetuned is the reference every displacement is measured from; its movement is zero by construction, not by measurement"
+    },
+    {
+      "condition": "null_refit",
+      "n_seeds": 3,
+      "deletion": "none; only the training RNG changed",
+      "membership_auc": {
+        "mean": 0.0006277777777777752,
+        "sd": 0.00045010286890064563,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.0001833333333333326,
+          "43": 0.0006166666666666621,
+          "44": 0.0010833333333333307
+        }
+      },
+      "retain_ppl_ratio": {
+        "mean": 1.0019988647262654,
+        "sd": 0.006710376222327459,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0046637426241576,
+          "43": 1.0069674549303362,
+          "44": 0.994365396624302
+        }
+      },
+      "test_ppl_ratio": {
+        "mean": 1.0004407454467854,
+        "sd": 0.0025128916712958468,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9993596440642497,
+          "43": 0.9986493357176821,
+          "44": 1.0033132565584244
+        }
+      },
+      "rnff_forget": {
+        "mean": 0.0010088044151707846,
+        "sd": 0.014120850837175639,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": -0.00440733385255048,
+          "43": 0.017035939321992294,
+          "44": -0.009602192223929459
+        }
+      },
+      "rnff_retain": {
+        "mean": 0.004728159807442427,
+        "sd": 0.015995694115090994,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.010885885081516241,
+          "43": 0.016729882199187758,
+          "44": -0.01343128785837672
+        }
+      },
+      "primary_detector_auc": {
+        "mean": 0.4947472222222222,
+        "sd": 0.024936372270982755,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.46872499999999995,
+          "43": 0.4970833333333333,
+          "44": 0.5184333333333333
+        }
+      },
+      "detector_floors": {
+        "alignment_cos_sq": {
+          "mean": 0.5232916666666666,
+          "sd": 0.02563691592866296,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5482583333333333,
+            "43": 0.4970333333333333,
+            "44": 0.5245833333333334
+          }
+        },
+        "combined_log_score": {
+          "mean": 0.515625,
+          "sd": 0.015610155170415337,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.532225,
+            "43": 0.5012416666666666,
+            "44": 0.5134083333333334
+          }
+        },
+        "fuma_lora_ratio": {
+          "mean": 0.5052277777777777,
+          "sd": 0.01993312836665335,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.49175,
+            "43": 0.4958083333333333,
+            "44": 0.528125
+          }
+        },
+        "grad_norm_sq": {
+          "mean": 0.483825,
+          "sd": 0.02302775650045928,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.4651833333333334,
+            "43": 0.5095666666666667,
+            "44": 0.476725
+          }
+        },
+        "grad_ratio": {
+          "mean": 0.5099027777777777,
+          "sd": 0.02065412309748169,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.4906833333333333,
+            "43": 0.5317416666666667,
+            "44": 0.5072833333333333
+          }
+        },
+        "log_grad_ratio": {
+          "mean": 0.5099027777777777,
+          "sd": 0.02065412309748169,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.4906833333333333,
+            "43": 0.5317416666666667,
+            "44": 0.5072833333333333
+          }
+        },
+        "loss_delta": {
+          "mean": 0.5110777777777779,
+          "sd": 0.016614092774018832,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.4919166666666666,
+            "43": 0.521475,
+            "44": 0.5198416666666666
+          }
+        },
+        "loss_delta_vs_finetuned": {
+          "mean": 0.49714166666666665,
+          "sd": 0.02337244341336845,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.474075,
+            "43": 0.49654166666666666,
+            "44": 0.5208083333333333
+          }
+        },
+        "loss_ratio": {
+          "mean": 0.5016138888888889,
+          "sd": 0.014470835932750878,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.48680833333333323,
+            "43": 0.515725,
+            "44": 0.5023083333333334
+          }
+        },
+        "loss_ratio_vs_finetuned": {
+          "mean": 0.4947472222222222,
+          "sd": 0.024936372270982755,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.46872499999999995,
+            "43": 0.4970833333333333,
+            "44": 0.5184333333333333
+          }
+        },
+        "loss_unlearned": {
+          "mean": 0.49805833333333344,
+          "sd": 0.017811538473073516,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.501625,
+            "43": 0.5138166666666667,
+            "44": 0.47873333333333334
+          }
+        },
+        "raw_cosine": {
+          "mean": 0.4766805555555555,
+          "sd": 0.025619226088435438,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.4517166666666666,
+            "43": 0.5029083333333333,
+            "44": 0.4754166666666667
+          }
+        },
+        "sif": {
+          "mean": 0.4838861111111112,
+          "sd": 0.023513158746949786,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.4655666666666667,
+            "43": 0.5104000000000001,
+            "44": 0.4756916666666666
+          }
+        }
+      }
+    },
+    {
+      "condition": "routine_update",
+      "n_seeds": 3,
+      "deletion": "none; an ordinary maintenance update was applied",
+      "membership_auc": {
+        "mean": 0.0006666666666666661,
+        "sd": 0.0005965176722724441,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.00024999999999999914,
+          "43": 0.0013500000000000012,
+          "44": 0.0003999999999999981
+        }
+      },
+      "retain_ppl_ratio": {
+        "mean": 1.0565248251043566,
+        "sd": 0.001550604653323231,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0552503631555348,
+          "43": 1.0582511772137482,
+          "44": 1.0560729349437867
+        }
+      },
+      "test_ppl_ratio": {
+        "mean": 0.9507974128616334,
+        "sd": 0.0027412425395654865,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9512164484725806,
+          "43": 0.9478707793927602,
+          "44": 0.9533050107195596
+        }
+      },
+      "rnff_forget": {
+        "mean": 0.13164876736366504,
+        "sd": 0.008720475368366624,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.1251253925931621,
+          "43": 0.1415535622185397,
+          "44": 0.12826734727929337
+        }
+      },
+      "rnff_retain": {
+        "mean": 0.13064044319021717,
+        "sd": 0.005365494836779032,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.1258186368597306,
+          "43": 0.13642049648968751,
+          "44": 0.12968219622123342
+        }
+      },
+      "primary_detector_auc": {
+        "mean": 0.5140250000000001,
+        "sd": 0.00791714033670691,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.5049916666666666,
+          "43": 0.517325,
+          "44": 0.5197583333333333
+        }
+      },
+      "detector_floors": {
+        "alignment_cos_sq": {
+          "mean": 0.5088222222222223,
+          "sd": 0.013254606990834588,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5101,
+            "43": 0.49497500000000005,
+            "44": 0.5213916666666667
+          }
+        },
+        "combined_log_score": {
+          "mean": 0.49751111111111107,
+          "sd": 0.00874484504235576,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.48768333333333336,
+            "43": 0.5044333333333333,
+            "44": 0.5004166666666666
+          }
+        },
+        "fuma_lora_ratio": {
+          "mean": 0.5065138888888888,
+          "sd": 0.02037974439195646,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.4951583333333333,
+            "43": 0.4943416666666667,
+            "44": 0.5300416666666666
+          }
+        },
+        "grad_norm_sq": {
+          "mean": 0.48371111111111115,
+          "sd": 0.018187633797395082,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.47078333333333333,
+            "43": 0.5045083333333333,
+            "44": 0.4758416666666667
+          }
+        },
+        "grad_ratio": {
+          "mean": 0.4956305555555556,
+          "sd": 0.02607117172990833,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5125666666666666,
+            "43": 0.5087166666666667,
+            "44": 0.4656083333333333
+          }
+        },
+        "log_grad_ratio": {
+          "mean": 0.4956305555555556,
+          "sd": 0.02607117172990833,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5125666666666666,
+            "43": 0.5087166666666667,
+            "44": 0.4656083333333333
+          }
+        },
+        "loss_delta": {
+          "mean": 0.518675,
+          "sd": 0.012520352874863848,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5077083333333333,
+            "43": 0.5323166666666667,
+            "44": 0.5159999999999999
+          }
+        },
+        "loss_delta_vs_finetuned": {
+          "mean": 0.512886111111111,
+          "sd": 0.00678364215786225,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5068916666666666,
+            "43": 0.52025,
+            "44": 0.5115166666666667
+          }
+        },
+        "loss_ratio": {
+          "mean": 0.5099527777777778,
+          "sd": 0.017968174668728208,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5119166666666667,
+            "43": 0.5268583333333333,
+            "44": 0.4910833333333333
+          }
+        },
+        "loss_ratio_vs_finetuned": {
+          "mean": 0.5140250000000001,
+          "sd": 0.00791714033670691,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5049916666666666,
+            "43": 0.517325,
+            "44": 0.5197583333333333
+          }
+        },
+        "loss_unlearned": {
+          "mean": 0.5000138888888889,
+          "sd": 0.020404408451588536,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5061333333333333,
+            "43": 0.5166583333333333,
+            "44": 0.47725000000000006
+          }
+        },
+        "raw_cosine": {
+          "mean": 0.5088222222222223,
+          "sd": 0.013254606990834588,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5101,
+            "43": 0.49497500000000005,
+            "44": 0.5213916666666667
+          }
+        },
+        "sif": {
+          "mean": 0.4835583333333333,
+          "sd": 0.018908105625189783,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.47120000000000006,
+            "43": 0.505325,
+            "44": 0.47414999999999996
+          }
+        }
+      }
+    },
+    {
+      "condition": "exact_retrain",
+      "n_seeds": 3,
+      "deletion": "exact -- the forget set was never trained on",
+      "membership_auc": {
+        "mean": 0.4735277777777778,
+        "sd": 0.002572144227279267,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.4758833333333334,
+          "43": 0.4739166666666667,
+          "44": 0.47078333333333333
+        }
+      },
+      "retain_ppl_ratio": {
+        "mean": 1.0370817345910182,
+        "sd": 0.005038841843828839,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0344316777913103,
+          "43": 1.0428926103295433,
+          "44": 1.0339209156522013
+        }
+      },
+      "test_ppl_ratio": {
+        "mean": 0.9888561031985944,
+        "sd": 0.007339858402649263,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.992153809922464,
+          "43": 0.9804457877800146,
+          "44": 0.9939687118933045
+        }
+      },
+      "rnff_forget": {
+        "mean": 1.0,
+        "sd": 0.0,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0,
+          "43": 1.0,
+          "44": 1.0
+        }
+      },
+      "rnff_retain": {
+        "mean": 0.0865624739946876,
+        "sd": 0.012672024137799552,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.07920023486007682,
+          "43": 0.10119477029979512,
+          "44": 0.07929241682419085
+        }
+      },
+      "primary_detector_auc": {
+        "mean": 0.9994055555555557,
+        "sd": 0.0003960160397051324,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9990166666666667,
+          "43": 0.9993916666666666,
+          "44": 0.9998083333333334
+        }
+      },
+      "detector_floors": {
+        "alignment_cos_sq": {
+          "mean": 0.9986055555555556,
+          "sd": 0.00027084401688324264,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.998875,
+            "43": 0.9983333333333334,
+            "44": 0.9986083333333333
+          }
+        },
+        "combined_log_score": {
+          "mean": 0.9999416666666666,
+          "sd": 6.291528696055324e-05,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 1.0,
+            "43": 0.9998750000000001,
+            "44": 0.99995
+          }
+        },
+        "fuma_lora_ratio": {
+          "mean": 0.6001694444444444,
+          "sd": 0.03881512120629351,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.583,
+            "43": 0.5729,
+            "44": 0.6446083333333332
+          }
+        },
+        "grad_norm_sq": {
+          "mean": 0.7235666666666666,
+          "sd": 0.010876334528588959,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.711325,
+            "43": 0.7321166666666665,
+            "44": 0.7272583333333332
+          }
+        },
+        "grad_ratio": {
+          "mean": 0.989763888888889,
+          "sd": 0.0051080840975993675,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9933583333333333,
+            "43": 0.9920166666666667,
+            "44": 0.9839166666666668
+          }
+        },
+        "log_grad_ratio": {
+          "mean": 0.989763888888889,
+          "sd": 0.0051080840975993675,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9933583333333333,
+            "43": 0.9920166666666667,
+            "44": 0.9839166666666668
+          }
+        },
+        "loss_delta": {
+          "mean": 0.9995722222222222,
+          "sd": 0.0001307917485221456,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.999425,
+            "43": 0.9996166666666667,
+            "44": 0.999675
+          }
+        },
+        "loss_delta_vs_finetuned": {
+          "mean": 0.999936111111111,
+          "sd": 0.00011065880159463404,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 1.0,
+            "43": 0.9998083333333334,
+            "44": 1.0
+          }
+        },
+        "loss_ratio": {
+          "mean": 0.9991722222222222,
+          "sd": 0.0004116644174476878,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9996333333333333,
+            "43": 0.9988416666666667,
+            "44": 0.9990416666666666
+          }
+        },
+        "loss_ratio_vs_finetuned": {
+          "mean": 0.9994055555555557,
+          "sd": 0.0003960160397051324,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9990166666666667,
+            "43": 0.9993916666666666,
+            "44": 0.9998083333333334
+          }
+        },
+        "loss_unlearned": {
+          "mean": 0.7485750000000001,
+          "sd": 0.015825482702836555,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.7615666666666667,
+            "43": 0.7532083333333334,
+            "44": 0.73095
+          }
+        },
+        "raw_cosine": {
+          "mean": 0.9986194444444445,
+          "sd": 0.00027212299778940413,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.998875,
+            "43": 0.9983333333333334,
+            "44": 0.9986499999999999
+          }
+        },
+        "sif": {
+          "mean": 0.7237722222222223,
+          "sd": 0.010880312665714379,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.7121,
+            "43": 0.7336333333333334,
+            "44": 0.7255833333333335
+          }
+        }
+      }
+    },
+    {
+      "condition": "exact_retrain_routine_update",
+      "n_seeds": 3,
+      "deletion": "exact, followed by the identical maintenance update",
+      "membership_auc": {
+        "mean": 0.5271,
+        "sd": 0.015320474680780797,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.5387666666666666,
+          "43": 0.5327833333333334,
+          "44": 0.5097499999999999
+        }
+      },
+      "retain_ppl_ratio": {
+        "mean": 1.0877437260914558,
+        "sd": 0.005159605433084417,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0832024523204424,
+          "43": 1.0933541462974257,
+          "44": 1.0866745796564996
+        }
+      },
+      "test_ppl_ratio": {
+        "mean": 0.9432895606025814,
+        "sd": 0.00569844979432896,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9443486857570462,
+          "43": 0.937135851824469,
+          "44": 0.948384144226229
+        }
+      },
+      "rnff_forget": {
+        "mean": 0.910610008169123,
+        "sd": 0.00718640943568364,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9066015067702486,
+          "43": 0.9189065889599254,
+          "44": 0.9063219287771951
+        }
+      },
+      "rnff_retain": {
+        "mean": 0.199871280881576,
+        "sd": 0.014171479901104875,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.1869845211477933,
+          "43": 0.2150484692110017,
+          "44": 0.19758085228593292
+        }
+      },
+      "primary_detector_auc": {
+        "mean": 0.9941972222222222,
+        "sd": 0.0018502314670012384,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9929666666666667,
+          "43": 0.9933,
+          "44": 0.996325
+        }
+      },
+      "detector_floors": {
+        "alignment_cos_sq": {
+          "mean": 0.9874027777777777,
+          "sd": 0.003372378954805511,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9890333333333334,
+            "43": 0.983525,
+            "44": 0.98965
+          }
+        },
+        "combined_log_score": {
+          "mean": 0.9971888888888888,
+          "sd": 0.0015278964600366812,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9984083333333333,
+            "43": 0.995475,
+            "44": 0.9976833333333334
+          }
+        },
+        "fuma_lora_ratio": {
+          "mean": 0.5430722222222223,
+          "sd": 0.02788114448139804,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.5318916666666667,
+            "43": 0.5225166666666667,
+            "44": 0.5748083333333334
+          }
+        },
+        "grad_norm_sq": {
+          "mean": 0.6500472222222222,
+          "sd": 0.014386052112041327,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.6359250000000001,
+            "43": 0.6646833333333333,
+            "44": 0.6495333333333333
+          }
+        },
+        "grad_ratio": {
+          "mean": 0.9460722222222223,
+          "sd": 0.006368304399596946,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9419666666666666,
+            "43": 0.9534083333333333,
+            "44": 0.9428416666666667
+          }
+        },
+        "log_grad_ratio": {
+          "mean": 0.9460722222222223,
+          "sd": 0.006368304399596946,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9419666666666666,
+            "43": 0.9534083333333333,
+            "44": 0.9428416666666667
+          }
+        },
+        "loss_delta": {
+          "mean": 0.9987111111111111,
+          "sd": 0.0016828863542977248,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9967916666666666,
+            "43": 0.9994083333333332,
+            "44": 0.9999333333333333
+          }
+        },
+        "loss_delta_vs_finetuned": {
+          "mean": 0.9985333333333334,
+          "sd": 0.0009280729736634862,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9989166666666667,
+            "43": 0.9974749999999999,
+            "44": 0.9992083333333334
+          }
+        },
+        "loss_ratio": {
+          "mean": 0.9991416666666667,
+          "sd": 0.0006646323127197227,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9984,
+            "43": 0.9993416666666667,
+            "44": 0.9996833333333334
+          }
+        },
+        "loss_ratio_vs_finetuned": {
+          "mean": 0.9941972222222222,
+          "sd": 0.0018502314670012384,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9929666666666667,
+            "43": 0.9933,
+            "44": 0.996325
+          }
+        },
+        "loss_unlearned": {
+          "mean": 0.7026583333333334,
+          "sd": 0.01879707608763771,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.7155,
+            "43": 0.7113916666666666,
+            "44": 0.6810833333333335
+          }
+        },
+        "raw_cosine": {
+          "mean": 0.9874027777777777,
+          "sd": 0.003372378954805511,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9890333333333334,
+            "43": 0.983525,
+            "44": 0.98965
+          }
+        },
+        "sif": {
+          "mean": 0.6593944444444444,
+          "sd": 0.015358096700413694,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.6454,
+            "43": 0.6758249999999999,
+            "44": 0.6569583333333333
+          }
+        }
+      }
+    }
+  ],
+  "table2_method_verdicts": [
+    {
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "n_seeds": 3,
+      "membership_pass": 3,
+      "rnff_pass": 3,
+      "utility_pass": 3,
+      "conjunction_pass": 3,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "successful_selective_deletion",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "successful_selective_deletion",
+        "43": "successful_selective_deletion",
+        "44": "successful_selective_deletion"
+      },
+      "note": ""
+    },
+    {
+      "method": "ga_gd",
+      "setting": "ascent_lr=2.6e-05",
+      "n_seeds": 3,
+      "membership_pass": 0,
+      "rnff_pass": 1,
+      "utility_pass": 2,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "inconclusive",
+      "seeds_agree": false,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "incomplete_forgetting",
+        "44": "incomplete_forgetting"
+      },
+      "note": "seeds disagree (global_destruction, incomplete_forgetting); reported as inconclusive rather than averaged into a verdict"
+    },
+    {
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "n_seeds": 3,
+      "membership_pass": 3,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 3,
+      "failed_run_count": 3,
+      "classification": "failed_run",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "failed_run",
+        "43": "failed_run",
+        "44": "failed_run"
+      },
+      "note": ""
+    },
+    {
+      "method": "npo",
+      "setting": "lr=0.0001, beta=0.1",
+      "n_seeds": 3,
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    },
+    {
+      "method": "npo",
+      "setting": "lr=1e-05, beta=0.1",
+      "n_seeds": 3,
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    },
+    {
+      "method": "npo",
+      "setting": "lr=2.8e-05, beta=0.1",
+      "n_seeds": 3,
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    },
+    {
+      "method": "npo",
+      "setting": "lr=2e-05, beta=0.1",
+      "n_seeds": 3,
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    },
+    {
+      "method": "npo",
+      "setting": "lr=5e-05, beta=0.1",
+      "n_seeds": 3,
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    },
+    {
+      "method": "scrub",
+      "setting": "forget_kl=1, lr=1e-05",
+      "n_seeds": 3,
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    },
+    {
+      "method": "scrub",
+      "setting": "forget_kl=1, lr=5e-05",
+      "n_seeds": 3,
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    },
+    {
+      "method": "scrub",
+      "setting": "forget_kl=4, lr=1e-05",
+      "n_seeds": 3,
+      "membership_pass": 1,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    },
+    {
+      "method": "scrub",
+      "setting": "forget_kl=4, lr=5e-05",
+      "n_seeds": 3,
+      "membership_pass": 2,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0,
+      "collapse_count": 0,
+      "failed_run_count": 0,
+      "classification": "global_destruction",
+      "seeds_agree": true,
+      "per_seed_classification": {
+        "42": "global_destruction",
+        "43": "global_destruction",
+        "44": "global_destruction"
+      },
+      "note": ""
+    }
+  ],
+  "table3_detector_comparison": [
+    {
+      "detector": "loss_ratio_vs_finetuned",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_per_sample": 2,
+      "backward_per_sample": 0,
+      "comparable_to_baseline": true,
+      "seconds_per_sample": 0.06713747949834215,
+      "marginal_seconds_per_sample": 0.03413039771839976,
+      "peak_gpu_mib": 3493.8,
+      "roc_auc": {
+        "mean": 0.9994055555555557,
+        "sd": 0.0003960160397051324,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9990166666666667,
+          "43": 0.9993916666666666,
+          "44": 0.9998083333333334
+        }
+      },
+      "pr_auc": {
+        "mean": 0.9980425528870868,
+        "sd": 0.0014434460011496135,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9965264844615078,
+          "43": 0.9982008465268313,
+          "44": 0.9994003276729215
+        }
+      },
+      "tpr_at_1pct_fpr": {
+        "mean": 0.9883333333333333,
+        "sd": 0.016072751268321604,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.995,
+          "43": 0.97,
+          "44": 1.0
+        }
+      },
+      "top_k_recall": {
+        "mean": 0.9816666666666668,
+        "sd": 0.010408329997330674,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.985,
+          "43": 0.97,
+          "44": 0.99
+        }
+      },
+      "precision_1to100": {
+        "mean": 0.6345987604453169,
+        "sd": 0.13025602080501703,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.6632996632996634,
+          "43": 0.49238578680203043,
+          "44": 0.7481108312342569
+        }
+      }
+    },
+    {
+      "detector": "raw_cosine",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_per_sample": 1,
+      "backward_per_sample": 1,
+      "comparable_to_baseline": true,
+      "seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "peak_gpu_mib": 3493.8,
+      "roc_auc": {
+        "mean": 0.9986194444444445,
+        "sd": 0.00027212299778940413,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.998875,
+          "43": 0.9983333333333334,
+          "44": 0.9986499999999999
+        }
+      },
+      "pr_auc": {
+        "mean": 0.9961491391842032,
+        "sd": 0.0005722600692045831,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9967421045209743,
+          "43": 0.9956001180655829,
+          "44": 0.9961051949660524
+        }
+      },
+      "tpr_at_1pct_fpr": {
+        "mean": 0.9683333333333333,
+        "sd": 0.00763762615825974,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.97,
+          "43": 0.975,
+          "44": 0.96
+        }
+      },
+      "top_k_recall": {
+        "mean": 0.9683333333333333,
+        "sd": 0.00763762615825974,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.97,
+          "43": 0.975,
+          "44": 0.96
+        }
+      },
+      "precision_1to100": {
+        "mean": 0.4833869816257545,
+        "sd": 0.06078458080888517,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.49238578680203043,
+          "43": 0.5391705069124425,
+          "44": 0.41860465116279066
+        }
+      }
+    },
+    {
+      "detector": "alignment_cos_sq",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_per_sample": 1,
+      "backward_per_sample": 1,
+      "comparable_to_baseline": true,
+      "seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "peak_gpu_mib": 3493.8,
+      "roc_auc": {
+        "mean": 0.9986055555555556,
+        "sd": 0.00027084401688324264,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.998875,
+          "43": 0.9983333333333334,
+          "44": 0.9986083333333333
+        }
+      },
+      "pr_auc": {
+        "mean": 0.9961138444278487,
+        "sd": 0.0005795444311723757,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9967421045209743,
+          "43": 0.9956001180655829,
+          "44": 0.9959993106969885
+        }
+      },
+      "tpr_at_1pct_fpr": {
+        "mean": 0.9683333333333333,
+        "sd": 0.00763762615825974,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.97,
+          "43": 0.975,
+          "44": 0.96
+        }
+      },
+      "top_k_recall": {
+        "mean": 0.9683333333333333,
+        "sd": 0.00763762615825974,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.97,
+          "43": 0.975,
+          "44": 0.96
+        }
+      },
+      "precision_1to100": {
+        "mean": 0.4833869816257545,
+        "sd": 0.06078458080888517,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.49238578680203043,
+          "43": 0.5391705069124425,
+          "44": 0.41860465116279066
+        }
+      }
+    },
+    {
+      "detector": "grad_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_per_sample": 2,
+      "backward_per_sample": 2,
+      "comparable_to_baseline": true,
+      "seconds_per_sample": 0.2203012325007876,
+      "marginal_seconds_per_sample": 0.11194375946979562,
+      "peak_gpu_mib": 3493.8,
+      "roc_auc": {
+        "mean": 0.989763888888889,
+        "sd": 0.0051080840975993675,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9933583333333333,
+          "43": 0.9920166666666667,
+          "44": 0.9839166666666668
+        }
+      },
+      "pr_auc": {
+        "mean": 0.9665820792911676,
+        "sd": 0.015137536426949233,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.982282149748479,
+          "43": 0.9653860541168928,
+          "44": 0.9520780340081306
+        }
+      },
+      "tpr_at_1pct_fpr": {
+        "mean": 0.8533333333333334,
+        "sd": 0.040414518843273836,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.9,
+          "43": 0.83,
+          "44": 0.83
+        }
+      },
+      "top_k_recall": {
+        "mean": 0.9216666666666665,
+        "sd": 0.02081665999466128,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.945,
+          "43": 0.915,
+          "44": 0.905
+        }
+      },
+      "precision_1to100": {
+        "mean": 0.2688360566372489,
+        "sd": 0.06270235919398866,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.34013197360527897,
+          "43": 0.24410849266340598,
+          "44": 0.2222677036430618
+        }
+      }
+    },
+    {
+      "detector": "sif",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "fisher_or_curvature",
+        "auxiliary_training_data"
+      ],
+      "threat_band": "insider_or_checkpoint_compromise",
+      "forward_per_sample": 1,
+      "backward_per_sample": 1,
+      "comparable_to_baseline": false,
+      "seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "peak_gpu_mib": 3428.8,
+      "roc_auc": {
+        "mean": 0.7237722222222223,
+        "sd": 0.010880312665714379,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.7121,
+          "43": 0.7336333333333334,
+          "44": 0.7255833333333335
+        }
+      },
+      "pr_auc": {
+        "mean": 0.47435153891339565,
+        "sd": 0.007540257981913939,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.4660603785938147,
+          "43": 0.4807988544728513,
+          "44": 0.4761953836735209
+        }
+      },
+      "tpr_at_1pct_fpr": {
+        "mean": 0.09000000000000001,
+        "sd": 0.010000000000000002,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.08,
+          "43": 0.09,
+          "44": 0.1
+        }
+      },
+      "top_k_recall": {
+        "mean": 0.4466666666666667,
+        "sd": 0.011547005383792525,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.44,
+          "43": 0.44,
+          "44": 0.46
+        }
+      },
+      "precision_1to100": {
+        "mean": 0.02365865527950389,
+        "sd": 0.0010912681749219327,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.02302861130495464,
+          "43": 0.02302861130495464,
+          "44": 0.024918743228602387
+        }
+      }
+    },
+    {
+      "detector": "combined_log_score",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement",
+        "fisher_or_curvature",
+        "auxiliary_training_data"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_per_sample": 1,
+      "backward_per_sample": 1,
+      "comparable_to_baseline": true,
+      "seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "peak_gpu_mib": 3493.8,
+      "roc_auc": {
+        "mean": 0.9999416666666666,
+        "sd": 6.291528696055324e-05,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0,
+          "43": 0.9998750000000001,
+          "44": 0.99995
+        }
+      },
+      "pr_auc": {
+        "mean": 0.9998262500314358,
+        "sd": 0.00018697781451155804,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0,
+          "43": 0.9996283844419771,
+          "44": 0.9998503656523305
+        }
+      },
+      "tpr_at_1pct_fpr": {
+        "mean": 1.0,
+        "sd": 0.0,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0,
+          "43": 1.0,
+          "44": 1.0
+        }
+      },
+      "top_k_recall": {
+        "mean": 0.9933333333333333,
+        "sd": 0.005773502691896262,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 1.0,
+          "43": 0.99,
+          "44": 0.99
+        }
+      },
+      "precision_1to100": {
+        "mean": 0.7844548398704569,
+        "sd": 0.06294966950862056,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.8571428571428571,
+          "43": 0.7481108312342569,
+          "44": 0.7481108312342569
+        }
+      }
+    }
+  ],
+  "table3_setting": {
+    "method": "exact_retrain",
+    "setting": null
+  },
+  "table4_npo_sweep": [
+    {
+      "setting": "lr=0.0001, beta=0.1",
+      "seed": 42,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.28515,
+      "retain_ppl_ratio": 1.2313545801381949,
+      "test_ppl_ratio": 1.137775531777724,
+      "rnff_forget": 0.9963946306313529,
+      "rnff_retain": 0.4869036081144726,
+      "primary_detector_auc": 0.8463416666666665,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 4,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=0.0001, beta=0.1",
+      "seed": 43,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.35281666666666667,
+      "retain_ppl_ratio": 1.1981860637243247,
+      "test_ppl_ratio": 1.0871272099708575,
+      "rnff_forget": 0.9750645471758962,
+      "rnff_retain": 0.4356591775834195,
+      "primary_detector_auc": 0.8829750000000001,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 2,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=0.0001, beta=0.1",
+      "seed": 44,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.2818333333333333,
+      "retain_ppl_ratio": 1.2342095762701786,
+      "test_ppl_ratio": 1.1502786619151821,
+      "rnff_forget": 1.0487407988135218,
+      "rnff_retain": 0.5001923896268698,
+      "primary_detector_auc": 0.8652500000000001,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 5,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=1e-05, beta=0.1",
+      "seed": 42,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.010550000000000004,
+      "retain_ppl_ratio": 1.2592430145524476,
+      "test_ppl_ratio": 1.1195176093070738,
+      "rnff_forget": 0.591559285855939,
+      "rnff_retain": 0.5393008762737184,
+      "primary_detector_auc": 0.5639416666666667,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 4,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=1e-05, beta=0.1",
+      "seed": 43,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.009716666666666665,
+      "retain_ppl_ratio": 1.1510268494892721,
+      "test_ppl_ratio": 1.0355102457765128,
+      "rnff_forget": 0.43318160371921377,
+      "rnff_retain": 0.33890720479001973,
+      "primary_detector_auc": 0.6581583333333333,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 2,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=1e-05, beta=0.1",
+      "seed": 44,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.03445,
+      "retain_ppl_ratio": 1.2675321574368208,
+      "test_ppl_ratio": 1.108953257071587,
+      "rnff_forget": 0.6236954665226077,
+      "rnff_retain": 0.5635180499702553,
+      "primary_detector_auc": 0.58035,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 5,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=2.8e-05, beta=0.1",
+      "seed": 42,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.08253333333333333,
+      "retain_ppl_ratio": 1.2925082855440135,
+      "test_ppl_ratio": 1.1287328336271072,
+      "rnff_forget": 0.7365473224944376,
+      "rnff_retain": 0.6003033219537058,
+      "primary_detector_auc": 0.6249,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 4,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=2.8e-05, beta=0.1",
+      "seed": 43,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.1159,
+      "retain_ppl_ratio": 1.3145732447949035,
+      "test_ppl_ratio": 1.141650007226636,
+      "rnff_forget": 0.8658843039401071,
+      "rnff_retain": 0.6590279343095105,
+      "primary_detector_auc": 0.6744749999999999,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 2,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=2.8e-05, beta=0.1",
+      "seed": 44,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.10449999999999998,
+      "retain_ppl_ratio": 1.317417374475537,
+      "test_ppl_ratio": 1.151572402117369,
+      "rnff_forget": 0.8077616410604576,
+      "rnff_retain": 0.6552734432690168,
+      "primary_detector_auc": 0.6442666666666667,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 5,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=2e-05, beta=0.1",
+      "seed": 42,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.05941666666666667,
+      "retain_ppl_ratio": 1.2981880296679043,
+      "test_ppl_ratio": 1.1360435498559014,
+      "rnff_forget": 0.7071647239090866,
+      "rnff_retain": 0.6105617987739896,
+      "primary_detector_auc": 0.592725,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 4,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=2e-05, beta=0.1",
+      "seed": 43,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.09961666666666666,
+      "retain_ppl_ratio": 1.3585831684926613,
+      "test_ppl_ratio": 1.1622842417456969,
+      "rnff_forget": 0.9005446277939032,
+      "rnff_retain": 0.7383735232273952,
+      "primary_detector_auc": 0.6317000000000002,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 2,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=2e-05, beta=0.1",
+      "seed": 44,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.07815,
+      "retain_ppl_ratio": 1.3116672033777317,
+      "test_ppl_ratio": 1.1461967859671331,
+      "rnff_forget": 0.7564731300481554,
+      "rnff_retain": 0.6448758031193277,
+      "primary_detector_auc": 0.615775,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 5,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=5e-05, beta=0.1",
+      "seed": 42,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.14785000000000004,
+      "retain_ppl_ratio": 1.2523770447078986,
+      "test_ppl_ratio": 1.1221235125469404,
+      "rnff_forget": 0.7972233187297396,
+      "rnff_retain": 0.5265094505680592,
+      "primary_detector_auc": 0.7287083333333334,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 4,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=5e-05, beta=0.1",
+      "seed": 43,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.17883333333333334,
+      "retain_ppl_ratio": 1.245980874596994,
+      "test_ppl_ratio": 1.1042849382210727,
+      "rnff_forget": 0.8455216988680357,
+      "rnff_retain": 0.52990509519637,
+      "primary_detector_auc": 0.7661250000000001,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 2,
+      "nonfinite": {}
+    },
+    {
+      "setting": "lr=5e-05, beta=0.1",
+      "seed": 44,
+      "steps_taken": 100,
+      "steps_configured": 100,
+      "stop_reason": "completed",
+      "membership_auc": 0.15416666666666667,
+      "retain_ppl_ratio": 1.2805664945677186,
+      "test_ppl_ratio": 1.1546229675257385,
+      "rnff_forget": 0.8780507266069509,
+      "rnff_retain": 0.5878364154019381,
+      "primary_detector_auc": 0.7434583333333333,
+      "classification": "global_destruction",
+      "conjunction": false,
+      "truncated": 5,
+      "nonfinite": {}
+    }
+  ],
+  "failure_log": {
+    "failed_runs": [
+      {
+        "seed": 42,
+        "method": "ga_gd",
+        "setting": "ascent_lr=5e-05",
+        "classification": "failed_run",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": false
+        },
+        "conjunction": false,
+        "stop_reason": "collapse_guard",
+        "unevaluable_criteria": [],
+        "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+      },
+      {
+        "seed": 43,
+        "method": "ga_gd",
+        "setting": "ascent_lr=5e-05",
+        "classification": "failed_run",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": false
+        },
+        "conjunction": false,
+        "stop_reason": "collapse_guard",
+        "unevaluable_criteria": [],
+        "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+      },
+      {
+        "seed": 44,
+        "method": "ga_gd",
+        "setting": "ascent_lr=5e-05",
+        "classification": "failed_run",
+        "criteria": {
+          "membership_removed": true,
+          "selective_forgetting": false,
+          "utility_preserved": false,
+          "collapse_guard_not_triggered": false
+        },
+        "conjunction": false,
+        "stop_reason": "collapse_guard",
+        "unevaluable_criteria": [],
+        "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+      }
+    ],
+    "n_failed_runs": 3,
+    "runs_with_null_score_columns": [],
+    "populations_not_disjoint": [],
+    "lowprev_input_failures": [],
+    "policy": "every failed and collapsed run appears in the tables above with its classification; nothing is filtered from a summary for having failed"
+  },
+  "provenance": {
+    "git_commit": "artifact-snapshot",
+    "python": "3.12.13",
+    "python_executable": "python3",
+    "platform": "Linux-6.1.0-52-amd64-x86_64-with-glibc2.36",
+    "argv": [
+      "evidence/deletion_signals/fllm_report.py",
+      "--audit",
+      "fllm_audit/reports/audit_results.json",
+      "--lowprev",
+      "fllm_audit/lowprev/lowprev_results.json",
+      "--benchmark",
+      "fllm_audit/benchmark/benchmark.json",
+      "--table3-method",
+      "exact_retrain",
+      "--output",
+      "fllm_audit/reports"
+    ],
+    "torch_version": "2.11.0+cu128",
+    "cuda_available": true,
+    "gpu": "NVIDIA RTX A5000",
+    "transformers_version": "5.14.1",
+    "peft_version": "0.20.0",
+    "datasets_version": "5.0.1",
+    "numpy_version": "2.5.1",
+    "scipy_version": "1.18.0",
+    "sklearn_version": "1.9.0"
+  }
+}

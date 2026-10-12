@@ -1,0 +1,437 @@
+{
+  "source_repository": "evidence",
+  "replication_unit": "seed",
+  "figure1": {
+    "exact_retraining_auc": {
+      "ArxivMIA / Llama": [
+        0.4758833333333333,
+        0.47391666666666665,
+        0.47078333333333333
+      ],
+      "ArxivMIA / Qwen": [
+        0.49016666666666664,
+        0.4419166666666667,
+        0.48643333333333333
+      ],
+      "BookMIA / Llama": [
+        0.10318333333333334,
+        0.12836666666666666,
+        0.13296666666666668
+      ],
+      "BookMIA / Qwen": [
+        0.2538666666666667,
+        0.23551666666666668,
+        0.2808
+      ]
+    },
+    "bookmia_qwen_matched": {
+      "42": 0.4956166666666667,
+      "43": 0.5453,
+      "44": 0.5267666666666666
+    }
+  },
+  "overview": {
+    "bookmia_qwen_original_auc": 0.25672777777777783,
+    "bookmia_qwen_matched_auc": 0.5225611111111111,
+    "role": "conceptual summary of evidence reported in figure1"
+  },
+  "figure2": [
+    {
+      "dataset": "ArxivMIA",
+      "label": "Exact retrain",
+      "membership_pass": 3,
+      "rnff_pass": 3,
+      "utility_pass": 3,
+      "conjunction_pass": 3
+    },
+    {
+      "dataset": "ArxivMIA",
+      "label": "GA+GD 2.6e-5",
+      "membership_pass": 0,
+      "rnff_pass": 1,
+      "utility_pass": 2,
+      "conjunction_pass": 0
+    },
+    {
+      "dataset": "ArxivMIA",
+      "label": "GA+GD 5e-5",
+      "membership_pass": 3,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0
+    },
+    {
+      "dataset": "ArxivMIA",
+      "label": "NPO-RT 1e-4",
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0
+    },
+    {
+      "dataset": "ArxivMIA",
+      "label": "SCRUB",
+      "membership_pass": 2,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0
+    },
+    {
+      "dataset": "BookMIA",
+      "label": "Exact retrain",
+      "membership_pass": 0,
+      "rnff_pass": 3,
+      "utility_pass": 3,
+      "conjunction_pass": 0
+    },
+    {
+      "dataset": "BookMIA",
+      "label": "GA+GD 2.6e-5",
+      "membership_pass": 0,
+      "rnff_pass": 1,
+      "utility_pass": 3,
+      "conjunction_pass": 0
+    },
+    {
+      "dataset": "BookMIA",
+      "label": "GA+GD 5e-5",
+      "membership_pass": 1,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0
+    },
+    {
+      "dataset": "BookMIA",
+      "label": "NPO-RT 1e-4",
+      "membership_pass": 0,
+      "rnff_pass": 0,
+      "utility_pass": 2,
+      "conjunction_pass": 0
+    },
+    {
+      "dataset": "BookMIA",
+      "label": "SCRUB",
+      "membership_pass": 1,
+      "rnff_pass": 0,
+      "utility_pass": 0,
+      "conjunction_pass": 0
+    }
+  ],
+  "figure3": {
+    "ArxivMIA / Llama": {
+      "loss_delta_vs_finetuned": {
+        "auc": 0.999936111111111,
+        "auc_sd": 0.00011065880159463404,
+        "precision": 0.7925284591951258,
+        "precision_sd": 0.1119154201459447,
+        "precision_by_prevalence": {
+          "1:1": {
+            "mean": 0.9972072359759547,
+            "sd": 0.0019552610840805856
+          },
+          "1:10": {
+            "mean": 0.9729679786700457,
+            "sd": 0.018426558840850545
+          },
+          "1:100": {
+            "mean": 0.7925284591951258,
+            "sd": 0.1119154201459447
+          }
+        }
+      },
+      "raw_cosine": {
+        "auc": 0.9986194444444445,
+        "auc_sd": 0.00027212299778940413,
+        "precision": 0.4833869816257545,
+        "precision_sd": 0.06078458080888517,
+        "precision_by_prevalence": {
+          "1:1": {
+            "mean": 0.9892075706530581,
+            "sd": 0.002661259001464571
+          },
+          "1:10": {
+            "mean": 0.9019502263607521,
+            "sd": 0.021968446589884946
+          },
+          "1:100": {
+            "mean": 0.4833869816257545,
+            "sd": 0.06078458080888517
+          }
+        }
+      },
+      "grad_ratio": {
+        "auc": 0.989763888888889,
+        "auc_sd": 0.0051080840975993675,
+        "precision": 0.2688360566372489,
+        "precision_sd": 0.06270235919398866,
+        "precision_by_prevalence": {
+          "1:1": {
+            "mean": 0.9723752310869824,
+            "sd": 0.007677613309009755
+          },
+          "1:10": {
+            "mean": 0.780623411088289,
+            "sd": 0.05057069061208299
+          },
+          "1:100": {
+            "mean": 0.2688360566372489,
+            "sd": 0.06270235919398866
+          }
+        }
+      },
+      "loss_unlearned": {
+        "auc": 0.7485750000000001,
+        "auc_sd": 0.015825482702836555,
+        "precision": 0.030491808725806552,
+        "precision_sd": 0.0012206875282145383,
+        "precision_by_prevalence": {
+          "1:1": {
+            "mean": 0.758596542065102,
+            "sd": 0.007661943190552262
+          },
+          "1:10": {
+            "mean": 0.23921574857595043,
+            "sd": 0.007543747430538963
+          },
+          "1:100": {
+            "mean": 0.030491808725806552,
+            "sd": 0.0012206875282145383
+          }
+        }
+      }
+    },
+    "BookMIA / Qwen": {
+      "loss_delta_vs_finetuned": {
+        "auc": 0.9936416666666666,
+        "auc_sd": 0.0009595395488635254,
+        "precision": 0.364633866780667,
+        "precision_sd": 0.06033608185183153,
+        "precision_by_prevalence": {
+          "1:1": {
+            "mean": 0.9824222447587406,
+            "sd": 0.004216148968418888
+          },
+          "1:10": {
+            "mean": 0.8489261536457159,
+            "sd": 0.03178083188956857
+          },
+          "1:100": {
+            "mean": 0.364633866780667,
+            "sd": 0.06033608185183153
+          }
+        }
+      },
+      "raw_cosine": {
+        "auc": 0.9950104166666667,
+        "auc_sd": 0.0014293974546406958,
+        "precision": 0.42459659593280286,
+        "precision_sd": 0.029910802241670805,
+        "precision_by_prevalence": {
+          "1:1": {
+            "mean": 0.9865579564090758,
+            "sd": 0.0015580611456463811
+          },
+          "1:10": {
+            "mean": 0.8801906708997914,
+            "sd": 0.01249060839499219
+          },
+          "1:100": {
+            "mean": 0.42459659593280286,
+            "sd": 0.029910802241670805
+          }
+        }
+      },
+      "grad_ratio": {
+        "auc": 0.9272958333333333,
+        "auc_sd": 0.006254780463440154,
+        "precision": 0.1135542142152719,
+        "precision_sd": 0.007043539116314883,
+        "precision_by_prevalence": {
+          "1:1": {
+            "mean": 0.9274123394790917,
+            "sd": 0.004654424107642246
+          },
+          "1:10": {
+            "mean": 0.5612391090675862,
+            "sd": 0.017120640883665387
+          },
+          "1:100": {
+            "mean": 0.1135542142152719,
+            "sd": 0.007043539116314883
+          }
+        }
+      },
+      "loss_unlearned": {
+        "auc": 0.6219291666666665,
+        "auc_sd": 0.015137620423413042,
+        "precision": 0.018483450736947776,
+        "precision_sd": 0.0008335689490877366,
+        "precision_by_prevalence": {
+          "1:1": {
+            "mean": 0.6529549513454977,
+            "sd": 0.010415174790725224
+          },
+          "1:10": {
+            "mean": 0.15844617419887166,
+            "sd": 0.00612724448236432
+          },
+          "1:100": {
+            "mean": 0.018483450736947776,
+            "sd": 0.0008335689490877366
+          }
+        }
+      }
+    }
+  },
+  "figure4": {
+    "auc_by_detector": {
+      "ArxivMIA / Llama": {
+        "loss_unlearned": [
+          0.76344375,
+          0.74870625,
+          0.73376875
+        ],
+        "grad_ratio": [
+          0.99293125,
+          0.9912125,
+          0.9852625
+        ],
+        "raw_cosine": [
+          0.99873125,
+          0.99849375,
+          0.99868125
+        ],
+        "loss_delta_vs_finetuned": [
+          1.0,
+          0.99985625,
+          0.99985
+        ]
+      },
+      "ArxivMIA / Qwen": {
+        "loss_unlearned": [
+          0.701246875,
+          0.6831875,
+          0.659175
+        ],
+        "grad_ratio": [
+          0.9842,
+          0.971425,
+          0.98063125
+        ],
+        "raw_cosine": [
+          0.99859375,
+          0.99700625,
+          0.99755
+        ],
+        "loss_delta_vs_finetuned": [
+          0.99838125,
+          0.99854375,
+          0.99908125
+        ]
+      },
+      "BookMIA / Llama": {
+        "loss_unlearned": [
+          0.6894375,
+          0.6549875,
+          0.66369375
+        ],
+        "grad_ratio": [
+          0.9552,
+          0.96575625,
+          0.971825
+        ],
+        "raw_cosine": [
+          0.993775,
+          0.99591875,
+          0.994675
+        ],
+        "loss_delta_vs_finetuned": [
+          0.99416875,
+          0.9963875,
+          0.995225
+        ]
+      },
+      "BookMIA / Qwen": {
+        "loss_unlearned": [
+          0.6391875,
+          0.6109,
+          0.6157
+        ],
+        "grad_ratio": [
+          0.93170625,
+          0.93004375,
+          0.9201375
+        ],
+        "raw_cosine": [
+          0.99345625,
+          0.99626875,
+          0.99530625
+        ],
+        "loss_delta_vs_finetuned": [
+          0.99355,
+          0.99464375,
+          0.99273125
+        ]
+      }
+    },
+    "paired_difference": {
+      "ArxivMIA / Llama": [
+        0.0012687500000000407,
+        0.0013625000000000442,
+        0.0011687500000000517
+      ],
+      "ArxivMIA / Qwen": [
+        -0.00021249999999994884,
+        0.0015374999999999694,
+        0.001531249999999984
+      ],
+      "BookMIA / Llama": [
+        0.00039375000000008153,
+        0.00046875000000001776,
+        0.0005500000000000504
+      ],
+      "BookMIA / Qwen": [
+        9.375000000000355e-05,
+        -0.0016249999999999876,
+        -0.002574999999999994
+      ]
+    }
+  },
+  "figure1_pipeline": {
+    "role": "conceptual summary of the audit protocol"
+  },
+  "figure2_reference": {
+    "cells": {
+      "ArxivMIA / Llama": [
+        0.4758833333333333,
+        0.47391666666666665,
+        0.47078333333333333
+      ],
+      "ArxivMIA / Qwen": [
+        0.49016666666666664,
+        0.4419166666666667,
+        0.48643333333333333
+      ],
+      "BookMIA / Llama": [
+        0.10318333333333334,
+        0.12836666666666666,
+        0.13296666666666668
+      ],
+      "BookMIA / Qwen": [
+        0.2538666666666667,
+        0.23551666666666668,
+        0.2808
+      ]
+    },
+    "matched_seeds": [
+      0.4956166666666667,
+      0.5453,
+      0.5267666666666666
+    ],
+    "original_seeds": [
+      0.2538666666666667,
+      0.23551666666666668,
+      0.2808
+    ]
+  }
+}

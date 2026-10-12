@@ -1,0 +1,28 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Model weights are never committed. The per-sample score tables under results/
+# are what make the numbers reproducible offline; the checkpoints that produced
+# them are large and regenerable from the pipeline.
+*.safetensors
+*.bin
+*.pt
+*.ckpt
+**/unlearned_model/
+**/finetuned_seed*/
+
+# Local run outputs (the pipeline's defaults). Curated results live in results/.
+ds_results*/
+ds_checkpoints*/
+ds_smoke/
+ds_sweep*/
+ds_*/
+
+# Local editor settings.
+.vscode/
+
+.venv/
+.env
+.DS_Store

@@ -1,0 +1,104 @@
+# Primary setting: Llama-3.2-1B, QLoRA 4-bit NF4 + PEFT LoRA, WikiMIA.
+#
+# Only the keys that differ from deletion_signals/config.py:DEFAULTS need to
+# appear here; the merged result is recorded in every output file's metadata.
+
+training_mode: lora
+device: cuda
+seed: 42
+
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  torch_dtype: bfloat16
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "swj0419/WikiMIA"
+  split: WikiMIA_length32
+  train_samples: 2000
+  test_samples: 1000
+  forget_ratio: 0.2
+  max_length: 512
+
+training:
+  epochs: 6
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  max_grad_norm: 1.0
+
+unlearning:
+  ga_gd:
+    steps: 100
+    ascent_lr: 1.0e-5
+    descent_lr: 2.0e-5
+    batch_size: 4
+  scrub:
+    steps: 100
+    learning_rate: 1.0e-5
+    batch_size: 4
+    kl_temperature: 4.0
+    forget_kl_weight: 0.1
+    forget_entropy_weight: 0.5
+    retain_ce_weight: 1.0
+    retain_kl_weight: 1.0
+
+scoring:
+  # Gradients live on the adapter parameters, which is also the space
+  # ghat = theta_unlearned - theta_finetuned occupies.
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    # Forward passes only, so the 4-bit pretrained base is both sufficient and
+    # the right reference: it is the model that never saw any of this data.
+    reference: pretrained_base
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    # NOT the pretrained base: it has no adapters and a 4-bit backbone, so
+    # ||grad L_base||^2 does not exist over the scored parameter space. The
+    # fine-tuned pre-unlearning model shares that space exactly and isolates
+    # the unlearning effect.
+    reference: finetuned_pre_unlearning
+  fuma:
+    enabled: true
+    denominator_source: shadow_bf16
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    # Ablation. Turn on with --set scores.sif.enabled=true; 'fisher' additionally
+    # needs enough retain samples to hold out fisher_rank of them.
+    enabled: false
+    method: fisher
+    damping: 1.0e-3
+    fisher_rank: 200
+    fisher_device: cpu
+    beta: 1.0
+
+evaluation:
+  seeds: [42, 43, 44]
+  methods: [ga_gd, scrub]
+  n_bootstrap: 1000
+
+paths:
+  checkpoints: "./ds_checkpoints"
+  results: "./ds_results"

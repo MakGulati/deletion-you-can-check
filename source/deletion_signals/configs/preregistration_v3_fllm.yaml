@@ -1,0 +1,910 @@
+# CONFIRMATORY PREREGISTRATION -- FLLM EXTENSION (document version 3-fllm)
+# =====================================================================
+#
+# Machine-readable and authoritative for the four-component FLLM audit:
+#
+#   A  NPO comparison
+#   B  low-prevalence security metrics
+#   C  matched-access detector cost and capability comparison
+#   D  routine-update control
+#
+# RELATION TO configs/preregistration_v2.yaml
+# -------------------------------------------
+# v2 is NOT modified, superseded or reinterpreted by this file. Every threshold
+# v2 froze is restated here BY VALUE and unchanged, so that a run governed by
+# this document is judged by exactly the bars v2 declared. Where this document
+# adds something, it adds it -- it never loosens.
+#
+#   membership equivalence region  [0.45, 0.55]        (v2, unchanged)
+#   utility max perplexity ratio   1.10                (v2, unchanged)
+#   RNFF min_forget / max_retain   0.50 / 0.20         (v2, unchanged)
+#   deletion detectable            AUC >= 0.70, CI lower > 0.50, above the
+#                                  null-refit floor by 2 SD (v2, unchanged)
+#   primary detector               loss_ratio_vs_finetuned (v2, unchanged)
+#
+# `schema_version` is the FILE FORMAT version that deletion_signals.audit
+# parses; it stays 2 because the format has not changed. `document_version` is
+# this preregistration's own identity. They are different things and are
+# deliberately allowed to differ.
+#
+# WRITTEN BEFORE ANY RESULT OF THIS EXTENSION EXISTED. At the time of writing,
+# no NPO run, no routine-update run, no low-prevalence metric and no timing
+# measurement had been produced. What HAD been seen is the confirmatory
+# evidence already in ds_confirm/, ds_confirm_refine/ and ds_sweep/; every place
+# where that evidence informed a choice below is recorded under
+# `declared_conflicts`.
+
+schema_version: 2
+document_version: 3-fllm
+supersedes: none
+extends: preregistration_v2.yaml
+
+dataset: zhliu/ArxivMIA
+model: meta-llama/Llama-3.2-1B
+training_mode: lora
+seeds: [42, 43, 44]
+replication_unit: seed
+output_root: fllm_audit
+
+# ---------------------------------------------------------------- the questions
+
+research_questions:
+
+  Q1:
+    component: A
+    question: >-
+      Does NPO, a method explicitly designed to avoid the catastrophic collapse
+      that GA+GD exhibits, jointly satisfy membership removal, selective
+      forgetting and utility preservation on any preregistered setting, on any
+      independently trained seed?
+    primary_outcome: conjunction pass count over seeds
+    null_result_is_publishable: true
+
+  Q2:
+    component: B
+    question: >-
+      At realistic deletion prevalence -- where forget records are 1 in 10 or
+      1 in 100 of the audited pool rather than 1 in 3 -- does any detector
+      retain usable precision, or does ROC-AUC overstate operational capability?
+    primary_outcome: precision at the true deletion-set size, and prevalence-adjusted precision at 1:10 and 1:100
+
+  Q3:
+    component: C
+    question: >-
+      Does any gradient-based detector provide better deletion-set recovery
+      than two-checkpoint calibrated loss when BOTH hold the same pre- and
+      post-deletion checkpoints, and at what cost in passes, time and memory?
+    primary_outcome: paired across-seed AUC difference against loss_ratio_vs_finetuned, reported beside cost
+    decision_rule: >-
+      A gradient detector is claimed advantageous ONLY if its across-seed mean
+      paired difference against loss_ratio_vs_finetuned is positive and exceeds
+      the across-seed SD of that difference, on a setting that is not a failed
+      run. Cost never substitutes for performance and performance never excuses
+      cost; both are reported in the same row.
+
+  Q4:
+    component: D
+    question: >-
+      Does an ordinary, legitimate, non-deletion model update create false
+      deletion signals -- and can genuine deletion still be recovered when it is
+      mixed with routine maintenance?
+    primary_outcome: detector AUC and TPR@1%FPR under routine update vs null refit, and under exact deletion vs exact deletion + routine update
+
+# ------------------------------------------------------------------------ axes
+#
+# Restated from v2 BY VALUE. Unchanged. A criterion is met only if it is
+# MEASURED; unevaluable is not satisfied.
+
+axes:
+
+  membership_removal:
+    question: Do forgotten records still look like training members?
+    score: loss_ratio
+    task: forget_vs_unseen
+    equivalence_region: [0.45, 0.55]
+    supporting_tasks: [member_vs_unseen, retain_vs_unseen]
+    note: >-
+      Two-sided. An AUC of 0.02 is not "membership removed", it is membership
+      evidence that is as strong as 0.98 with the opposite sign. Under the
+      preregistered direction the confirmatory GA+GD runs read 0.013-0.072,
+      which is failure of this axis, not success.
+
+  utility_preservation:
+    question: Does the model remain useful?
+    populations: [retain, test]
+    max_perplexity_ratio: 1.10
+    calibrate_against_null_refit: true
+
+  selective_forgetting:
+    question: Did the forget set change more than the retain set, and enough?
+    metric: rnff
+    min_forget: 0.50
+    max_retain: 0.20
+    require_both_measured: true
+    denominator_source: exact_retrain_control
+    denominator_is_per_seed: true
+
+  collapse_guard:
+    question: Did the run complete, or did it destroy the model mid-flight?
+    # Restated from the training configuration so a verdict never depends on
+    # reading a training config that could later change.
+    collapse_loss: 20.0
+    trips_when: forget or retain batch loss exceeds collapse_loss
+    a_trip_is: a failed run, reported with all its measurements, never dropped
+
+# ------------------------------------------------------------------- detectors
+#
+# Restated from preregistration_v2.yaml BY VALUE and UNCHANGED. These keys are
+# what `deletion_signals.audit` reads directly, so they must be present at the
+# top level of whichever preregistration governs a run -- v3 governs the FLLM
+# extension, and omitting them would either crash the audit or, worse, silently
+# fall back to a different document's thresholds.
+#
+# The finer-grained access dimensions the extension adds live under
+# `component_c_access_and_cost`; these coarse classes are the ones the audit's
+# matched-access rule uses, and tests/test_benchmark.py asserts the two tables
+# do not contradict each other.
+
+primary_detector: loss_ratio_vs_finetuned
+primary_task: forget_vs_retain
+
+detectors:
+  loss_unlearned:
+    access: [unlearned]
+    role: weakest-access baseline
+  loss_ratio:
+    access: [unlearned, base]
+    role: difficulty-calibrated membership baseline
+  loss_delta:
+    access: [unlearned, base]
+    role: additive form of loss_ratio
+  loss_ratio_vs_finetuned:
+    access: [unlearned, finetuned]
+    role: PRINCIPAL SIMPLE BASELINE -- two-checkpoint calibrated loss
+  loss_delta_vs_finetuned:
+    access: [unlearned, finetuned]
+    role: additive form of the principal baseline
+  grad_norm_sq:
+    access: [unlearned, gradients]
+    role: raw gradient magnitude
+  grad_ratio:
+    access: [unlearned, finetuned, gradients]
+    role: calibrated gradient magnitude
+  log_grad_ratio:
+    access: [unlearned, finetuned, gradients]
+    role: log form of grad_ratio
+  raw_cosine:
+    access: [unlearned, finetuned, gradients]
+    role: signed directional alignment
+  alignment_cos_sq:
+    access: [unlearned, finetuned, gradients]
+    role: sign-invariant directional alignment
+  sif:
+    access: [unlearned, gradients, curvature]
+    role: >-
+      self-influence ablation, carried as a declared negative result: at Fisher
+      rank 200 the curvature term was inert and SIF tracked grad_norm_sq at
+      rho = 0.9999 in the exploratory runs.
+  combined_log_score:
+    access: [unlearned, finetuned, gradients, curvature]
+    role: the original combined score
+  fuma_lora_ratio:
+    access: [unlearned, gradients, lora_structure]
+    role: FUMA-style adapter/backbone gradient ratio
+
+# ------------------------------------------------------- the joint decision rule
+#
+# Restated from v2 BY VALUE and UNCHANGED.
+
+decision_rule:
+  candidate_operating_point:
+    - membership_removal_within_equivalence_region
+    - utility_preserved_on_retain_and_test
+    - selective_forgetting_achieved
+  all_seeds_required: true
+
+  deletion_detectable:
+    task: forget_vs_retain
+    judged_on: primary_detector
+    min_auc: 0.70
+    bootstrap_ci_lower_above: 0.50
+    # A detector scoring 0.65 on an EXACTLY RETRAINED model is reading
+    # run-to-run training randomness, not deletion. Every detector must clear
+    # its own false-positive floor, measured on the null refit.
+    must_exceed_null_refit: true
+    null_refit_margin_sds: 2.0
+
+# ------------------------------------------------------- joint success criteria
+#
+# The conjunction, stated as the brief requires: a method setting passes only
+# if ALL of these hold JOINTLY on an INDEPENDENTLY TRAINED SEED.
+
+joint_success_criteria:
+  required:
+    - membership_removed          # within the equivalence region above
+    - selective_forgetting        # RNFF forget >= 0.50 and |RNFF retain| <= 0.20
+    - utility_preserved           # retain AND test perplexity ratio <= 1.10
+    - collapse_guard_not_triggered
+  evaluated_per: seed
+  reporting:
+    marginal_counts_required: true    # how many seeds passed each criterion alone
+    conjunction_count_required: true  # how many seeds passed all four together
+  prohibited: >-
+    Classifying a setting from across-seed MEAN values when no individual seed
+    passes the full conjunction. Three seeds each failing a different criterion
+    is not a pass, and a mean that straddles a threshold is not a seed.
+
+# ----------------------------------------------------------- classifications
+#
+# TWO vocabularies, deliberately, because two pieces of machinery read this file
+# and they answer different questions.
+#
+# `classifications` below is v2's, restated BY VALUE and UNCHANGED. It is what
+# `deletion_signals.audit` emits per run, it includes the `deletion_detectable`
+# axis, and keeping it means a v3-governed run is labelled by the audit exactly
+# as a v2-governed run would be. Removing it would not merely rename a label --
+# it would make the shared audit crash on any run this document governs.
+#
+# `fllm_classifications` is the extension's six-label partition, which
+# `deletion_signals.fllm_report` applies. It is a function of the four JOINT
+# SUCCESS criteria (which include the collapse guard and exclude detectability),
+# so it answers "did this method delete selectively while staying useful?"
+# rather than "was the deletion afterwards detectable?". The two are reported
+# side by side and neither is derived from the other.
+
+classifications:
+  persistent_fingerprint:
+    requires: [membership_removed, utility_preserved, selective_forgetting, deletion_detectable]
+    statement: >-
+      Successful approximate unlearning removed conventional membership evidence
+      while leaving a checkpoint-based deletion-set fingerprint.
+  incomplete_forgetting:
+    requires: [utility_preserved]
+    forbids: [membership_removed]
+    statement: >-
+      The model remains useful, but forgotten records still look like training
+      members. Nothing was deleted in any auditable sense.
+  global_destruction:
+    requires: [membership_removed]
+    forbids: [utility_preserved]
+    statement: >-
+      Membership evidence disappeared, but retained or test utility exceeded the
+      damage threshold. Membership-only evaluation would have falsely certified
+      this as successful unlearning.
+  successful_deletion_no_fingerprint:
+    requires: [membership_removed, utility_preserved, selective_forgetting]
+    forbids: [deletion_detectable]
+    statement: >-
+      Deletion succeeded on all three axes and left no detectable fingerprint.
+  inconclusive:
+    statement: >-
+      No setting satisfied the jointly preregistered criteria, or uncertainty
+      prevents classification. A statement about what was tested, not about what
+      is true.
+
+# Exactly the six labels the extension requires, as a total function of the
+# four measured criteria. Evaluated in the order listed; the first match wins,
+# so the partition is exhaustive and mutually exclusive by construction. No
+# judgement is exercised while looking at numbers.
+
+fllm_classifications:
+  order: [failed_run, successful_selective_deletion, deletion_without_preserved_utility,
+          global_destruction, incomplete_forgetting, inconclusive]
+
+  failed_run:
+    when: collapse_guard_triggered OR run_did_not_complete OR losses_non_finite
+    statement: >-
+      The run did not complete as configured. Reported with every measurement
+      it produced; never excluded from a summary table and never counted as
+      evidence about the method's capability.
+
+  successful_selective_deletion:
+    when: membership_removed AND utility_preserved AND selective_forgetting
+    statement: >-
+      Membership evidence is within the chance-equivalence region, the forget
+      set moved at least half as far as exact retraining moved it, the retain
+      set did not, and utility is intact.
+
+  deletion_without_preserved_utility:
+    when: selective_forgetting AND NOT utility_preserved
+    statement: >-
+      The forget set moved specifically and far enough, but retained or test
+      utility exceeded the damage threshold. Deletion happened; the model was
+      not preserved.
+
+  global_destruction:
+    when: NOT utility_preserved AND NOT selective_forgetting
+    statement: >-
+      Utility is gone and the damage was indiscriminate -- the retain set moved
+      nearly as far as the forget set. Membership-only evaluation would falsely
+      certify this as successful unlearning whenever membership AUC lands near
+      chance for this reason.
+
+  incomplete_forgetting:
+    when: utility_preserved AND NOT membership_removed
+    statement: >-
+      The model remains useful, but forgotten records still look like training
+      members. Nothing was deleted in any auditable sense.
+
+  inconclusive:
+    when: anything else, including any criterion that could not be measured
+    statement: >-
+      A statement about what was tested, not about what is true.
+
+prohibited_inferences:
+  - reinterpreting global_destruction or failed_run as successful unlearning
+  - declaring success from membership AUC alone
+  - treating membership AUC near chance as proof of forgetting
+  - post-hoc max(AUC, 1-AUC) or any orientation flip after seeing performance
+  - claiming a gradient detector is advantageous over a detector with weaker or
+    equal access unless it beats it under the paired across-seed comparison
+  - excluding collapsed, failed or incomplete runs from any summary table
+  - claiming deletion-history detection is automatically a privacy attack
+  - generalising beyond ArxivMIA, Llama-3.2-1B, LoRA and the tested methods
+  - presenting n=3 as population-level statistical certainty
+  - presenting sample-level bootstrap intervals as across-seed replication
+
+# =============================================================== COMPONENT A
+#
+# NPO -- Negative Preference Optimization.
+
+component_a_npo:
+
+  reference:
+    paper: >-
+      Zhang, Lin, Chen, Sun, Wu, Wu (2024). Negative Preference Optimization:
+      From Catastrophic Collapse to Effective Unlearning. arXiv:2404.05868.
+    equation_implemented: >-
+      L_NPO(theta) = (2/beta) * E_{(x,y)~D_forget} [ log(1 + (pi_theta(y|x) /
+      pi_ref(y|x))^beta ) ]
+      = -(2/beta) * E [ log sigmoid( -beta * r(x,y) ) ],
+      where r(x,y) = log pi_theta(y|x) - log pi_ref(y|x).
+    gradient: >-
+      grad L_NPO = 2 * sigmoid(beta * r) * grad_theta log pi_theta(y|x).
+      Gradient ascent on the forget log-likelihood, weighted by a factor in
+      (0, 2) that decays to zero once a record is already forgotten. That decay
+      is the paper's collapse-avoidance mechanism and is what this component
+      tests.
+    sign_convention: >-
+      r is CURRENT MINUS REFERENCE on the forget sequence. Minimising L_NPO
+      drives pi_theta DOWN on forget records. A run whose forget loss falls
+      rather than rises has the sign inverted and is a failed run.
+
+  variant_selected: NPO-RT
+  variant_justification: >-
+    The paper defines NPO (forget term alone), NPO-RT (forget term plus retain
+    cross-entropy) and NPO-KL (forget term plus KL to the reference on retain).
+    NPO-RT is selected because it is the variant structurally comparable to
+    this repository's GA+GD, which is ascent on forget plus cross-entropy
+    descent on retain. Selecting the variant on comparability, not on outcome:
+    no NPO number existed when this was written.
+  objective: L = L_NPO(forget) + retain_weight * CE(retain)
+  deviation_from_ga_gd: >-
+    GA+GD uses two AdamW optimizers with independently swept learning rates.
+    NPO-RT as published is a single objective under a single optimizer, so
+    sweeping its learning rate scales the retain term too. The published form is
+    kept; the difference is recorded rather than engineered away.
+
+  reference_model:
+    identity: theta_finetuned -- this seed's own pre-unlearning checkpoint
+    path_template: ds_checkpoints/finetuned_seed{seed}
+    frozen: true
+    requires_grad: false
+    cross_seed_reuse: PROHIBITED
+    note: >-
+      Each seed uses its own fine-tuned checkpoint as both the initialisation
+      and the NPO reference. Reusing one seed's model for another would make the
+      seeds dependent and the across-seed SD meaningless.
+
+  token_reduction:
+    setting: sum
+    definition: >-
+      r is the SUM of token log-probabilities over the target tokens of the
+      sequence, matching the paper's sequence-level derivation and the official
+      implementation (licong-lin/negative-preference-optimization, following
+      TOFU's get_batch_loss).
+    recorded_alternative: mean
+    why_it_matters: >-
+      This repository's other losses are token MEANS. Sum and mean differ by a
+      factor of up to max_length (512), which moves beta's effective scale by
+      about two orders of magnitude. The choice is therefore declared here
+      rather than left implicit, and the setting used is written into every
+      output row's metadata. Both detectors and thresholds are unaffected:
+      gradients are clipped to norm 1.0 in both GA+GD and NPO, which normalises
+      the scale difference away.
+
+  fixed_hyperparameters:
+    beta: 0.1                  # published default (TOFU/NPO)
+    retain_weight: 1.0         # lambda
+    steps: 100                 # matched to the GA+GD confirmatory runs
+    batch_size: 4              # matched
+    max_grad_norm: 1.0         # matched
+    optimizer: AdamW
+    collapse_loss: 20.0
+    probe_every: 10
+    probe_samples: 32
+    log_ratio_reduction: sum
+
+  strength_grid:
+    swept_parameter: learning_rate
+    values: [1.0e-5, 2.0e-5, 2.8e-5, 5.0e-5, 1.0e-4]
+    intended_regimes:
+      1.0e-5: weak intervention
+      2.0e-5: moderate intervention
+      2.8e-5: expected viable region
+      5.0e-5: aggressive intervention
+      1.0e-4: near-collapse / clearly over-aggressive
+    justification: >-
+      Theoretical, anchored on a gradient identity rather than on any NPO
+      outcome. At initialisation theta = theta_ref, so r = 0 and the NPO weight
+      is 2*sigmoid(0) = 1.0: NPO's first forget gradient is identical in
+      direction to GA's ascent gradient, and after clipping to norm 1.0 also
+      identical in magnitude. Under AdamW the per-step displacement is set by
+      the learning rate. The grid is therefore anchored on the MEASURED GA+GD
+      transition (RNFF_forget crossed 0.50 at ascent_lr 2.6e-5; utility failed
+      by 2.7e-5) and, because the NPO weight 2*sigmoid(beta*r) decays
+      monotonically as forgetting proceeds and so is weaker per step than GA at
+      the same learning rate, extended UPWARD to 1.0e-4 rather than downward.
+      The step-0 identity is asserted as a unit test.
+    smoke_test_permitted_to: [check numerical stability, check that forget loss rises and the NPO weight decays]
+    smoke_test_prohibited_from: [selecting the grid by outcome, altering any threshold in this document]
+
+  optional_secondary:
+    swept_parameter: beta
+    values: [0.05, 0.1, 0.5]
+    at: the viable learning rate only
+    status: OPTIONAL. Run only if time permits after the required matrix. Never a substitute for the required grid.
+
+  per_cell_record_required:
+    - seed
+    - configuration and its hash
+    - steps configured and steps completed
+    - stopping reason
+    - collapse status
+    - forget / retain / test loss and perplexity
+    - per-population loss under base, fine-tuned and unlearned models
+    - membership AUCs on every preregistered task
+    - RNFF forget and retain, and the denominator
+    - retain and test utility change
+    - every deletion detector
+    - wall-clock runtime
+    - peak GPU memory and peak host memory
+    - null and non-finite counts per score column
+    - truncation count and failed-sample count
+  omission_policy: >-
+    Collapsed and failed runs appear in every summary table with their
+    classification. Nothing is filtered from a table for having failed.
+
+# =============================================================== COMPONENT B
+#
+# Low-prevalence security metrics. Computed OFFLINE from saved per-sample score
+# files. No model is re-run to produce any number in this component.
+
+component_b_low_prevalence:
+
+  task: forget_vs_retain
+  positives: forget
+  negatives: retain
+  statistical_unit: seed
+  report: [per_seed, mean, sd]
+
+  metrics:
+    - roc_auc
+    - average_precision            # PR-AUC
+    - tpr_at_fpr_0.01
+    - tpr_at_fpr_0.001             # ONLY where the negative count supports it
+    - precision_at_true_deletion_set_size
+    - recall_at_true_deletion_set_size
+    - top_k_recall
+    - prevalence_adjusted_precision_and_recall
+
+  fpr_resolution_rule:
+    rule: >-
+      An FPR target smaller than 1/n_negative is NOT estimable and is reported
+      as unsupported (null with a stated reason), never as a number.
+    consequence_at_this_scale: >-
+      With 600 scored retain samples the finest non-zero empirical FPR is
+      1/600 = 0.00167. TPR@1%FPR is estimable (6 negatives). TPR@0.1%FPR is NOT
+      and will be reported as unsupported throughout. This is declared in
+      advance so its absence from the tables is a preregistered outcome and not
+      a gap.
+
+  top_k:
+    k: true deletion-set size, i.e. the number of forget samples scored in that run
+    definition: >-
+      Rank all scored samples by the detector's preregistered oriented score,
+      take the top k, and report the fraction of true forget samples recovered
+      (recall) and the fraction of the selection that is forget (precision). At
+      k equal to the positive count these two coincide numerically; both are
+      reported because they answer different operational questions.
+
+  prevalence_simulation:
+    levels: ["1:1", "1:10", "1:100"]
+    interpretation: "positives : negatives in the audited pool"
+    method: analytic
+    formula: >-
+      precision(pi) = pi * TPR / (pi * TPR + (1 - pi) * FPR),
+      recall(pi) = TPR,
+      where TPR and FPR are the empirical operating point measured on the
+      observed forget/retain populations at a fixed threshold, and pi is the
+      simulated prevalence. Recall is prevalence-invariant; precision is not,
+      which is the entire point of this component.
+    why_analytic: >-
+      Deterministic and exactly reproducible. Subsampling negatives to hit a
+      target prevalence introduces an RNG whose seed would have to be recorded,
+      throws away negatives that were actually measured, and estimates the same
+      quantity with more variance. A resampling cross-check is reported beside
+      the analytic value as a diagnostic only.
+    thresholds_evaluated_at:
+      - the top-k operating point (k = true deletion-set size)
+      - the 1% FPR operating point
+    floor_rule: >-
+      A precision computed from an FPR of exactly 0 is not reported as 1.0. The
+      FPR is floored at 1/n_negative -- the finest value the sample supports --
+      and the row is marked as resolution-limited.
+
+  required_settings:
+    - null_refit
+    - exact_retrain
+    - ga_gd_best_viable
+    - ga_gd_destructive
+    - scrub_best
+    - every NPO setting
+    - routine_update
+    - exact_retrain_plus_routine_update
+
+  required_detectors:
+    - loss_unlearned
+    - loss_delta_vs_finetuned
+    - loss_ratio_vs_finetuned
+    - loss_ratio                   # base-calibrated loss ratio
+    - loss_delta
+    - raw_cosine
+    - alignment_cos_sq
+    - grad_norm_sq
+    - grad_ratio
+    - log_grad_ratio
+    - sif
+    - combined_log_score
+    - fuma_lora_ratio
+
+  orientation_rule: >-
+    Every detector keeps the direction declared in configs/orientations.yaml.
+    No score is flipped after its performance is observed, and no metric in
+    this component is computed as max(x, 1-x).
+
+  uncertainty:
+    across_seed: mean and SD over seeds; the seed is the replication unit
+    within_seed: >-
+      Sample-level bootstrap intervals are permitted as a within-run precision
+      diagnostic and are labelled as such. They are never presented as a
+      substitute for across-seed replication and never used to compare methods.
+
+# =============================================================== COMPONENT C
+#
+# Matched-access detector cost and capability comparison.
+
+component_c_access_and_cost:
+
+  access_dimensions:
+    - unlearned_checkpoint
+    - pretrained_base_checkpoint
+    - finetuned_pre_unlearning_checkpoint
+    - both_pre_and_post_checkpoints
+    - logits_or_token_probabilities
+    - labels_or_target_tokens
+    - per_example_loss
+    - per_example_gradients
+    - global_model_displacement
+    - fisher_or_curvature
+    - auxiliary_training_data
+    - trained_attack_classifier
+
+  matched_access_rule: >-
+    Two detectors are comparable only when the challenger's access set is a
+    SUPERSET of, or equal to, the baseline's. A detector that beats one
+    requiring strictly more information has demonstrated nothing. Every
+    comparison row states both access sets and whether the rule is satisfied.
+
+  central_comparison:
+    baseline: loss_ratio_vs_finetuned          # two-checkpoint calibrated loss
+    challengers:
+      - raw_cosine                             # signed cosine
+      - alignment_cos_sq                       # squared cosine
+      - grad_ratio                             # calibrated gradient magnitude
+      - sif
+      - combined_log_score                     # original combined score
+    access_held_constant: pre- and post-deletion checkpoints
+    question: >-
+      Does any gradient-based detector provide better deletion-set recovery
+      than two-checkpoint loss when both have access to the same pre- and
+      post-deletion checkpoints?
+    reported: performance AND cost, in the same table row
+
+  cost_measurements:
+    per_detector:
+      - forward_passes_per_sample
+      - backward_passes_per_sample
+      - checkpoints_that_must_be_resident
+      - wall_clock_scoring_time
+      - throughput_samples_per_second
+      - peak_gpu_memory
+      - peak_host_memory
+      - persistent_storage_required
+    phases_separated:
+      - checkpoint_loading
+      - preprocessing
+      - per_example_scoring
+      - aggregation_and_evaluation
+    protocol:
+      warmup_required: true
+      repeats: 5
+      report: median and min-max range
+      held_constant: [hardware, sample count, sequence-length policy, batch-size constraint]
+      concurrent_gpu_processes_recorded: true
+    honesty_note: >-
+      Pass counts are derived from the collector's actual call graph, not
+      asserted from the detector's definition, and the derivation is unit
+      tested. Detectors that share a backward pass are reported as sharing it,
+      with the marginal cost of adding each one stated separately from its
+      standalone cost.
+
+# =============================================================== COMPONENT D
+#
+# Routine-update control. Preregistered BEFORE any detector output under it was
+# examined.
+
+component_d_routine_update:
+
+  motivation: >-
+    The null refit measures what independent training randomness does when
+    nothing is deleted. It does not measure what an ORDINARY, LEGITIMATE update
+    does. In production a checkpoint changes for many reasons that are not
+    deletion, and a deletion detector that fires on all of them has no
+    operational value. This control supplies that missing floor.
+
+  conditions:
+    c1_no_deletion_null_refit:
+      status: EXISTING (v2 control, reused unchanged)
+      source: ds_confirm/controls/null_refit/seed{seed}
+    c2_no_deletion_routine_update:
+      status: NEW
+      base_checkpoint: theta_finetuned
+      deletion: none
+    c3_exact_deletion_only:
+      status: EXISTING (v2 control, reused unchanged)
+      source: ds_confirm/controls/exact_retrain/seed{seed}
+    c4_exact_deletion_plus_routine_update:
+      status: NEW
+      base_checkpoint: theta_exact_retrain
+      deletion: exact retraining, then the identical routine update
+      well_defined: >-
+        Yes in the current pipeline. The exact-retraining control checkpoints
+        exist per seed, so condition 4 is literally condition 3 followed by the
+        same update applied in condition 2. No substitute is required.
+
+  update_definition:
+    objective: causal language-model cross-entropy (the pipeline's own finetune path)
+    parameter_scope: LoRA adapters only, identical to every other method
+    learning_rate: 5.0e-5
+    epochs: 3
+    batch_size: 8
+    gradient_accumulation_steps: 4
+    max_length: 512
+    approximate_optimizer_steps: 18
+    identical_across_conditions: true
+    forget_records_involved: none
+
+  update_data:
+    population_name: update
+    source: the scored-test prefix complement -- test[300:500], 200 records
+    disjoint_from: [forget, retain (scored), retain (Fisher curvature holdout), test (scored prefix)]
+    disjointness_enforced_by: >-
+      Scoring caps the test population at 300 by DETERMINISTIC PREFIX, so
+      test[300:500] is never scored under any configuration in this study. The
+      routine-update driver asserts fingerprint-level disjointness against every
+      scored population and refuses to run if it does not hold.
+    why_these_records: >-
+      ArxivMIA supplies exactly 1000 members and 1000 non-members. The split
+      manifests already consume ALL 1000 members (200 forget + 800 retain), so
+      no unused member records exist. The unscored non-members are the only
+      records in the corpus that are genuinely fresh and fully disjoint from
+      every scored population.
+    declared_confound:
+      what: >-
+        The update records are ArxivMIA NON-MEMBERS. Training on 200 of them
+        moves the model toward the non-member distribution, which can compress
+        the member/non-member loss gap and shift the membership axis for a
+        reason that has nothing to do with deletion.
+      handling: >-
+        The membership axis is reported explicitly for both routine-update
+        conditions, beside the same axis for the conditions without the update,
+        so the shift is visible as a measurement rather than inferred. No
+        deletion claim is made from a membership movement that the update alone
+        can explain. The alternative -- continuing on retain data -- was
+        rejected because it is not disjoint from the scored retain population,
+        which is the negative class of the primary task.
+
+  constraints:
+    utility_must_be_preserved: true
+    utility_threshold: the frozen 1.10 perplexity ratio, unchanged
+    tuning_prohibited: >-
+      The learning rate, epoch count and record count above are frozen by this
+      document. They may NOT be adjusted to make any detector succeed or fail.
+      If the update violates the utility threshold, that is reported as a
+      property of the update and the update is not retuned.
+
+  questions_to_answer:
+    - Does an unrelated update create false deletion signals?
+    - Does it raise detector false-positive floors above the null-refit floor?
+    - Can genuine deletion still be detected when mixed with ordinary maintenance?
+    - Are loss and gradient detectors equally robust to this nuisance change?
+    - Does the method remain useful at realistic low deletion prevalence?
+
+# ------------------------------------------------- setting-selection rules
+#
+# Fixed here so that "best viable" and "destructive" are not chosen while
+# looking at the low-prevalence numbers they will be used to produce.
+
+setting_selection:
+  ga_gd_best_viable:
+    rule: >-
+      Among confirmatory GA+GD settings, the one with the largest RNFF_forget
+      that also satisfies the utility axis on the largest number of seeds; ties
+      broken by the smaller RNFF_retain.
+    resolved_to: ascent_lr=2.6e-5 (ds_confirm_refine)
+    resolved_before: any Component B or C metric was computed
+  ga_gd_destructive:
+    rule: the completed confirmatory GA+GD setting with the largest retain perplexity ratio
+    resolved_to: ascent_lr=5.0e-5 (ds_confirm/transition)
+  scrub_best:
+    rule: >-
+      Among the four confirmatory SCRUB settings, the one passing the most
+      marginal criteria; ties broken by the largest RNFF_forget.
+    resolved_to: determined mechanically by the report generator from ds_confirm/scrub
+
+# ------------------------------------------------------------------ statistics
+
+statistics:
+  unit: seed
+  n_seeds: 3
+  report_per_seed: true
+  lead_with: [per_seed_values, mean, sd, paired_within_seed_differences]
+  p_values: secondary
+  note: >-
+    At n=3 distributional assumptions cannot be validated and Wilcoxon
+    signed-rank cannot reach p<0.05. Per-seed values, means, across-seed SDs and
+    paired within-seed differences are the evidence. n=3 does not provide
+    population-level statistical certainty and no claim in this study rests on
+    it doing so.
+  bootstrap:
+    n_resamples: 1000
+    confidence: 0.95
+    unit: sample
+    scope: within-run precision only
+    prohibited_use: as a substitute for across-seed replication
+
+# ---------------------------------------------------- failed and collapsed runs
+
+run_handling:
+  failed_run_definition: >-
+    A run whose collapse guard tripped, which did not complete its configured
+    steps for any reason, or which produced non-finite losses.
+  policy:
+    included_in_all_tables: true
+    classified_as: failed_run
+    counted_toward_capability_claims: false
+    collapse_count_reported_separately: true
+  incomplete_run_definition: a run whose artifacts are missing or partial
+  incomplete_policy: >-
+    Listed in the failure log with what is missing. Never silently absent, and
+    never imputed.
+  unevaluable_criterion_policy: >-
+    A criterion that could not be measured is NOT satisfied. It renders the
+    setting inconclusive rather than passing.
+
+# ------------------------------------------------------------- threat model
+
+threat_model:
+  categories:
+    authorized_audit:
+      who: model owner, regulator, authorised verifier
+      access: both pre- and post-deletion checkpoints, per-example gradients
+      applies_to: every two-checkpoint and gradient detector in this study
+    insider_or_checkpoint_compromise:
+      who: a party who has obtained a checkpoint they were not meant to hold
+      access: as above, contingent on the compromise
+      applies_to: the same detectors, under an explicitly stated precondition
+    ordinary_black_box_user:
+      who: a user of the released model
+      access: the released checkpoint's outputs only
+      applies_to: loss_unlearned alone, and only in a degraded form
+  framing_rule: >-
+    A two-checkpoint result is framed primarily as an AUDIT CAPABILITY. It is
+    described as a privacy attack only where a realistic adversary can obtain
+    both checkpoints, and that precondition is stated in the same sentence.
+    Deletion-history detection is not automatically a privacy harm and is not
+    presented as one.
+
+# ------------------------------------------------------------------- outputs
+
+outputs:
+  root: fllm_audit
+  directories:
+    preregistration: fllm_audit/preregistration
+    smoke: fllm_audit/smoke
+    npo: fllm_audit/npo
+    routine_update: fllm_audit/routine_update
+    rescore: fllm_audit/rescore
+    benchmark: fllm_audit/benchmark
+    lowprev: fllm_audit/lowprev
+    reports: fllm_audit/reports
+    figures: fllm_audit/figures
+    logs: fllm_audit/logs
+  formats: [strict JSON, CSV, Markdown, vector PDF]
+  json_strictness: >-
+    Report JSON is STRICT: a non-finite value is written as null and means "not
+    computed". Per-sample score files keep the existing schema, which permits
+    -Infinity as a meaningful ranking position.
+  immutable:
+    - ds_results
+    - ds_sweep
+    - ds_confirm
+    - ds_confirm_refine
+    - configs/preregistration_v2.yaml
+    - configs/orientations.yaml
+  rescore_policy: >-
+    The confirmatory GA+GD settings were scored with FUMA and Fisher-SIF
+    disabled. They are re-scored -- scoring only, from the existing unlearned
+    checkpoints, with no retraining -- into fllm_audit/rescore so that
+    every row of the central detector table carries all 13 score columns at a
+    uniform 600 scored retain samples. The original files are not modified.
+
+# ----------------------------------------------------- software and versioning
+
+software:
+  python_env: python3
+  gpu: NVIDIA RTX A5000, 24 GB
+  record_per_run:
+    - git revision and dirty state
+    - effective configuration and its SHA-256 hash
+    - package versions (torch, transformers, peft, datasets, numpy, scipy, scikit-learn)
+    - this preregistration's path and SHA-256 hash
+  provenance_source: deletion_signals.reproducibility.run_provenance
+
+# -------------------------------------------------- declared conflicts of interest
+#
+# Choices in this document that were made with knowledge of earlier results.
+# Recording them is what keeps this a preregistration rather than a description.
+
+declared_conflicts:
+
+  - item: the NPO learning-rate grid is anchored on the measured GA+GD transition
+    disclosure: >-
+      The GA+GD confirmatory sweep was already complete when this grid was
+      chosen, and its transition region (2.6e-5 to 2.9e-5) informed the grid's
+      centre. The anchor is a GRADIENT IDENTITY -- NPO and GA take the same
+      clipped first step at equal learning rate -- not an NPO outcome; no NPO
+      number existed. The grid was not adjusted afterwards, and the upward
+      extension to 1.0e-4 follows from the monotone decay of NPO's weight, which
+      is a property of the objective.
+
+  - item: ga_gd_best_viable and ga_gd_destructive are resolved to specific settings
+    disclosure: >-
+      Both were resolved from the completed confirmatory audit before any
+      Component B or C metric was computed. The RULES are stated above so a
+      reader can check that each names the setting the rule selects, rather
+      than the setting that produces a convenient low-prevalence number.
+
+  - item: the routine-update data source
+    disclosure: >-
+      Chosen after establishing that ArxivMIA's member pool is fully consumed by
+      the existing manifests, which eliminated the preferred option of fresh
+      member records. The confound this forces is declared above rather than
+      resolved, because it cannot be resolved within this dataset.
+
+  - item: every threshold restated from v2
+    disclosure: >-
+      These were frozen before the confirmatory runs that produced the evidence
+      cited in this document, and are carried over unchanged and unloosened. No
+      threshold in this file was set after seeing a result it will judge.

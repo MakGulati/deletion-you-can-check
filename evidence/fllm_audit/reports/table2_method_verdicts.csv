@@ -1,0 +1,13 @@
+method,setting,n_seeds,membership_pass,rnff_pass,utility_pass,conjunction_pass,collapse_count,failed_run_count,classification,seeds_agree
+exact_retrain,exact_retrain,3,3,3,3,3,0,0,successful_selective_deletion,True
+ga_gd,ascent_lr=2.6e-05,3,0,1,2,0,0,0,inconclusive,False
+ga_gd,ascent_lr=5e-05,3,3,0,0,0,3,3,failed_run,True
+npo,"lr=0.0001, beta=0.1",3,0,0,0,0,0,0,global_destruction,True
+npo,"lr=1e-05, beta=0.1",3,0,0,0,0,0,0,global_destruction,True
+npo,"lr=2.8e-05, beta=0.1",3,0,0,0,0,0,0,global_destruction,True
+npo,"lr=2e-05, beta=0.1",3,0,0,0,0,0,0,global_destruction,True
+npo,"lr=5e-05, beta=0.1",3,0,0,0,0,0,0,global_destruction,True
+scrub,"forget_kl=1, lr=1e-05",3,0,0,0,0,0,0,global_destruction,True
+scrub,"forget_kl=1, lr=5e-05",3,0,0,0,0,0,0,global_destruction,True
+scrub,"forget_kl=4, lr=1e-05",3,1,0,0,0,0,0,global_destruction,True
+scrub,"forget_kl=4, lr=5e-05",3,2,0,0,0,0,0,global_destruction,True

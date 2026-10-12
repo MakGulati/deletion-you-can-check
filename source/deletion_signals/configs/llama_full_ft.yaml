@@ -1,0 +1,93 @@
+# Full fine-tuning variant: Llama-3.2-1B, no quantisation, no adapters.
+#
+# Two scores behave differently here and the differences are deliberate:
+#
+#  * FUMA is NOT APPLICABLE. There are no LoRA parameters, so its numerator is
+#    undefined. Rows record fuma_lora_ratio: null with the reason attached --
+#    never a zero, which would rank as a real measurement. A defensible
+#    updated-vs-non-updated analogue exists but is exposed under a different
+#    name (scores.updated_parameter_ratio) rather than being labelled FUMA.
+#
+#  * The gradient-calibration reference MAY be the pretrained base, because the
+#    parameter spaces now match. grad_ratio_vs_base and
+#    grad_ratio_vs_finetuned answer different questions -- the first includes
+#    the effect of fine-tuning, the second isolates unlearning -- so which one
+#    a row used is recorded per row in grad_reference_model.
+
+training_mode: full
+device: cuda
+seed: 42
+
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  load_in_4bit: false
+  torch_dtype: bfloat16
+
+data:
+  name: "swj0419/WikiMIA"
+  split: WikiMIA_length32
+  train_samples: 2000
+  test_samples: 1000
+  forget_ratio: 0.2
+  max_length: 512
+
+training:
+  epochs: 3
+  batch_size: 2
+  gradient_accumulation_steps: 8
+  learning_rate: 1.0e-5
+  warmup_steps: 50
+  max_grad_norm: 1.0
+  gradient_checkpointing: true
+
+unlearning:
+  ga_gd:
+    steps: 100
+    ascent_lr: 5.0e-7
+    descent_lr: 1.0e-6
+    batch_size: 2
+  scrub:
+    steps: 100
+    learning_rate: 5.0e-7
+    batch_size: 2
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    # Switch to pretrained_base to measure against the never-fine-tuned model
+    # instead; both are computable here.
+    reference: finetuned_pre_unlearning
+  fuma:
+    # Not applicable without adapters; rows carry the reason.
+    enabled: true
+    denominator_source: none
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    enabled: false
+    # 'fisher' is not usable at this scale: G is n x d with d the full
+    # parameter count. The config validator rejects that combination.
+    method: gradient
+    damping: 1.0e-3
+    beta: 1.0
+
+evaluation:
+  seeds: [42, 43, 44]
+  methods: [ga_gd, scrub]
+
+paths:
+  checkpoints: "./ds_checkpoints_full"
+  results: "./ds_results_full"

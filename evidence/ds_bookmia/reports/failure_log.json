@@ -1,0 +1,306 @@
+{
+  "failed_runs": [
+    {
+      "seed": 43,
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "classification": "failed_run",
+      "criteria": {
+        "membership_removed": true,
+        "selective_forgetting": false,
+        "utility_preserved": false,
+        "collapse_guard_not_triggered": false
+      },
+      "conjunction": false,
+      "stop_reason": "collapse_guard",
+      "unevaluable_criteria": [],
+      "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+    },
+    {
+      "seed": 44,
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "classification": "failed_run",
+      "criteria": {
+        "membership_removed": false,
+        "selective_forgetting": false,
+        "utility_preserved": false,
+        "collapse_guard_not_triggered": false
+      },
+      "conjunction": false,
+      "stop_reason": "collapse_guard",
+      "unevaluable_criteria": [],
+      "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+    }
+  ],
+  "n_failed_runs": 2,
+  "runs_with_null_score_columns": [
+    {
+      "path": "ds_bookmia/controls/exact_retrain/seed42/per_sample_scores.json",
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "seed": 42,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/controls/exact_retrain/seed43/per_sample_scores.json",
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "seed": 43,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/controls/exact_retrain/seed44/per_sample_scores.json",
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "seed": 44,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/routine_update/exact_retrain_routine_update/seed42/per_sample_scores.json",
+      "method": "exact_retrain_routine_update",
+      "setting": "exact_retrain_routine_update",
+      "seed": 42,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/routine_update/exact_retrain_routine_update/seed43/per_sample_scores.json",
+      "method": "exact_retrain_routine_update",
+      "setting": "exact_retrain_routine_update",
+      "seed": 43,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/routine_update/exact_retrain_routine_update/seed44/per_sample_scores.json",
+      "method": "exact_retrain_routine_update",
+      "setting": "exact_retrain_routine_update",
+      "seed": 44,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/ga_gd/ascent_2.6e-5/seed42/ga_gd/per_sample_scores.json",
+      "method": "ga_gd",
+      "setting": "ascent_lr=2.6e-05",
+      "seed": 42,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/ga_gd/ascent_2.6e-5/seed43/ga_gd/per_sample_scores.json",
+      "method": "ga_gd",
+      "setting": "ascent_lr=2.6e-05",
+      "seed": 43,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/ga_gd/ascent_2.6e-5/seed44/ga_gd/per_sample_scores.json",
+      "method": "ga_gd",
+      "setting": "ascent_lr=2.6e-05",
+      "seed": 44,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/ga_gd/ascent_5.0e-5/seed42/ga_gd/per_sample_scores.json",
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "seed": 42,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/ga_gd/ascent_5.0e-5/seed43/ga_gd/per_sample_scores.json",
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "seed": 43,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/ga_gd/ascent_5.0e-5/seed44/ga_gd/per_sample_scores.json",
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "seed": 44,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/npo/seed42/npo/per_sample_scores.json",
+      "method": "npo",
+      "setting": "lr=0.0001, beta=0.1",
+      "seed": 42,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/npo/seed43/npo/per_sample_scores.json",
+      "method": "npo",
+      "setting": "lr=0.0001, beta=0.1",
+      "seed": 43,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/npo/seed44/npo/per_sample_scores.json",
+      "method": "npo",
+      "setting": "lr=0.0001, beta=0.1",
+      "seed": 44,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/controls/null_refit/seed42/per_sample_scores.json",
+      "method": "null_refit",
+      "setting": "null_refit",
+      "seed": 42,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/controls/null_refit/seed43/per_sample_scores.json",
+      "method": "null_refit",
+      "setting": "null_refit",
+      "seed": 43,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/controls/null_refit/seed44/per_sample_scores.json",
+      "method": "null_refit",
+      "setting": "null_refit",
+      "seed": 44,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/routine_update/routine_update/seed42/per_sample_scores.json",
+      "method": "routine_update",
+      "setting": "routine_update",
+      "seed": 42,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/routine_update/routine_update/seed43/per_sample_scores.json",
+      "method": "routine_update",
+      "setting": "routine_update",
+      "seed": 43,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/routine_update/routine_update/seed44/per_sample_scores.json",
+      "method": "routine_update",
+      "setting": "routine_update",
+      "seed": 44,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/scrub/seed42/scrub/per_sample_scores.json",
+      "method": "scrub",
+      "setting": "forget_kl=0.1, lr=5e-05",
+      "seed": 42,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/scrub/seed43/scrub/per_sample_scores.json",
+      "method": "scrub",
+      "setting": "forget_kl=0.1, lr=5e-05",
+      "seed": 43,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    },
+    {
+      "path": "ds_bookmia/scrub/seed44/scrub/per_sample_scores.json",
+      "method": "scrub",
+      "setting": "forget_kl=0.1, lr=5e-05",
+      "seed": 44,
+      "missing": [
+        "combined_log_score",
+        "fuma_lora_ratio",
+        "sif"
+      ]
+    }
+  ],
+  "populations_not_disjoint": [],
+  "lowprev_input_failures": [],
+  "policy": "every failed and collapsed run appears in the tables above with its classification; nothing is filtered from a summary for having failed"
+}

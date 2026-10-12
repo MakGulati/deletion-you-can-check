@@ -1,0 +1,5815 @@
+{
+  "metadata": {
+    "timestamp": "2026-08-08T19:58:01.363637+00:00",
+    "preregistration": "evidence/deletion_signals/configs/preregistration_v2.yaml",
+    "preregistration_schema": 2,
+    "inputs": [
+      "ds_confirm/controls/exact_retrain/seed42/per_sample_scores.json",
+      "ds_confirm/controls/exact_retrain/seed43/per_sample_scores.json",
+      "ds_confirm/controls/exact_retrain/seed44/per_sample_scores.json",
+      "ds_confirm/controls/null_refit/seed42/per_sample_scores.json",
+      "ds_confirm/controls/null_refit/seed43/per_sample_scores.json",
+      "ds_confirm/controls/null_refit/seed44/per_sample_scores.json"
+    ],
+    "n_bootstrap": 1000,
+    "confidence": 0.95,
+    "replication_unit": "seed",
+    "primary_detector": "loss_ratio_vs_finetuned",
+    "primary_task": "forget_vs_retain",
+    "retrain_control_seeds": [
+      42,
+      43,
+      44
+    ],
+    "null_refit_floors": {
+      "alignment_cos_sq": {
+        "mean": 0.5232916666666666,
+        "sd": 0.02563691592866296,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.5482583333333333,
+          "43": 0.4970333333333333,
+          "44": 0.5245833333333334
+        }
+      },
+      "combined_log_score": {
+        "mean": 0.515625,
+        "sd": 0.015610155170415337,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.532225,
+          "43": 0.5012416666666666,
+          "44": 0.5134083333333334
+        }
+      },
+      "fuma_lora_ratio": {
+        "mean": 0.5052277777777777,
+        "sd": 0.01993312836665335,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.49175,
+          "43": 0.4958083333333333,
+          "44": 0.528125
+        }
+      },
+      "grad_norm_sq": {
+        "mean": 0.483825,
+        "sd": 0.02302775650045928,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.4651833333333334,
+          "43": 0.5095666666666667,
+          "44": 0.476725
+        }
+      },
+      "grad_ratio": {
+        "mean": 0.5099027777777777,
+        "sd": 0.02065412309748169,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.4906833333333333,
+          "43": 0.5317416666666667,
+          "44": 0.5072833333333333
+        }
+      },
+      "log_grad_ratio": {
+        "mean": 0.5099027777777777,
+        "sd": 0.02065412309748169,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.4906833333333333,
+          "43": 0.5317416666666667,
+          "44": 0.5072833333333333
+        }
+      },
+      "loss_delta": {
+        "mean": 0.5110777777777779,
+        "sd": 0.016614092774018832,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.4919166666666666,
+          "43": 0.521475,
+          "44": 0.5198416666666666
+        }
+      },
+      "loss_delta_vs_finetuned": {
+        "mean": 0.49714166666666665,
+        "sd": 0.02337244341336845,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.474075,
+          "43": 0.49654166666666666,
+          "44": 0.5208083333333333
+        }
+      },
+      "loss_ratio": {
+        "mean": 0.5016138888888889,
+        "sd": 0.014470835932750878,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.48680833333333323,
+          "43": 0.515725,
+          "44": 0.5023083333333334
+        }
+      },
+      "loss_ratio_vs_finetuned": {
+        "mean": 0.4947472222222222,
+        "sd": 0.024936372270982755,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.46872499999999995,
+          "43": 0.4970833333333333,
+          "44": 0.5184333333333333
+        }
+      },
+      "loss_unlearned": {
+        "mean": 0.49805833333333344,
+        "sd": 0.017811538473073516,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.501625,
+          "43": 0.5138166666666667,
+          "44": 0.47873333333333334
+        }
+      },
+      "raw_cosine": {
+        "mean": 0.4766805555555555,
+        "sd": 0.025619226088435438,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.4517166666666666,
+          "43": 0.5029083333333333,
+          "44": 0.4754166666666667
+        }
+      },
+      "sif": {
+        "mean": 0.4838861111111112,
+        "sd": 0.023513158746949786,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.4655666666666667,
+          "43": 0.5104000000000001,
+          "44": 0.4756916666666666
+        }
+      }
+    },
+    "control_validity": {
+      "evaluable": true,
+      "null_refit_rnff_forget": {
+        "mean": 0.0010088044151707846,
+        "sd": 0.014120850837175639,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": -0.00440733385255048,
+          "43": 0.017035939321992294,
+          "44": -0.009602192223929459
+        }
+      },
+      "null_refit_rnff_retain": {
+        "mean": 0.004728159807442427,
+        "sd": 0.015995694115090994,
+        "n_seeds": 3,
+        "per_seed": {
+          "42": 0.010885885081516241,
+          "43": 0.016729882199187758,
+          "44": -0.01343128785837672
+        }
+      },
+      "denominator_contaminated": false,
+      "interpretation": "the null refit, which deleted nothing, shows RNFF_forget near zero, so the denominator is attributable to deletion rather than to training variance."
+    },
+    "thresholds": {
+      "membership_equivalence_region": [
+        0.45,
+        0.55
+      ],
+      "max_perplexity_ratio": 1.1,
+      "rnff_min_forget": 0.5,
+      "rnff_max_retain": 0.2,
+      "deletion_min_auc": 0.7
+    },
+    "provenance": {
+      "git_commit": "artifact-snapshot",
+      "python": "3.12.13",
+      "python_executable": "python3",
+      "platform": "Linux-6.1.0-52-amd64-x86_64-with-glibc2.36",
+      "argv": [
+        "evidence/deletion_signals/audit.py",
+        "--inputs",
+        "ds_confirm/controls/*/seed*/per_sample_scores.json",
+        "--output",
+        "ds_confirm/audit_block_a",
+        "--quiet"
+      ],
+      "torch_version": "2.11.0+cu128",
+      "cuda_available": true,
+      "gpu": "NVIDIA RTX A5000",
+      "transformers_version": "5.14.1",
+      "peft_version": "0.20.0",
+      "datasets_version": "5.0.1",
+      "numpy_version": "2.5.1",
+      "scipy_version": "1.18.0",
+      "sklearn_version": "1.9.0"
+    }
+  },
+  "runs": [
+    {
+      "path": "ds_confirm/controls/exact_retrain/seed42/per_sample_scores.json",
+      "seed": 42,
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "is_control": true,
+      "counts": {
+        "forget": 200,
+        "retain": 600,
+        "test": 300
+      },
+      "mean_token_nll": {
+        "forget": {
+          "post": 2.4382048302120247,
+          "finetuned": 2.0107796795002737
+        },
+        "retain": {
+          "post": 2.054162128944294,
+          "finetuned": 2.0203099566228198
+        },
+        "test": {
+          "post": 2.4005476412456357,
+          "finetuned": 2.4084247746368947
+        }
+      },
+      "perplexity_ratio": {
+        "forget": 1.533304408629531,
+        "retain": 1.0344316777913103,
+        "test": 0.992153809922464
+      },
+      "rnff": {
+        "forget": 1.0,
+        "retain": 0.07920023486007682,
+        "test": -0.018429269728610986
+      },
+      "rnff_denominator": 0.427425150711751,
+      "auc": {
+        "forget_vs_retain": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7615666666666667
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9996333333333333
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.999425
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9990166666666667,
+            "ci_lower": 0.9973327083333332,
+            "ci_upper": 0.9999666666666667,
+            "n_positive": 200,
+            "n_negative": 600,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.711325
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9933583333333333
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9933583333333333
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.583
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.998875
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.998875
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7121
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          }
+        },
+        "forget_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5437166666666666
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4758833333333334,
+            "ci_lower": 0.42261541666666663,
+            "ci_upper": 0.52715125,
+            "n_positive": 200,
+            "n_negative": 300,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.47630000000000006
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5304833333333334
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9872
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9872
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4562833333333334
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.53085
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          }
+        },
+        "member_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6532541666666667
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.8808791666666667
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.8806999999999999
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.19931666666666664
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.20056041666666669
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.637525
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.30010000000000003
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.30010000000000003
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3936874999999999
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7191208333333334
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7608458333333333
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6374833333333333
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7189208333333332
+          }
+        },
+        "retain_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7189111111111112
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9998
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9997
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.2657555555555555
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.2674138888888889
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6935277777777777
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.39586666666666664
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.39586666666666664
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.37282222222222217
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6254944444444445
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6811277777777778
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6935944444444444
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6252277777777778
+          }
+        }
+      },
+      "unlearning": {
+        "steps_configured": null,
+        "steps_taken": null,
+        "stop_reason": null,
+        "final_forget_loss": null,
+        "final_retain_loss": null,
+        "trajectory_path": null,
+        "control": "exact_retrain",
+        "training_seed": 42,
+        "n_training_samples": 800
+      },
+      "data_quality": {
+        "n_rows": 1100,
+        "counts": {
+          "forget": 200,
+          "retain": 600,
+          "test": 300
+        },
+        "population_overlaps": {
+          "forget&retain": 0,
+          "forget&test": 0,
+          "retain&test": 0
+        },
+        "populations_disjoint": true,
+        "null_counts": {},
+        "nonfinite_counts": {},
+        "truncated": 4,
+        "nonfinite_loss_flagged": 0,
+        "zero_grad_norm_flagged": 0
+      },
+      "axes": {
+        "membership_removed": {
+          "met": true,
+          "score": "loss_ratio",
+          "task": "forget_vs_unseen",
+          "auc": 0.4758833333333334,
+          "equivalence_region": [
+            0.45,
+            0.55
+          ]
+        },
+        "utility_preserved": {
+          "met": true,
+          "perplexity_ratio": {
+            "retain": 1.0344316777913103,
+            "test": 0.992153809922464
+          },
+          "max_allowed": 1.1,
+          "evaluable": true
+        },
+        "selective_forgetting": {
+          "met": true,
+          "rnff_forget": 1.0,
+          "rnff_retain": 0.07920023486007682,
+          "min_forget": 0.5,
+          "max_retain": 0.2,
+          "denominator": 0.427425150711751,
+          "evaluable": true
+        },
+        "deletion_detectable": {
+          "detector": "loss_ratio_vs_finetuned",
+          "task": "forget_vs_retain",
+          "auc": 0.9990166666666667,
+          "ci_lower": 0.9973327083333332,
+          "min_auc": 0.7,
+          "ci_lower_above": 0.5,
+          "met": true,
+          "null_refit_floor": 0.5446199667641878,
+          "clears_thresholds": true,
+          "clears_null_floor": true
+        },
+        "_verdict": {
+          "classification": "persistent_fingerprint",
+          "statement": "Successful approximate unlearning removed conventional membership evidence while leaving a checkpoint-based deletion-set fingerprint.",
+          "axes_met": {
+            "membership_removed": true,
+            "utility_preserved": true,
+            "selective_forgetting": true,
+            "deletion_detectable": true
+          }
+        }
+      }
+    },
+    {
+      "path": "ds_confirm/controls/exact_retrain/seed43/per_sample_scores.json",
+      "seed": 43,
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "is_control": true,
+      "counts": {
+        "forget": 200,
+        "retain": 600,
+        "test": 300
+      },
+      "mean_token_nll": {
+        "forget": {
+          "post": 2.4312953005666866,
+          "finetuned": 2.0162717939039614
+        },
+        "retain": {
+          "post": 2.0502029937245445,
+          "finetuned": 2.0082047852987945
+        },
+        "test": {
+          "post": 2.4410310533403976,
+          "finetuned": 2.4607789785971463
+        }
+      },
+      "perplexity_ratio": {
+        "forget": 1.5144063389126867,
+        "retain": 1.0428926103295433,
+        "test": 0.9804457877800146
+      },
+      "rnff": {
+        "forget": 1.0,
+        "retain": 0.10119477029979512,
+        "test": -0.04758266686035489
+      },
+      "rnff_denominator": 0.41502350666272525,
+      "auc": {
+        "forget_vs_retain": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7532083333333334
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9988416666666667
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9996166666666667
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9993916666666666,
+            "ci_lower": 0.9987329166666666,
+            "ci_upper": 0.9998335416666667,
+            "n_positive": 200,
+            "n_negative": 600,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9998083333333334
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7321166666666665
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9920166666666667
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9920166666666667
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5729
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9983333333333334
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9983333333333334
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7336333333333334
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9998750000000001
+          }
+        },
+        "forget_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5158333333333334
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4739166666666667,
+            "ci_lower": 0.42010875000000003,
+            "ci_upper": 0.5255383333333334,
+            "n_positive": 200,
+            "n_negative": 300,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.47233333333333327
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5400499999999999
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9931833333333333
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9931833333333333
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4272
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5405666666666666
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          }
+        },
+        "member_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6787541666666667
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.8808374999999999
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.8818583333333332
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.15106666666666668
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.1448375
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6415
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.24629583333333332
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.24629583333333332
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3763708333333333
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.787175
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.8230208333333333
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6424041666666667
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7805333333333333
+          }
+        },
+        "retain_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7436166666666667
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9990888888888888
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9999222222222222
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.2014222222222222
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.1931166666666667
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7020166666666665
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3261222222222222
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3261222222222222
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3594277777777778
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7162333333333333
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7640277777777778
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7033944444444444
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7073777777777778
+          }
+        }
+      },
+      "unlearning": {
+        "steps_configured": null,
+        "steps_taken": null,
+        "stop_reason": null,
+        "final_forget_loss": null,
+        "final_retain_loss": null,
+        "trajectory_path": null,
+        "control": "exact_retrain",
+        "training_seed": 43,
+        "n_training_samples": 800
+      },
+      "data_quality": {
+        "n_rows": 1100,
+        "counts": {
+          "forget": 200,
+          "retain": 600,
+          "test": 300
+        },
+        "population_overlaps": {
+          "forget&retain": 0,
+          "forget&test": 0,
+          "retain&test": 0
+        },
+        "populations_disjoint": true,
+        "null_counts": {},
+        "nonfinite_counts": {},
+        "truncated": 2,
+        "nonfinite_loss_flagged": 0,
+        "zero_grad_norm_flagged": 0
+      },
+      "axes": {
+        "membership_removed": {
+          "met": true,
+          "score": "loss_ratio",
+          "task": "forget_vs_unseen",
+          "auc": 0.4739166666666667,
+          "equivalence_region": [
+            0.45,
+            0.55
+          ]
+        },
+        "utility_preserved": {
+          "met": true,
+          "perplexity_ratio": {
+            "retain": 1.0428926103295433,
+            "test": 0.9804457877800146
+          },
+          "max_allowed": 1.1,
+          "evaluable": true
+        },
+        "selective_forgetting": {
+          "met": true,
+          "rnff_forget": 1.0,
+          "rnff_retain": 0.10119477029979512,
+          "min_forget": 0.5,
+          "max_retain": 0.2,
+          "denominator": 0.41502350666272525,
+          "evaluable": true
+        },
+        "deletion_detectable": {
+          "detector": "loss_ratio_vs_finetuned",
+          "task": "forget_vs_retain",
+          "auc": 0.9993916666666666,
+          "ci_lower": 0.9987329166666666,
+          "min_auc": 0.7,
+          "ci_lower_above": 0.5,
+          "met": true,
+          "null_refit_floor": 0.5446199667641878,
+          "clears_thresholds": true,
+          "clears_null_floor": true
+        },
+        "_verdict": {
+          "classification": "persistent_fingerprint",
+          "statement": "Successful approximate unlearning removed conventional membership evidence while leaving a checkpoint-based deletion-set fingerprint.",
+          "axes_met": {
+            "membership_removed": true,
+            "utility_preserved": true,
+            "selective_forgetting": true,
+            "deletion_detectable": true
+          }
+        }
+      }
+    },
+    {
+      "path": "ds_confirm/controls/exact_retrain/seed44/per_sample_scores.json",
+      "seed": 44,
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "is_control": true,
+      "counts": {
+        "forget": 200,
+        "retain": 600,
+        "test": 300
+      },
+      "mean_token_nll": {
+        "forget": {
+          "post": 2.4122025038567587,
+          "finetuned": 1.9915028884092758
+        },
+        "retain": {
+          "post": 2.066201747606032,
+          "finetuned": 2.0328434583401935
+        },
+        "test": {
+          "post": 2.369981901664874,
+          "finetuned": 2.3760314514543537
+        }
+      },
+      "perplexity_ratio": {
+        "forget": 1.5230267159912987,
+        "retain": 1.0339209156522013,
+        "test": 0.9939687118933045
+      },
+      "rnff": {
+        "forget": 1.0,
+        "retain": 0.07929241682419085,
+        "test": -0.014379736912868353
+      },
+      "rnff_denominator": 0.4206996154474829,
+      "auc": {
+        "forget_vs_retain": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.73095
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9990416666666666
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.999675
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9998083333333334,
+            "ci_lower": 0.9993666666666667,
+            "ci_upper": 1.0,
+            "n_positive": 200,
+            "n_negative": 600,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7272583333333332
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9839166666666668
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9839166666666668
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6446083333333332
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9986499999999999
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9986083333333333
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7255833333333335
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.99995
+          }
+        },
+        "forget_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5344833333333333
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.47078333333333333,
+            "ci_lower": 0.4199725,
+            "ci_upper": 0.5211504166666666,
+            "n_positive": 200,
+            "n_negative": 300,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.47540000000000004
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5411
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.98345
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.98345
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5006999999999999
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5406333333333333
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 1.0
+          }
+        },
+        "member_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6398208333333333
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.8816
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.8808666666666667
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.21617083333333334
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.21886250000000002
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6337166666666667
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.30692083333333336
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.30692083333333336
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3969083333333333
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6982875
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7358375
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6325958333333332
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6869458333333334
+          }
+        },
+        "retain_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6979222222222222
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9990611111111111
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9996222222222222
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.28822777777777775
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.29181666666666667
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6919888888888889
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.40371111111111113
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.40371111111111113
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.36231111111111114
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5977166666666667
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6477833333333334
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6903388888888888
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5825944444444444
+          }
+        }
+      },
+      "unlearning": {
+        "steps_configured": null,
+        "steps_taken": null,
+        "stop_reason": null,
+        "final_forget_loss": null,
+        "final_retain_loss": null,
+        "trajectory_path": null,
+        "control": "exact_retrain",
+        "training_seed": 44,
+        "n_training_samples": 800
+      },
+      "data_quality": {
+        "n_rows": 1100,
+        "counts": {
+          "forget": 200,
+          "retain": 600,
+          "test": 300
+        },
+        "population_overlaps": {
+          "forget&retain": 0,
+          "forget&test": 0,
+          "retain&test": 0
+        },
+        "populations_disjoint": true,
+        "null_counts": {},
+        "nonfinite_counts": {},
+        "truncated": 5,
+        "nonfinite_loss_flagged": 0,
+        "zero_grad_norm_flagged": 0
+      },
+      "axes": {
+        "membership_removed": {
+          "met": true,
+          "score": "loss_ratio",
+          "task": "forget_vs_unseen",
+          "auc": 0.47078333333333333,
+          "equivalence_region": [
+            0.45,
+            0.55
+          ]
+        },
+        "utility_preserved": {
+          "met": true,
+          "perplexity_ratio": {
+            "retain": 1.0339209156522013,
+            "test": 0.9939687118933045
+          },
+          "max_allowed": 1.1,
+          "evaluable": true
+        },
+        "selective_forgetting": {
+          "met": true,
+          "rnff_forget": 1.0,
+          "rnff_retain": 0.07929241682419085,
+          "min_forget": 0.5,
+          "max_retain": 0.2,
+          "denominator": 0.4206996154474829,
+          "evaluable": true
+        },
+        "deletion_detectable": {
+          "detector": "loss_ratio_vs_finetuned",
+          "task": "forget_vs_retain",
+          "auc": 0.9998083333333334,
+          "ci_lower": 0.9993666666666667,
+          "min_auc": 0.7,
+          "ci_lower_above": 0.5,
+          "met": true,
+          "null_refit_floor": 0.5446199667641878,
+          "clears_thresholds": true,
+          "clears_null_floor": true
+        },
+        "_verdict": {
+          "classification": "persistent_fingerprint",
+          "statement": "Successful approximate unlearning removed conventional membership evidence while leaving a checkpoint-based deletion-set fingerprint.",
+          "axes_met": {
+            "membership_removed": true,
+            "utility_preserved": true,
+            "selective_forgetting": true,
+            "deletion_detectable": true
+          }
+        }
+      }
+    },
+    {
+      "path": "ds_confirm/controls/null_refit/seed42/per_sample_scores.json",
+      "seed": 42,
+      "method": "null_refit",
+      "setting": "null_refit",
+      "is_control": true,
+      "counts": {
+        "forget": 200,
+        "retain": 600,
+        "test": 300
+      },
+      "mean_token_nll": {
+        "forget": {
+          "post": 2.0088958741641103,
+          "finetuned": 2.0107796795002737
+        },
+        "retain": {
+          "post": 2.0249628576944176,
+          "finetuned": 2.0203099566228198
+        },
+        "test": {
+          "post": 2.407784213585713,
+          "finetuned": 2.4084247746368947
+        }
+      },
+      "perplexity_ratio": {
+        "forget": 0.9981179679114497,
+        "retain": 1.0046637426241576,
+        "test": 0.9993596440642497
+      },
+      "rnff": {
+        "forget": -0.00440733385255048,
+        "retain": 0.010885885081516241,
+        "test": -0.0014986508166752546
+      },
+      "rnff_denominator": 0.427425150711751,
+      "auc": {
+        "forget_vs_retain": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.501625
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.48680833333333323
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4919166666666666
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.46872499999999995,
+            "ci_lower": 0.4221816666666667,
+            "ci_upper": 0.5141768750000001,
+            "n_positive": 200,
+            "n_negative": 600,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.474075
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4651833333333334
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4906833333333333
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4906833333333333
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.49175
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4517166666666666
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5482583333333333
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4655666666666667
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.532225
+          }
+        },
+        "forget_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.2642666666666667
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.0001833333333333326,
+            "ci_lower": 0.0,
+            "ci_upper": 0.0006000000000000005,
+            "n_positive": 200,
+            "n_negative": 300,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.000249999999999998
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.49894999999999995
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5026166666666667
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.26426666666666665
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4552
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4552
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.35403333333333337
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 8.333333333333305e-05
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.63095
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.26393333333333335
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4628833333333333
+          }
+        },
+        "member_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7379291666666667
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9997666666666667
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9996875
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4698625
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4707708333333333
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7218208333333334
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5385958333333334
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5385958333333334
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3576041666666666
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.0001374999999999997
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5884416666666666
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7223708333333334
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4396875
+          }
+        },
+        "retain_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7386611111111112
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.99975
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9996666666666666
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4594666666666667
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.46190000000000003
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7171833333333333
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5365277777777777
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5365277777777777
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3587944444444444
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.00015555555555555526
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5742722222222222
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7178055555555556
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4319555555555555
+          }
+        }
+      },
+      "unlearning": {
+        "steps_configured": null,
+        "steps_taken": null,
+        "stop_reason": null,
+        "final_forget_loss": null,
+        "final_retain_loss": null,
+        "trajectory_path": null,
+        "control": "null_refit",
+        "training_seed": 1042,
+        "n_training_samples": 1000
+      },
+      "data_quality": {
+        "n_rows": 1100,
+        "counts": {
+          "forget": 200,
+          "retain": 600,
+          "test": 300
+        },
+        "population_overlaps": {
+          "forget&retain": 0,
+          "forget&test": 0,
+          "retain&test": 0
+        },
+        "populations_disjoint": true,
+        "null_counts": {},
+        "nonfinite_counts": {},
+        "truncated": 4,
+        "nonfinite_loss_flagged": 0,
+        "zero_grad_norm_flagged": 0
+      },
+      "axes": {
+        "membership_removed": {
+          "met": false,
+          "score": "loss_ratio",
+          "task": "forget_vs_unseen",
+          "auc": 0.0001833333333333326,
+          "equivalence_region": [
+            0.45,
+            0.55
+          ]
+        },
+        "utility_preserved": {
+          "met": true,
+          "perplexity_ratio": {
+            "retain": 1.0046637426241576,
+            "test": 0.9993596440642497
+          },
+          "max_allowed": 1.1,
+          "evaluable": true
+        },
+        "selective_forgetting": {
+          "met": false,
+          "rnff_forget": -0.00440733385255048,
+          "rnff_retain": 0.010885885081516241,
+          "min_forget": 0.5,
+          "max_retain": 0.2,
+          "denominator": 0.427425150711751,
+          "evaluable": true
+        },
+        "deletion_detectable": {
+          "detector": "loss_ratio_vs_finetuned",
+          "task": "forget_vs_retain",
+          "auc": 0.46872499999999995,
+          "ci_lower": 0.4221816666666667,
+          "min_auc": 0.7,
+          "ci_lower_above": 0.5,
+          "met": false,
+          "null_refit_floor": 0.5446199667641878,
+          "clears_thresholds": false,
+          "clears_null_floor": false
+        },
+        "_verdict": {
+          "classification": "incomplete_forgetting",
+          "statement": "The model remains useful, but forgotten records still look like training members. Nothing was deleted in any auditable sense.",
+          "axes_met": {
+            "membership_removed": false,
+            "utility_preserved": true,
+            "selective_forgetting": false,
+            "deletion_detectable": false
+          }
+        }
+      }
+    },
+    {
+      "path": "ds_confirm/controls/null_refit/seed43/per_sample_scores.json",
+      "seed": 43,
+      "method": "null_refit",
+      "setting": "null_refit",
+      "is_control": true,
+      "counts": {
+        "forget": 200,
+        "retain": 600,
+        "test": 300
+      },
+      "mean_token_nll": {
+        "forget": {
+          "post": 2.023342109180668,
+          "finetuned": 2.0162717939039614
+        },
+        "retain": {
+          "post": 2.0151480796751557,
+          "finetuned": 2.0082047852987945
+        },
+        "test": {
+          "post": 2.4594274013456574,
+          "finetuned": 2.4607789785971463
+        }
+      },
+      "perplexity_ratio": {
+        "forget": 1.007095368966786,
+        "retain": 1.0069674549303362,
+        "test": 0.9986493357176821
+      },
+      "rnff": {
+        "forget": 0.017035939321992294,
+        "retain": 0.016729882199187758,
+        "test": -0.003256628190429975
+      },
+      "rnff_denominator": 0.41502350666272525,
+      "auc": {
+        "forget_vs_retain": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5138166666666667
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.515725
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.521475
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4970833333333333,
+            "ci_lower": 0.4518329166666667,
+            "ci_upper": 0.5473027083333334,
+            "n_positive": 200,
+            "n_negative": 600,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.49654166666666666
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5095666666666667
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5317416666666667
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5317416666666667
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4958083333333333
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5029083333333333
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4970333333333333
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5104000000000001
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5012416666666666
+          }
+        },
+        "forget_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.23775000000000002
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.0006166666666666621,
+            "ci_lower": 0.0,
+            "ci_upper": 0.0019508333333333337,
+            "n_positive": 200,
+            "n_negative": 300,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 6.666666666666653e-05
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5319666666666667
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5333166666666667
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.26625
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5733666666666667
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5733666666666667
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3469666666666667
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 9.999999999999897e-05
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5762333333333333
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.26525000000000004
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.43479999999999996
+          }
+        },
+        "member_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7670708333333334
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9994041666666668
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9999416666666666
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.45870416666666664
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4607833333333334
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7342041666666665
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4471625
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4471625
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3479041666666667
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.00012499999999999957
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5797958333333333
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7352166666666666
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.42910833333333337
+          }
+        },
+        "retain_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7686777777777778
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9994111111111111
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9999444444444444
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4555944444444444
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.45881666666666665
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7343555555555555
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.45400555555555555
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.45400555555555555
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.3482166666666666
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.00013333333333333307
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5809833333333334
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7353722222222223
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4272111111111111
+          }
+        }
+      },
+      "unlearning": {
+        "steps_configured": null,
+        "steps_taken": null,
+        "stop_reason": null,
+        "final_forget_loss": null,
+        "final_retain_loss": null,
+        "trajectory_path": null,
+        "control": "null_refit",
+        "training_seed": 1043,
+        "n_training_samples": 1000
+      },
+      "data_quality": {
+        "n_rows": 1100,
+        "counts": {
+          "forget": 200,
+          "retain": 600,
+          "test": 300
+        },
+        "population_overlaps": {
+          "forget&retain": 0,
+          "forget&test": 0,
+          "retain&test": 0
+        },
+        "populations_disjoint": true,
+        "null_counts": {},
+        "nonfinite_counts": {},
+        "truncated": 2,
+        "nonfinite_loss_flagged": 0,
+        "zero_grad_norm_flagged": 0
+      },
+      "axes": {
+        "membership_removed": {
+          "met": false,
+          "score": "loss_ratio",
+          "task": "forget_vs_unseen",
+          "auc": 0.0006166666666666621,
+          "equivalence_region": [
+            0.45,
+            0.55
+          ]
+        },
+        "utility_preserved": {
+          "met": true,
+          "perplexity_ratio": {
+            "retain": 1.0069674549303362,
+            "test": 0.9986493357176821
+          },
+          "max_allowed": 1.1,
+          "evaluable": true
+        },
+        "selective_forgetting": {
+          "met": false,
+          "rnff_forget": 0.017035939321992294,
+          "rnff_retain": 0.016729882199187758,
+          "min_forget": 0.5,
+          "max_retain": 0.2,
+          "denominator": 0.41502350666272525,
+          "evaluable": true
+        },
+        "deletion_detectable": {
+          "detector": "loss_ratio_vs_finetuned",
+          "task": "forget_vs_retain",
+          "auc": 0.4970833333333333,
+          "ci_lower": 0.4518329166666667,
+          "min_auc": 0.7,
+          "ci_lower_above": 0.5,
+          "met": false,
+          "null_refit_floor": 0.5446199667641878,
+          "clears_thresholds": false,
+          "clears_null_floor": false
+        },
+        "_verdict": {
+          "classification": "incomplete_forgetting",
+          "statement": "The model remains useful, but forgotten records still look like training members. Nothing was deleted in any auditable sense.",
+          "axes_met": {
+            "membership_removed": false,
+            "utility_preserved": true,
+            "selective_forgetting": false,
+            "deletion_detectable": false
+          }
+        }
+      }
+    },
+    {
+      "path": "ds_confirm/controls/null_refit/seed44/per_sample_scores.json",
+      "seed": 44,
+      "method": "null_refit",
+      "setting": "null_refit",
+      "is_control": true,
+      "counts": {
+        "forget": 200,
+        "retain": 600,
+        "test": 300
+      },
+      "mean_token_nll": {
+        "forget": {
+          "post": 1.9874632498332159,
+          "finetuned": 1.9915028884092758
+        },
+        "retain": {
+          "post": 2.02719292070321,
+          "finetuned": 2.0328434583401935
+        },
+        "test": {
+          "post": 2.379339231272164,
+          "finetuned": 2.3760314514543537
+        }
+      },
+      "perplexity_ratio": {
+        "forget": 0.9959685097880113,
+        "retain": 0.994365396624302,
+        "test": 1.0033132565584244
+      },
+      "rnff": {
+        "forget": -0.009602192223929459,
+        "retain": -0.01343128785837672,
+        "test": 0.007862569149943028
+      },
+      "rnff_denominator": 0.4206996154474829,
+      "auc": {
+        "forget_vs_retain": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.47873333333333334
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5023083333333334
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5198416666666666
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5184333333333333,
+            "ci_lower": 0.47180625,
+            "ci_upper": 0.5656454166666666,
+            "n_positive": 200,
+            "n_negative": 600,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5208083333333333
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.476725
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5072833333333333
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5072833333333333
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.528125
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4754166666666667
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5245833333333334
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4756916666666666
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5134083333333334
+          }
+        },
+        "forget_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.25545
+          },
+          "loss_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.0010833333333333307,
+            "ci_lower": 0.0,
+            "ci_upper": 0.003099999999999995,
+            "n_positive": 200,
+            "n_negative": 300,
+            "n_bootstrap": 1000,
+            "confidence": 0.95,
+            "ci_kind": "percentile bootstrap over samples within one run"
+          },
+          "loss_delta": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.0005499999999999955
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.48016666666666674
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.47819999999999996
+          },
+          "grad_norm_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.26665
+          },
+          "grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.51835
+          },
+          "log_grad_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.51835
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.39876666666666666
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.00013333333333333198
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7096666666666667
+          },
+          "sif": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.26685000000000003
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5693333333333332
+          }
+        },
+        "member_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.72895
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9987666666666667
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.99935
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5389625
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5419125
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7230458333333334
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4875125
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.4875125
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.37978333333333336
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.00013333333333333223
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6832791666666667
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7223166666666667
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5527624999999999
+          }
+        },
+        "retain_vs_unseen": {
+          "loss_unlearned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.72375
+          },
+          "loss_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9987166666666667
+          },
+          "loss_delta": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "base"
+            ],
+            "n_dropped": 0,
+            "auc": 0.9993166666666666
+          },
+          "loss_ratio_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5453388888888888
+          },
+          "loss_delta_vs_finetuned": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5486166666666666
+          },
+          "grad_norm_sq": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7196111111111112
+          },
+          "grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.48946666666666666
+          },
+          "log_grad_ratio": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.48946666666666666
+          },
+          "fuma_lora_ratio": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "lora_structure"
+            ],
+            "n_dropped": 0,
+            "auc": 0.37345555555555554
+          },
+          "raw_cosine": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.00013333333333333234
+          },
+          "alignment_cos_sq": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients"
+            ],
+            "n_dropped": 0,
+            "auc": 0.6744833333333333
+          },
+          "sif": {
+            "direction": "lower_is_positive",
+            "access": [
+              "unlearned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.7187055555555556
+          },
+          "combined_log_score": {
+            "direction": "higher_is_positive",
+            "access": [
+              "unlearned",
+              "finetuned",
+              "gradients",
+              "curvature"
+            ],
+            "n_dropped": 0,
+            "auc": 0.5472388888888888
+          }
+        }
+      },
+      "unlearning": {
+        "steps_configured": null,
+        "steps_taken": null,
+        "stop_reason": null,
+        "final_forget_loss": null,
+        "final_retain_loss": null,
+        "trajectory_path": null,
+        "control": "null_refit",
+        "training_seed": 1044,
+        "n_training_samples": 1000
+      },
+      "data_quality": {
+        "n_rows": 1100,
+        "counts": {
+          "forget": 200,
+          "retain": 600,
+          "test": 300
+        },
+        "population_overlaps": {
+          "forget&retain": 0,
+          "forget&test": 0,
+          "retain&test": 0
+        },
+        "populations_disjoint": true,
+        "null_counts": {},
+        "nonfinite_counts": {},
+        "truncated": 5,
+        "nonfinite_loss_flagged": 0,
+        "zero_grad_norm_flagged": 0
+      },
+      "axes": {
+        "membership_removed": {
+          "met": false,
+          "score": "loss_ratio",
+          "task": "forget_vs_unseen",
+          "auc": 0.0010833333333333307,
+          "equivalence_region": [
+            0.45,
+            0.55
+          ]
+        },
+        "utility_preserved": {
+          "met": true,
+          "perplexity_ratio": {
+            "retain": 0.994365396624302,
+            "test": 1.0033132565584244
+          },
+          "max_allowed": 1.1,
+          "evaluable": true
+        },
+        "selective_forgetting": {
+          "met": false,
+          "rnff_forget": -0.009602192223929459,
+          "rnff_retain": -0.01343128785837672,
+          "min_forget": 0.5,
+          "max_retain": 0.2,
+          "denominator": 0.4206996154474829,
+          "evaluable": true
+        },
+        "deletion_detectable": {
+          "detector": "loss_ratio_vs_finetuned",
+          "task": "forget_vs_retain",
+          "auc": 0.5184333333333333,
+          "ci_lower": 0.47180625,
+          "min_auc": 0.7,
+          "ci_lower_above": 0.5,
+          "met": false,
+          "null_refit_floor": 0.5446199667641878,
+          "clears_thresholds": false,
+          "clears_null_floor": false
+        },
+        "_verdict": {
+          "classification": "incomplete_forgetting",
+          "statement": "The model remains useful, but forgotten records still look like training members. Nothing was deleted in any auditable sense.",
+          "axes_met": {
+            "membership_removed": false,
+            "utility_preserved": true,
+            "selective_forgetting": false,
+            "deletion_detectable": false
+          }
+        }
+      }
+    }
+  ],
+  "settings": [
+    {
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "is_control": true,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "n_seeds": 3,
+      "per_seed": {
+        "42": {
+          "classification": "persistent_fingerprint",
+          "membership_auc": 0.4758833333333334,
+          "perplexity_ratio": {
+            "forget": 1.533304408629531,
+            "retain": 1.0344316777913103,
+            "test": 0.992153809922464
+          },
+          "rnff": {
+            "forget": 1.0,
+            "retain": 0.07920023486007682,
+            "test": -0.018429269728610986
+          },
+          "deletion_auc": 0.9990166666666667,
+          "stop_reason": null
+        },
+        "43": {
+          "classification": "persistent_fingerprint",
+          "membership_auc": 0.4739166666666667,
+          "perplexity_ratio": {
+            "forget": 1.5144063389126867,
+            "retain": 1.0428926103295433,
+            "test": 0.9804457877800146
+          },
+          "rnff": {
+            "forget": 1.0,
+            "retain": 0.10119477029979512,
+            "test": -0.04758266686035489
+          },
+          "deletion_auc": 0.9993916666666666,
+          "stop_reason": null
+        },
+        "44": {
+          "classification": "persistent_fingerprint",
+          "membership_auc": 0.47078333333333333,
+          "perplexity_ratio": {
+            "forget": 1.5230267159912987,
+            "retain": 1.0339209156522013,
+            "test": 0.9939687118933045
+          },
+          "rnff": {
+            "forget": 1.0,
+            "retain": 0.07929241682419085,
+            "test": -0.014379736912868353
+          },
+          "deletion_auc": 0.9998083333333334,
+          "stop_reason": null
+        }
+      },
+      "perplexity_ratio": {
+        "forget": {
+          "mean": 1.5235791545111723,
+          "sd": 0.009461138990330796,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 1.533304408629531,
+            "43": 1.5144063389126867,
+            "44": 1.5230267159912987
+          }
+        },
+        "retain": {
+          "mean": 1.0370817345910182,
+          "sd": 0.005038841843828839,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 1.0344316777913103,
+            "43": 1.0428926103295433,
+            "44": 1.0339209156522013
+          }
+        },
+        "test": {
+          "mean": 0.9888561031985944,
+          "sd": 0.007339858402649263,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.992153809922464,
+            "43": 0.9804457877800146,
+            "44": 0.9939687118933045
+          }
+        }
+      },
+      "rnff": {
+        "forget": {
+          "mean": 1.0,
+          "sd": 0.0,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 1.0,
+            "43": 1.0,
+            "44": 1.0
+          }
+        },
+        "retain": {
+          "mean": 0.0865624739946876,
+          "sd": 0.012672024137799552,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.07920023486007682,
+            "43": 0.10119477029979512,
+            "44": 0.07929241682419085
+          }
+        },
+        "test": {
+          "mean": -0.026797224500611408,
+          "sd": 0.01811423858665078,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.018429269728610986,
+            "43": -0.04758266686035489,
+            "44": -0.014379736912868353
+          }
+        }
+      },
+      "auc": {
+        "forget_vs_retain": {
+          "alignment_cos_sq": {
+            "mean": 0.9986055555555556,
+            "sd": 0.00027084401688324264,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.998875,
+              "43": 0.9983333333333334,
+              "44": 0.9986083333333333
+            }
+          },
+          "combined_log_score": {
+            "mean": 0.9999416666666666,
+            "sd": 6.291528696055324e-05,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 1.0,
+              "43": 0.9998750000000001,
+              "44": 0.99995
+            }
+          },
+          "fuma_lora_ratio": {
+            "mean": 0.6001694444444444,
+            "sd": 0.03881512120629351,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.583,
+              "43": 0.5729,
+              "44": 0.6446083333333332
+            }
+          },
+          "grad_norm_sq": {
+            "mean": 0.7235666666666666,
+            "sd": 0.010876334528588959,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.711325,
+              "43": 0.7321166666666665,
+              "44": 0.7272583333333332
+            }
+          },
+          "grad_ratio": {
+            "mean": 0.989763888888889,
+            "sd": 0.0051080840975993675,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9933583333333333,
+              "43": 0.9920166666666667,
+              "44": 0.9839166666666668
+            }
+          },
+          "log_grad_ratio": {
+            "mean": 0.989763888888889,
+            "sd": 0.0051080840975993675,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9933583333333333,
+              "43": 0.9920166666666667,
+              "44": 0.9839166666666668
+            }
+          },
+          "loss_delta": {
+            "mean": 0.9995722222222222,
+            "sd": 0.0001307917485221456,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.999425,
+              "43": 0.9996166666666667,
+              "44": 0.999675
+            }
+          },
+          "loss_delta_vs_finetuned": {
+            "mean": 0.999936111111111,
+            "sd": 0.00011065880159463404,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 1.0,
+              "43": 0.9998083333333334,
+              "44": 1.0
+            }
+          },
+          "loss_ratio": {
+            "mean": 0.9991722222222222,
+            "sd": 0.0004116644174476878,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9996333333333333,
+              "43": 0.9988416666666667,
+              "44": 0.9990416666666666
+            }
+          },
+          "loss_ratio_vs_finetuned": {
+            "mean": 0.9994055555555557,
+            "sd": 0.0003960160397051324,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9990166666666667,
+              "43": 0.9993916666666666,
+              "44": 0.9998083333333334
+            }
+          },
+          "loss_unlearned": {
+            "mean": 0.7485750000000001,
+            "sd": 0.015825482702836555,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7615666666666667,
+              "43": 0.7532083333333334,
+              "44": 0.73095
+            }
+          },
+          "raw_cosine": {
+            "mean": 0.9986194444444445,
+            "sd": 0.00027212299778940413,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.998875,
+              "43": 0.9983333333333334,
+              "44": 0.9986499999999999
+            }
+          },
+          "sif": {
+            "mean": 0.7237722222222223,
+            "sd": 0.010880312665714379,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7121,
+              "43": 0.7336333333333334,
+              "44": 0.7255833333333335
+            }
+          }
+        },
+        "forget_vs_unseen": {
+          "alignment_cos_sq": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 1.0,
+              "43": 1.0,
+              "44": 1.0
+            }
+          },
+          "combined_log_score": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 1.0,
+              "43": 1.0,
+              "44": 1.0
+            }
+          },
+          "fuma_lora_ratio": {
+            "mean": 0.46139444444444444,
+            "sd": 0.03701560606815169,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4562833333333334,
+              "43": 0.4272,
+              "44": 0.5006999999999999
+            }
+          },
+          "grad_norm_sq": {
+            "mean": 0.5372111111111111,
+            "sd": 0.005850031655501505,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5304833333333334,
+              "43": 0.5400499999999999,
+              "44": 0.5411
+            }
+          },
+          "grad_ratio": {
+            "mean": 0.9879444444444444,
+            "sd": 0.004909184514009661,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9872,
+              "43": 0.9931833333333333,
+              "44": 0.98345
+            }
+          },
+          "log_grad_ratio": {
+            "mean": 0.9879444444444444,
+            "sd": 0.004909184514009661,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9872,
+              "43": 0.9931833333333333,
+              "44": 0.98345
+            }
+          },
+          "loss_delta": {
+            "mean": 0.4746777777777778,
+            "sd": 0.0020796189109582273,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.47630000000000006,
+              "43": 0.47233333333333327,
+              "44": 0.47540000000000004
+            }
+          },
+          "loss_delta_vs_finetuned": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 1.0,
+              "43": 1.0,
+              "44": 1.0
+            }
+          },
+          "loss_ratio": {
+            "mean": 0.4735277777777778,
+            "sd": 0.002572144227279267,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4758833333333334,
+              "43": 0.4739166666666667,
+              "44": 0.47078333333333333
+            }
+          },
+          "loss_ratio_vs_finetuned": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 1.0,
+              "43": 1.0,
+              "44": 1.0
+            }
+          },
+          "loss_unlearned": {
+            "mean": 0.5313444444444445,
+            "sd": 0.01420420842697811,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5437166666666666,
+              "43": 0.5158333333333334,
+              "44": 0.5344833333333333
+            }
+          },
+          "raw_cosine": {
+            "mean": 1.0,
+            "sd": 0.0,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 1.0,
+              "43": 1.0,
+              "44": 1.0
+            }
+          },
+          "sif": {
+            "mean": 0.53735,
+            "sd": 0.005629263816087378,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.53085,
+              "43": 0.5405666666666666,
+              "44": 0.5406333333333333
+            }
+          }
+        },
+        "member_vs_unseen": {
+          "alignment_cos_sq": {
+            "mean": 0.7732347222222223,
+            "sd": 0.04489261441154549,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7608458333333333,
+              "43": 0.8230208333333333,
+              "44": 0.7358375
+            }
+          },
+          "combined_log_score": {
+            "mean": 0.7288,
+            "sd": 0.047569459630978896,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7189208333333332,
+              "43": 0.7805333333333333,
+              "44": 0.6869458333333334
+            }
+          },
+          "fuma_lora_ratio": {
+            "mean": 0.3889888888888889,
+            "sd": 0.01104558447265658,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.3936874999999999,
+              "43": 0.3763708333333333,
+              "44": 0.3969083333333333
+            }
+          },
+          "grad_norm_sq": {
+            "mean": 0.6375805555555555,
+            "sd": 0.003891964061917703,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.637525,
+              "43": 0.6415,
+              "44": 0.6337166666666667
+            }
+          },
+          "grad_ratio": {
+            "mean": 0.2844388888888889,
+            "sd": 0.03320843954743925,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.30010000000000003,
+              "43": 0.24629583333333332,
+              "44": 0.30692083333333336
+            }
+          },
+          "log_grad_ratio": {
+            "mean": 0.2844388888888889,
+            "sd": 0.03320843954743925,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.30010000000000003,
+              "43": 0.24629583333333332,
+              "44": 0.30692083333333336
+            }
+          },
+          "loss_delta": {
+            "mean": 0.8811416666666666,
+            "sd": 0.0006262210294917447,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.8806999999999999,
+              "43": 0.8818583333333332,
+              "44": 0.8808666666666667
+            }
+          },
+          "loss_delta_vs_finetuned": {
+            "mean": 0.18808680555555557,
+            "sd": 0.03855669055901227,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.20056041666666669,
+              "43": 0.1448375,
+              "44": 0.21886250000000002
+            }
+          },
+          "loss_ratio": {
+            "mean": 0.8811055555555556,
+            "sd": 0.00042870795334271826,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.8808791666666667,
+              "43": 0.8808374999999999,
+              "44": 0.8816
+            }
+          },
+          "loss_ratio_vs_finetuned": {
+            "mean": 0.1888513888888889,
+            "sd": 0.03379023022361366,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.19931666666666664,
+              "43": 0.15106666666666668,
+              "44": 0.21617083333333334
+            }
+          },
+          "loss_unlearned": {
+            "mean": 0.657276388888889,
+            "sd": 0.019775864451770885,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.6532541666666667,
+              "43": 0.6787541666666667,
+              "44": 0.6398208333333333
+            }
+          },
+          "raw_cosine": {
+            "mean": 0.7348611111111111,
+            "sd": 0.046487247417476785,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7191208333333334,
+              "43": 0.787175,
+              "44": 0.6982875
+            }
+          },
+          "sif": {
+            "mean": 0.6374944444444445,
+            "sd": 0.00490417610685398,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.6374833333333333,
+              "43": 0.6424041666666667,
+              "44": 0.6325958333333332
+            }
+          }
+        },
+        "retain_vs_unseen": {
+          "alignment_cos_sq": {
+            "mean": 0.6976462962962963,
+            "sd": 0.05985681921539398,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.6811277777777778,
+              "43": 0.7640277777777778,
+              "44": 0.6477833333333334
+            }
+          },
+          "combined_log_score": {
+            "mean": 0.6384,
+            "sd": 0.06342594617463858,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.6252277777777778,
+              "43": 0.7073777777777778,
+              "44": 0.5825944444444444
+            }
+          },
+          "fuma_lora_ratio": {
+            "mean": 0.3648537037037037,
+            "sd": 0.007049919738036499,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.37282222222222217,
+              "43": 0.3594277777777778,
+              "44": 0.36231111111111114
+            }
+          },
+          "grad_norm_sq": {
+            "mean": 0.6958444444444444,
+            "sd": 0.005400397219043796,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.6935277777777777,
+              "43": 0.7020166666666665,
+              "44": 0.6919888888888889
+            }
+          },
+          "grad_ratio": {
+            "mean": 0.3752333333333333,
+            "sd": 0.042711939233502624,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.39586666666666664,
+              "43": 0.3261222222222222,
+              "44": 0.40371111111111113
+            }
+          },
+          "log_grad_ratio": {
+            "mean": 0.3752333333333333,
+            "sd": 0.042711939233502624,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.39586666666666664,
+              "43": 0.3261222222222222,
+              "44": 0.40371111111111113
+            }
+          },
+          "loss_delta": {
+            "mean": 0.9997481481481482,
+            "sd": 0.000155687774496147,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9997,
+              "43": 0.9999222222222222,
+              "44": 0.9996222222222222
+            }
+          },
+          "loss_delta_vs_finetuned": {
+            "mean": 0.2507824074074074,
+            "sd": 0.05140892074534968,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.2674138888888889,
+              "43": 0.1931166666666667,
+              "44": 0.29181666666666667
+            }
+          },
+          "loss_ratio": {
+            "mean": 0.9993166666666666,
+            "sd": 0.0004188093057322659,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9998,
+              "43": 0.9990888888888888,
+              "44": 0.9990611111111111
+            }
+          },
+          "loss_ratio_vs_finetuned": {
+            "mean": 0.25180185185185183,
+            "sd": 0.04505364029815156,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.2657555555555555,
+              "43": 0.2014222222222222,
+              "44": 0.28822777777777775
+            }
+          },
+          "loss_unlearned": {
+            "mean": 0.72015,
+            "sd": 0.022872400344757543,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7189111111111112,
+              "43": 0.7436166666666667,
+              "44": 0.6979222222222222
+            }
+          },
+          "raw_cosine": {
+            "mean": 0.6464814814814815,
+            "sd": 0.0619829965566357,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.6254944444444445,
+              "43": 0.7162333333333333,
+              "44": 0.5977166666666667
+            }
+          },
+          "sif": {
+            "mean": 0.6957759259259259,
+            "sd": 0.006795662499461305,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.6935944444444444,
+              "43": 0.7033944444444444,
+              "44": 0.6903388888888888
+            }
+          }
+        }
+      },
+      "paired_differences": [
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "alignment_cos_sq",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.0007999999999999859,
+          "sd": 0.0005745167051047426,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.00014166666666670658,
+            "43": 0.0010583333333331613,
+            "44": 0.0012000000000000899
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "combined_log_score",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients",
+            "curvature"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.0005361111111111446,
+          "sd": 0.00042330817948019287,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.000983333333333336,
+            "43": -0.00048333333333350215,
+            "44": -0.00014166666666659555
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "fuma_lora_ratio",
+          "other_access": [
+            "unlearned",
+            "gradients",
+            "lora_structure"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.3992361111111111,
+          "sd": 0.03849435955555805,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.4160166666666667,
+            "43": 0.4264916666666666,
+            "44": 0.3552000000000002
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "grad_norm_sq",
+          "other_access": [
+            "unlearned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.27583888888888897,
+          "sd": 0.010598238628990963,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.2876916666666667,
+            "43": 0.26727500000000004,
+            "44": 0.2725500000000002
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "grad_ratio",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.009641666666666623,
+          "sd": 0.005480292976758741,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.005658333333333321,
+            "43": 0.007374999999999909,
+            "44": 0.015891666666666637
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "log_grad_ratio",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.009641666666666623,
+          "sd": 0.005480292976758741,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.005658333333333321,
+            "43": 0.007374999999999909,
+            "44": 0.015891666666666637
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "loss_delta",
+          "other_access": [
+            "unlearned",
+            "base"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.0001666666666666853,
+          "sd": 0.00027550458758034775,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.0004083333333333439,
+            "43": -0.00022500000000014175,
+            "44": 0.00013333333333342967
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "loss_delta_vs_finetuned",
+          "other_access": [
+            "unlearned",
+            "finetuned"
+          ],
+          "other_access_is_weaker_or_equal": true,
+          "mean": -0.0005305555555555896,
+          "sd": 0.0004079363149280095,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.000983333333333336,
+            "43": -0.0004166666666668428,
+            "44": -0.00019166666666659005
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "loss_ratio",
+          "other_access": [
+            "unlearned",
+            "base"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.00023333333333334463,
+          "sd": 0.0007440504761849645,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.0006166666666665988,
+            "43": 0.0005499999999998284,
+            "44": 0.0007666666666668043
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "loss_unlearned",
+          "other_access": [
+            "unlearned"
+          ],
+          "other_access_is_weaker_or_equal": true,
+          "mean": 0.2508305555555555,
+          "sd": 0.016211673463325263,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.23744999999999994,
+            "43": 0.2461833333333332,
+            "44": 0.2688583333333334
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "raw_cosine",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.0007861111111111171,
+          "sd": 0.0005603405049445068,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.00014166666666670658,
+            "43": 0.0010583333333331613,
+            "44": 0.0011583333333334833
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "sif",
+          "other_access": [
+            "unlearned",
+            "gradients",
+            "curvature"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.2756333333333333,
+          "sd": 0.01064924032241015,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.2869166666666667,
+            "43": 0.2657583333333332,
+            "44": 0.27422499999999994
+          }
+        }
+      ],
+      "classifications": {
+        "persistent_fingerprint": 3
+      },
+      "unanimous_classification": "persistent_fingerprint",
+      "axes_met_seed_counts": {
+        "membership_removed": 3,
+        "utility_preserved": 3,
+        "selective_forgetting": 3,
+        "deletion_detectable": 3
+      },
+      "candidate_operating_point": true
+    },
+    {
+      "method": "null_refit",
+      "setting": "null_refit",
+      "is_control": true,
+      "seeds": [
+        42,
+        43,
+        44
+      ],
+      "n_seeds": 3,
+      "per_seed": {
+        "42": {
+          "classification": "incomplete_forgetting",
+          "membership_auc": 0.0001833333333333326,
+          "perplexity_ratio": {
+            "forget": 0.9981179679114497,
+            "retain": 1.0046637426241576,
+            "test": 0.9993596440642497
+          },
+          "rnff": {
+            "forget": -0.00440733385255048,
+            "retain": 0.010885885081516241,
+            "test": -0.0014986508166752546
+          },
+          "deletion_auc": 0.46872499999999995,
+          "stop_reason": null
+        },
+        "43": {
+          "classification": "incomplete_forgetting",
+          "membership_auc": 0.0006166666666666621,
+          "perplexity_ratio": {
+            "forget": 1.007095368966786,
+            "retain": 1.0069674549303362,
+            "test": 0.9986493357176821
+          },
+          "rnff": {
+            "forget": 0.017035939321992294,
+            "retain": 0.016729882199187758,
+            "test": -0.003256628190429975
+          },
+          "deletion_auc": 0.4970833333333333,
+          "stop_reason": null
+        },
+        "44": {
+          "classification": "incomplete_forgetting",
+          "membership_auc": 0.0010833333333333307,
+          "perplexity_ratio": {
+            "forget": 0.9959685097880113,
+            "retain": 0.994365396624302,
+            "test": 1.0033132565584244
+          },
+          "rnff": {
+            "forget": -0.009602192223929459,
+            "retain": -0.01343128785837672,
+            "test": 0.007862569149943028
+          },
+          "deletion_auc": 0.5184333333333333,
+          "stop_reason": null
+        }
+      },
+      "perplexity_ratio": {
+        "forget": {
+          "mean": 1.000393948888749,
+          "sd": 0.005902272092410041,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9981179679114497,
+            "43": 1.007095368966786,
+            "44": 0.9959685097880113
+          }
+        },
+        "retain": {
+          "mean": 1.0019988647262654,
+          "sd": 0.006710376222327459,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 1.0046637426241576,
+            "43": 1.0069674549303362,
+            "44": 0.994365396624302
+          }
+        },
+        "test": {
+          "mean": 1.0004407454467854,
+          "sd": 0.0025128916712958468,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.9993596440642497,
+            "43": 0.9986493357176821,
+            "44": 1.0033132565584244
+          }
+        }
+      },
+      "rnff": {
+        "forget": {
+          "mean": 0.0010088044151707846,
+          "sd": 0.014120850837175639,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.00440733385255048,
+            "43": 0.017035939321992294,
+            "44": -0.009602192223929459
+          }
+        },
+        "retain": {
+          "mean": 0.004728159807442427,
+          "sd": 0.015995694115090994,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.010885885081516241,
+            "43": 0.016729882199187758,
+            "44": -0.01343128785837672
+          }
+        },
+        "test": {
+          "mean": 0.001035763380945933,
+          "sd": 0.00597717147715936,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.0014986508166752546,
+            "43": -0.003256628190429975,
+            "44": 0.007862569149943028
+          }
+        }
+      },
+      "auc": {
+        "forget_vs_retain": {
+          "alignment_cos_sq": {
+            "mean": 0.5232916666666666,
+            "sd": 0.02563691592866296,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5482583333333333,
+              "43": 0.4970333333333333,
+              "44": 0.5245833333333334
+            }
+          },
+          "combined_log_score": {
+            "mean": 0.515625,
+            "sd": 0.015610155170415337,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.532225,
+              "43": 0.5012416666666666,
+              "44": 0.5134083333333334
+            }
+          },
+          "fuma_lora_ratio": {
+            "mean": 0.5052277777777777,
+            "sd": 0.01993312836665335,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.49175,
+              "43": 0.4958083333333333,
+              "44": 0.528125
+            }
+          },
+          "grad_norm_sq": {
+            "mean": 0.483825,
+            "sd": 0.02302775650045928,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4651833333333334,
+              "43": 0.5095666666666667,
+              "44": 0.476725
+            }
+          },
+          "grad_ratio": {
+            "mean": 0.5099027777777777,
+            "sd": 0.02065412309748169,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4906833333333333,
+              "43": 0.5317416666666667,
+              "44": 0.5072833333333333
+            }
+          },
+          "log_grad_ratio": {
+            "mean": 0.5099027777777777,
+            "sd": 0.02065412309748169,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4906833333333333,
+              "43": 0.5317416666666667,
+              "44": 0.5072833333333333
+            }
+          },
+          "loss_delta": {
+            "mean": 0.5110777777777779,
+            "sd": 0.016614092774018832,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4919166666666666,
+              "43": 0.521475,
+              "44": 0.5198416666666666
+            }
+          },
+          "loss_delta_vs_finetuned": {
+            "mean": 0.49714166666666665,
+            "sd": 0.02337244341336845,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.474075,
+              "43": 0.49654166666666666,
+              "44": 0.5208083333333333
+            }
+          },
+          "loss_ratio": {
+            "mean": 0.5016138888888889,
+            "sd": 0.014470835932750878,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.48680833333333323,
+              "43": 0.515725,
+              "44": 0.5023083333333334
+            }
+          },
+          "loss_ratio_vs_finetuned": {
+            "mean": 0.4947472222222222,
+            "sd": 0.024936372270982755,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.46872499999999995,
+              "43": 0.4970833333333333,
+              "44": 0.5184333333333333
+            }
+          },
+          "loss_unlearned": {
+            "mean": 0.49805833333333344,
+            "sd": 0.017811538473073516,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.501625,
+              "43": 0.5138166666666667,
+              "44": 0.47873333333333334
+            }
+          },
+          "raw_cosine": {
+            "mean": 0.4766805555555555,
+            "sd": 0.025619226088435438,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4517166666666666,
+              "43": 0.5029083333333333,
+              "44": 0.4754166666666667
+            }
+          },
+          "sif": {
+            "mean": 0.4838861111111112,
+            "sd": 0.023513158746949786,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4655666666666667,
+              "43": 0.5104000000000001,
+              "44": 0.4756916666666666
+            }
+          }
+        },
+        "forget_vs_unseen": {
+          "alignment_cos_sq": {
+            "mean": 0.63895,
+            "sd": 0.0670754322469197,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.63095,
+              "43": 0.5762333333333333,
+              "44": 0.7096666666666667
+            }
+          },
+          "combined_log_score": {
+            "mean": 0.48900555555555547,
+            "sd": 0.07096888272204101,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4628833333333333,
+              "43": 0.43479999999999996,
+              "44": 0.5693333333333332
+            }
+          },
+          "fuma_lora_ratio": {
+            "mean": 0.3665888888888889,
+            "sd": 0.028089882190594537,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.35403333333333337,
+              "43": 0.3469666666666667,
+              "44": 0.39876666666666666
+            }
+          },
+          "grad_norm_sq": {
+            "mean": 0.2657222222222222,
+            "sd": 0.001276315588513083,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.26426666666666665,
+              "43": 0.26625,
+              "44": 0.26665
+            }
+          },
+          "grad_ratio": {
+            "mean": 0.5156388888888889,
+            "sd": 0.05912996592566558,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4552,
+              "43": 0.5733666666666667,
+              "44": 0.51835
+            }
+          },
+          "log_grad_ratio": {
+            "mean": 0.5156388888888889,
+            "sd": 0.05912996592566558,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4552,
+              "43": 0.5733666666666667,
+              "44": 0.51835
+            }
+          },
+          "loss_delta": {
+            "mean": 0.00028888888888888665,
+            "sd": 0.00024400212506663947,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.000249999999999998,
+              "43": 6.666666666666653e-05,
+              "44": 0.0005499999999999955
+            }
+          },
+          "loss_delta_vs_finetuned": {
+            "mean": 0.5047111111111111,
+            "sd": 0.027617960809213634,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5026166666666667,
+              "43": 0.5333166666666667,
+              "44": 0.47819999999999996
+            }
+          },
+          "loss_ratio": {
+            "mean": 0.0006277777777777752,
+            "sd": 0.00045010286890064563,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.0001833333333333326,
+              "43": 0.0006166666666666621,
+              "44": 0.0010833333333333307
+            }
+          },
+          "loss_ratio_vs_finetuned": {
+            "mean": 0.5036944444444446,
+            "sd": 0.026223888247451296,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.49894999999999995,
+              "43": 0.5319666666666667,
+              "44": 0.48016666666666674
+            }
+          },
+          "loss_unlearned": {
+            "mean": 0.25248888888888893,
+            "sd": 0.01350405631790083,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.2642666666666667,
+              "43": 0.23775000000000002,
+              "44": 0.25545
+            }
+          },
+          "raw_cosine": {
+            "mean": 0.00010555555555555466,
+            "sd": 2.5458753860865282e-05,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 8.333333333333305e-05,
+              "43": 9.999999999999897e-05,
+              "44": 0.00013333333333333198
+            }
+          },
+          "sif": {
+            "mean": 0.26534444444444444,
+            "sd": 0.0014606251832437855,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.26393333333333335,
+              "43": 0.26525000000000004,
+              "44": 0.26685000000000003
+            }
+          }
+        },
+        "member_vs_unseen": {
+          "alignment_cos_sq": {
+            "mean": 0.6171722222222222,
+            "sd": 0.05741327099497637,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5884416666666666,
+              "43": 0.5797958333333333,
+              "44": 0.6832791666666667
+            }
+          },
+          "combined_log_score": {
+            "mean": 0.47385277777777784,
+            "sd": 0.06854223433571068,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4396875,
+              "43": 0.42910833333333337,
+              "44": 0.5527624999999999
+            }
+          },
+          "fuma_lora_ratio": {
+            "mean": 0.36176388888888883,
+            "sd": 0.016341596726293775,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.3576041666666666,
+              "43": 0.3479041666666667,
+              "44": 0.37978333333333336
+            }
+          },
+          "grad_norm_sq": {
+            "mean": 0.7263569444444444,
+            "sd": 0.006823439653408131,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7218208333333334,
+              "43": 0.7342041666666665,
+              "44": 0.7230458333333334
+            }
+          },
+          "grad_ratio": {
+            "mean": 0.49109027777777775,
+            "sd": 0.045821544948653606,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5385958333333334,
+              "43": 0.4471625,
+              "44": 0.4875125
+            }
+          },
+          "log_grad_ratio": {
+            "mean": 0.49109027777777775,
+            "sd": 0.045821544948653606,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5385958333333334,
+              "43": 0.4471625,
+              "44": 0.4875125
+            }
+          },
+          "loss_delta": {
+            "mean": 0.9996597222222222,
+            "sd": 0.00029680981253120967,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9996875,
+              "43": 0.9999416666666666,
+              "44": 0.99935
+            }
+          },
+          "loss_delta_vs_finetuned": {
+            "mean": 0.49115555555555557,
+            "sd": 0.04423955352470021,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4707708333333333,
+              "43": 0.4607833333333334,
+              "44": 0.5419125
+            }
+          },
+          "loss_ratio": {
+            "mean": 0.9993124999999999,
+            "sd": 0.0005062628599189754,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9997666666666667,
+              "43": 0.9994041666666668,
+              "44": 0.9987666666666667
+            }
+          },
+          "loss_ratio_vs_finetuned": {
+            "mean": 0.48917638888888887,
+            "sd": 0.04347550741935477,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4698625,
+              "43": 0.45870416666666664,
+              "44": 0.5389625
+            }
+          },
+          "loss_unlearned": {
+            "mean": 0.74465,
+            "sd": 0.01992929211055371,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7379291666666667,
+              "43": 0.7670708333333334,
+              "44": 0.72895
+            }
+          },
+          "raw_cosine": {
+            "mean": 0.00013194444444444384,
+            "sd": 6.364688465216432e-06,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.0001374999999999997,
+              "43": 0.00012499999999999957,
+              "44": 0.00013333333333333223
+            }
+          },
+          "sif": {
+            "mean": 0.7266347222222223,
+            "sd": 0.007432231249267728,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7223708333333334,
+              "43": 0.7352166666666666,
+              "44": 0.7223166666666667
+            }
+          }
+        },
+        "retain_vs_unseen": {
+          "alignment_cos_sq": {
+            "mean": 0.609912962962963,
+            "sd": 0.05602016869317265,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5742722222222222,
+              "43": 0.5809833333333334,
+              "44": 0.6744833333333333
+            }
+          },
+          "combined_log_score": {
+            "mean": 0.4688018518518518,
+            "sd": 0.06796987584683191,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4319555555555555,
+              "43": 0.4272111111111111,
+              "44": 0.5472388888888888
+            }
+          },
+          "fuma_lora_ratio": {
+            "mean": 0.36015555555555556,
+            "sd": 0.01267437752629346,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.3587944444444444,
+              "43": 0.3482166666666666,
+              "44": 0.37345555555555554
+            }
+          },
+          "grad_norm_sq": {
+            "mean": 0.7237166666666667,
+            "sd": 0.009293169202546582,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7171833333333333,
+              "43": 0.7343555555555555,
+              "44": 0.7196111111111112
+            }
+          },
+          "grad_ratio": {
+            "mean": 0.49333333333333335,
+            "sd": 0.04139677068874802,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5365277777777777,
+              "43": 0.45400555555555555,
+              "44": 0.48946666666666666
+            }
+          },
+          "log_grad_ratio": {
+            "mean": 0.49333333333333335,
+            "sd": 0.04139677068874802,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.5365277777777777,
+              "43": 0.45400555555555555,
+              "44": 0.48946666666666666
+            }
+          },
+          "loss_delta": {
+            "mean": 0.9996425925925925,
+            "sd": 0.00031458052283921643,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.9996666666666666,
+              "43": 0.9999444444444444,
+              "44": 0.9993166666666666
+            }
+          },
+          "loss_delta_vs_finetuned": {
+            "mean": 0.4897777777777777,
+            "sd": 0.05097928864127439,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.46190000000000003,
+              "43": 0.45881666666666665,
+              "44": 0.5486166666666666
+            }
+          },
+          "loss_ratio": {
+            "mean": 0.9992925925925927,
+            "sd": 0.0005267631572806807,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.99975,
+              "43": 0.9994111111111111,
+              "44": 0.9987166666666667
+            }
+          },
+          "loss_ratio_vs_finetuned": {
+            "mean": 0.48679999999999995,
+            "sd": 0.05073312192733484,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.4594666666666667,
+              "43": 0.4555944444444444,
+              "44": 0.5453388888888888
+            }
+          },
+          "loss_unlearned": {
+            "mean": 0.7436962962962963,
+            "sd": 0.022883206099652574,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7386611111111112,
+              "43": 0.7686777777777778,
+              "44": 0.72375
+            }
+          },
+          "raw_cosine": {
+            "mean": 0.00014074074074074021,
+            "sd": 1.283000598199188e-05,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.00015555555555555526,
+              "43": 0.00013333333333333307,
+              "44": 0.00013333333333333234
+            }
+          },
+          "sif": {
+            "mean": 0.7239611111111112,
+            "sd": 0.009892552380078322,
+            "n_seeds": 3,
+            "per_seed": {
+              "42": 0.7178055555555556,
+              "43": 0.7353722222222223,
+              "44": 0.7187055555555556
+            }
+          }
+        }
+      },
+      "paired_differences": [
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "alignment_cos_sq",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.028544444444444483,
+          "sd": 0.0442663539563921,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.07953333333333334,
+            "43": 4.999999999999449e-05,
+            "44": -0.0061500000000001
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "combined_log_score",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients",
+            "curvature"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.020877777777777773,
+          "sd": 0.03719642150998061,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.0635,
+            "43": -0.004158333333333264,
+            "44": 0.005024999999999946
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "fuma_lora_ratio",
+          "other_access": [
+            "unlearned",
+            "gradients",
+            "lora_structure"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.010480555555555568,
+          "sd": 0.012169193040594783,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.023025000000000073,
+            "43": 0.0012750000000000261,
+            "44": -0.009691666666666654
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "grad_norm_sq",
+          "other_access": [
+            "unlearned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.010922222222222147,
+          "sd": 0.02783951569728289,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.003541666666666554,
+            "43": -0.012483333333333402,
+            "44": 0.04170833333333329
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "grad_ratio",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.01515555555555557,
+          "sd": 0.023649718599061915,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.021958333333333357,
+            "43": -0.03465833333333335,
+            "44": 0.011149999999999993
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "log_grad_ratio",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.01515555555555557,
+          "sd": 0.023649718599061915,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.021958333333333357,
+            "43": -0.03465833333333335,
+            "44": 0.011149999999999993
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "loss_delta",
+          "other_access": [
+            "unlearned",
+            "base"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.01633055555555557,
+          "sd": 0.012936944656178952,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.023191666666666666,
+            "43": -0.0243916666666667,
+            "44": -0.0014083333333333448
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "loss_delta_vs_finetuned",
+          "other_access": [
+            "unlearned",
+            "finetuned"
+          ],
+          "other_access_is_weaker_or_equal": true,
+          "mean": -0.002394444444444477,
+          "sd": 0.0029458814627531787,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.005350000000000077,
+            "43": 0.0005416666666666625,
+            "44": -0.002375000000000016
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "loss_ratio",
+          "other_access": [
+            "unlearned",
+            "base"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": -0.006866666666666669,
+          "sd": 0.01991332433600953,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.018083333333333285,
+            "43": -0.018641666666666667,
+            "44": 0.016124999999999945
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "loss_unlearned",
+          "other_access": [
+            "unlearned"
+          ],
+          "other_access_is_weaker_or_equal": true,
+          "mean": -0.0033111111111111535,
+          "sd": 0.03811570591025486,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": -0.03290000000000004,
+            "43": -0.016733333333333378,
+            "44": 0.03969999999999996
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "raw_cosine",
+          "other_access": [
+            "unlearned",
+            "finetuned",
+            "gradients"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.018066666666666658,
+          "sd": 0.024438026777499348,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.017008333333333348,
+            "43": -0.005824999999999969,
+            "44": 0.04301666666666659
+          }
+        },
+        {
+          "primary": "loss_ratio_vs_finetuned",
+          "other": "sif",
+          "other_access": [
+            "unlearned",
+            "gradients",
+            "curvature"
+          ],
+          "other_access_is_weaker_or_equal": false,
+          "mean": 0.010861111111111063,
+          "sd": 0.028812042155115476,
+          "n_seeds": 3,
+          "per_seed": {
+            "42": 0.003158333333333263,
+            "43": -0.013316666666666754,
+            "44": 0.04274166666666668
+          }
+        }
+      ],
+      "classifications": {
+        "incomplete_forgetting": 3
+      },
+      "unanimous_classification": "incomplete_forgetting",
+      "axes_met_seed_counts": {
+        "membership_removed": 0,
+        "utility_preserved": 3,
+        "selective_forgetting": 0,
+        "deletion_detectable": 0
+      },
+      "candidate_operating_point": false
+    }
+  ],
+  "verdict": {
+    "candidate_operating_points": [],
+    "outcome": "No setting satisfied the jointly preregistered criteria, or uncertainty prevents classification. A statement about what was tested, not about what is true."
+  }
+}

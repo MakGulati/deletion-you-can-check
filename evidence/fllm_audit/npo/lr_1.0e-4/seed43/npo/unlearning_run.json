@@ -1,0 +1,31 @@
+{
+  "method": "npo",
+  "variant": "NPO-RT",
+  "equation": "L_NPO = -(2/beta) * E[ log sigmoid( -beta * (log pi_theta - log pi_ref) ) ]; total = L_NPO(forget) + retain_weight * CE(retain)",
+  "reference": "Zhang et al. 2024, arXiv:2404.05868, Eq. 3",
+  "reference_model": "finetuned_pre_unlearning (this seed's own checkpoint)",
+  "sign_convention": "log-ratio is current minus reference on the forget sequence; minimising drives forget likelihood down",
+  "log_ratio_reduction": "sum",
+  "hyperparameters": {
+    "steps": 100,
+    "learning_rate": 0.0001,
+    "batch_size": 4,
+    "beta": 0.1,
+    "retain_weight": 1.0,
+    "log_ratio_reduction": "sum",
+    "max_grad_norm": 1.0,
+    "collapse_loss": 20.0,
+    "probe_every": 10,
+    "probe_samples": 32
+  },
+  "steps_configured": 100,
+  "steps_taken": 100,
+  "stop_reason": "completed",
+  "nonfinite_steps": 0,
+  "final_npo_loss": 0.2431640625,
+  "final_forget_loss": 2.75,
+  "final_retain_loss": 2.4519805908203125,
+  "final_npo_weight_mean": 0.02392578125,
+  "trajectory_path": "evidence/fllm_audit/npo/lr_1.0e-4/seed43/npo/trajectory.json",
+  "save_path": "evidence/fllm_audit/npo/lr_1.0e-4/seed43/npo/unlearned_model"
+}

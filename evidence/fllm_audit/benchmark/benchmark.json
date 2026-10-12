@@ -1,0 +1,930 @@
+{
+  "component": "C -- matched-access detector cost and capability",
+  "timestamp": "2026-08-09T17:30:40.957212+00:00",
+  "matched_access_baseline": "loss_ratio_vs_finetuned",
+  "matched_access_rule": "a challenger may be claimed advantageous over a baseline only when the baseline's access is a subset of the challenger's",
+  "unused_access_dimensions": [
+    "trained_attack_classifier"
+  ],
+  "access_table": [
+    {
+      "detector": "alignment_cos_sq",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement"
+      ],
+      "n_access_dimensions": 8,
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "needs_displacement": true,
+      "needs_curvature": false,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": true,
+      "note": "sign-invariant form of raw_cosine; identical cost"
+    },
+    {
+      "detector": "combined_log_score",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement",
+        "fisher_or_curvature",
+        "auxiliary_training_data"
+      ],
+      "n_access_dimensions": 10,
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "needs_displacement": true,
+      "needs_curvature": true,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": true,
+      "note": "the original combined score; the widest access set in the study"
+    },
+    {
+      "detector": "fuma_lora_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "n_access_dimensions": 5,
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "shadow_bf16"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "insider_or_checkpoint_compromise",
+      "comparable_to_matched_access_baseline": false,
+      "note": "needs an UNQUANTISED copy of the model: bitsandbytes does not backpropagate into 4-bit weights, so the backbone denominator does not exist on the model that was actually unlearned. That copy is the most expensive single object in the benchmark."
+    },
+    {
+      "detector": "grad_norm_sq",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "n_access_dimensions": 5,
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "insider_or_checkpoint_compromise",
+      "comparable_to_matched_access_baseline": false,
+      "note": "raw gradient magnitude; needs white-box weights but only one checkpoint"
+    },
+    {
+      "detector": "grad_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "n_access_dimensions": 7,
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 2,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": true,
+      "note": "calibrated gradient magnitude: two backward passes, two checkpoints"
+    },
+    {
+      "detector": "log_grad_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "n_access_dimensions": 7,
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 2,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": true,
+      "note": "log form of grad_ratio; identical cost and identical ranking"
+    },
+    {
+      "detector": "loss_delta",
+      "access": [
+        "unlearned_checkpoint",
+        "pretrained_base_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "n_access_dimensions": 5,
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned",
+        "base"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": false,
+      "note": "additive form of loss_ratio; identical cost"
+    },
+    {
+      "detector": "loss_delta_vs_finetuned",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "n_access_dimensions": 6,
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": true,
+      "note": "additive form of the matched-access baseline; identical cost"
+    },
+    {
+      "detector": "loss_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "pretrained_base_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "n_access_dimensions": 5,
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned",
+        "base"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": false,
+      "note": "difficulty-calibrated membership baseline; the base model is public"
+    },
+    {
+      "detector": "loss_ratio_vs_finetuned",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "n_access_dimensions": 6,
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": true,
+      "note": "THE MATCHED-ACCESS BASELINE. Two forward passes, no gradients, no displacement vector. Every gradient detector below must beat this to support a gradient-specific claim."
+    },
+    {
+      "detector": "loss_unlearned",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "n_access_dimensions": 4,
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": false,
+      "threat_band": "ordinary_black_box_user",
+      "comparable_to_matched_access_baseline": false,
+      "note": "the only detector here a party holding just the released model could compute, and then only with token-level output access"
+    },
+    {
+      "detector": "raw_cosine",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement"
+      ],
+      "n_access_dimensions": 8,
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "needs_displacement": true,
+      "needs_curvature": false,
+      "threat_band": "authorized_audit",
+      "comparable_to_matched_access_baseline": true,
+      "note": "signed alignment with ghat. The displacement is a one-off subtraction of two checkpoints, so its per-sample cost is zero, but it requires holding both."
+    },
+    {
+      "detector": "sif",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "fisher_or_curvature",
+        "auxiliary_training_data"
+      ],
+      "n_access_dimensions": 7,
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned"
+      ],
+      "needs_displacement": false,
+      "needs_curvature": true,
+      "threat_band": "insider_or_checkpoint_compromise",
+      "comparable_to_matched_access_baseline": false,
+      "note": "adds a held-out curvature slice: auxiliary data the auditor must possess AND must keep disjoint from what it scores. At Fisher rank 200 the curvature term was inert in the exploratory runs and SIF tracked grad_norm_sq at rho = 0.9999."
+    }
+  ],
+  "central_comparison": {
+    "baseline": "loss_ratio_vs_finetuned",
+    "challengers": [
+      "raw_cosine",
+      "alignment_cos_sq",
+      "grad_ratio",
+      "sif",
+      "combined_log_score"
+    ],
+    "all_challengers_comparable": true,
+    "note": "sif and grad_norm_sq do NOT subsume the baseline's access: they never read the pre-deletion checkpoint. They are reported for completeness and no advantage over the baseline may be claimed for them."
+  },
+  "primitives": {
+    "n_samples": 32,
+    "repeats": 5,
+    "warmup": 2,
+    "max_length": 512,
+    "batch_size": 1,
+    "sequence_length_policy": "per-sample, truncated at 512; identical to the scoring configuration, so composed costs transfer to a real run",
+    "gpu_processes_at_start": [
+      {
+        "pid": "1384",
+        "name": "<ANONYMIZED_HOME>/anonymous/Documents/genai_tooling/generative-ai/ComfyUI/venv/bin/python",
+        "used_memory": "202 MiB"
+      }
+    ],
+    "timings": {
+      "load_pretrained_base": {
+        "name": "load_pretrained_base",
+        "n_repeats": 1,
+        "median": 3.499363076989539,
+        "min": 3.499363076989539,
+        "max": 3.499363076989539,
+        "unit": "seconds",
+        "n_items": 1,
+        "per_item_median": 3.499363076989539,
+        "peak_gpu_bytes": 1057916928,
+        "peak_gpu_mib": 1008.9
+      },
+      "load_unlearned_adapter": {
+        "name": "load_unlearned_adapter",
+        "n_repeats": 1,
+        "median": 1.7322688659769483,
+        "min": 1.7322688659769483,
+        "max": 1.7322688659769483,
+        "unit": "seconds",
+        "n_items": 1,
+        "per_item_median": 1.7322688659769483,
+        "peak_gpu_bytes": 1056004096,
+        "peak_gpu_mib": 1007.1
+      },
+      "load_finetuned_checkpoint": {
+        "name": "load_finetuned_checkpoint",
+        "n_repeats": 1,
+        "median": 4.5278887010063045,
+        "min": 4.5278887010063045,
+        "max": 4.5278887010063045,
+        "unit": "seconds",
+        "n_items": 1,
+        "per_item_median": 4.5278887010063045,
+        "peak_gpu_bytes": 2101337088,
+        "peak_gpu_mib": 2004.0
+      },
+      "preprocess": {
+        "name": "preprocess",
+        "n_repeats": 5,
+        "median": 0.016254048969130963,
+        "min": 0.016200395999476314,
+        "max": 0.016590072016697377,
+        "unit": "seconds",
+        "n_items": 32,
+        "per_item_median": 0.0005079390302853426,
+        "peak_gpu_bytes": 2084744192,
+        "peak_gpu_mib": 1988.2
+      },
+      "forward_unlearned": {
+        "name": "forward_unlearned",
+        "n_repeats": 5,
+        "median": 1.0562266169581562,
+        "min": 1.0514691220014356,
+        "max": 1.080132858012803,
+        "unit": "seconds",
+        "n_items": 32,
+        "per_item_median": 0.03300708177994238,
+        "peak_gpu_bytes": 2677076480,
+        "peak_gpu_mib": 2553.1
+      },
+      "forward_finetuned": {
+        "name": "forward_finetuned",
+        "n_repeats": 5,
+        "median": 1.0921727269887924,
+        "min": 1.0891328110010363,
+        "max": 1.1016754130250774,
+        "unit": "seconds",
+        "n_items": 32,
+        "per_item_median": 0.03413039771839976,
+        "peak_gpu_bytes": 2677076480,
+        "peak_gpu_mib": 2553.1
+      },
+      "forward_base": {
+        "name": "forward_base",
+        "n_repeats": 5,
+        "median": 1.053086075000465,
+        "min": 1.051469833997544,
+        "max": 1.065308184013702,
+        "unit": "seconds",
+        "n_items": 32,
+        "per_item_median": 0.03290893984376453,
+        "peak_gpu_bytes": 2677076480,
+        "peak_gpu_mib": 2553.1
+      },
+      "backward_unlearned": {
+        "name": "backward_unlearned",
+        "n_repeats": 5,
+        "median": 3.467439136991743,
+        "min": 3.3626701000030152,
+        "max": 3.575330579013098,
+        "unit": "seconds",
+        "n_items": 32,
+        "per_item_median": 0.10835747303099197,
+        "peak_gpu_bytes": 3595323392,
+        "peak_gpu_mib": 3428.8
+      },
+      "backward_finetuned": {
+        "name": "backward_finetuned",
+        "n_repeats": 5,
+        "median": 3.58220030303346,
+        "min": 3.524665988981724,
+        "max": 3.731990599015262,
+        "unit": "seconds",
+        "n_items": 32,
+        "per_item_median": 0.11194375946979562,
+        "peak_gpu_bytes": 3663470592,
+        "peak_gpu_mib": 3493.8
+      },
+      "build_direction_once": {
+        "name": "build_direction_once",
+        "n_repeats": 1,
+        "median": 0.003723844012711197,
+        "min": 0.003723844012711197,
+        "max": 0.003723844012711197,
+        "unit": "seconds",
+        "n_items": 1,
+        "per_item_median": 0.003723844012711197,
+        "peak_gpu_bytes": 2142862336,
+        "peak_gpu_mib": 2043.6,
+        "n_parameters": 3407872
+      },
+      "load_shadow_bf16": {
+        "name": "load_shadow_bf16",
+        "n_repeats": 1,
+        "median": 2.8396193020162173,
+        "min": 2.8396193020162173,
+        "max": 2.8396193020162173,
+        "unit": "seconds",
+        "n_items": 1,
+        "per_item_median": 2.8396193020162173,
+        "peak_gpu_bytes": 4628123648,
+        "peak_gpu_mib": 4413.7
+      },
+      "backward_shadow": {
+        "name": "backward_shadow",
+        "n_repeats": 5,
+        "median": 7.745949603035115,
+        "min": 7.721521311963443,
+        "max": 7.79912671801867,
+        "unit": "seconds",
+        "n_items": 32,
+        "per_item_median": 0.24206092509484733,
+        "peak_gpu_bytes": 12105949696,
+        "peak_gpu_mib": 11545.1
+      }
+    },
+    "peak_host_bytes": 4285616128,
+    "gpu_processes_at_end": [
+      {
+        "pid": "1384",
+        "name": "<ANONYMIZED_HOME>/anonymous/Documents/genai_tooling/generative-ai/ComfyUI/venv/bin/python",
+        "used_memory": "202 MiB"
+      },
+      {
+        "pid": "1006243",
+        "name": "python3",
+        "used_memory": "7426 MiB"
+      }
+    ]
+  },
+  "costs": [
+    {
+      "detector": "alignment_cos_sq",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "standalone_seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "one_off_seconds": 9.763244487985503,
+      "one_off_terms": [
+        "load unlearned",
+        "load finetuned",
+        "build displacement"
+      ],
+      "standalone_seconds_total": 96.44922291277908,
+      "throughput_samples_per_second": 9.228712815349468,
+      "peak_gpu_mib": 3493.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pre-deletion checkpoint, retained after deletion",
+      "comparable_to_matched_access_baseline": true,
+      "note": "sign-invariant form of raw_cosine; identical cost",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "combined_log_score",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement",
+        "fisher_or_curvature",
+        "auxiliary_training_data"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "standalone_seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "one_off_seconds": 31.434739094183897,
+      "one_off_terms": [
+        "load unlearned",
+        "load finetuned",
+        "build displacement",
+        "Fisher curvature over 200 held-out samples"
+      ],
+      "standalone_seconds_total": 118.12071751897747,
+      "throughput_samples_per_second": 9.228712815349468,
+      "peak_gpu_mib": 3493.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pre-deletion checkpoint, retained after deletion; a held-out curvature slice and its Fisher factors",
+      "comparable_to_matched_access_baseline": true,
+      "note": "the original combined score; the widest access set in the study",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "fuma_lora_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "threat_band": "insider_or_checkpoint_compromise",
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "shadow_bf16"
+      ],
+      "standalone_seconds_per_sample": 0.24206092509484733,
+      "marginal_seconds_per_sample": 0.24206092509484733,
+      "one_off_seconds": 2.8396193020162173,
+      "one_off_terms": [
+        "load shadow_bf16"
+      ],
+      "standalone_seconds_total": 196.48835937789408,
+      "throughput_samples_per_second": 4.131191350310536,
+      "peak_gpu_mib": 11545.1,
+      "persistent_storage": "the published (post-deletion) checkpoint",
+      "comparable_to_matched_access_baseline": false,
+      "note": "needs an UNQUANTISED copy of the model: bitsandbytes does not backpropagate into 4-bit weights, so the backbone denominator does not exist on the model that was actually unlearned. That copy is the most expensive single object in the benchmark.",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "grad_norm_sq",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "threat_band": "insider_or_checkpoint_compromise",
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned"
+      ],
+      "standalone_seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "one_off_seconds": 5.231631942966487,
+      "one_off_terms": [
+        "load unlearned"
+      ],
+      "standalone_seconds_total": 91.91761036776006,
+      "throughput_samples_per_second": 9.228712815349468,
+      "peak_gpu_mib": 3428.8,
+      "persistent_storage": "the published (post-deletion) checkpoint",
+      "comparable_to_matched_access_baseline": false,
+      "note": "raw gradient magnitude; needs white-box weights but only one checkpoint",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "grad_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 2,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "standalone_seconds_per_sample": 0.2203012325007876,
+      "marginal_seconds_per_sample": 0.11194375946979562,
+      "one_off_seconds": 9.759520643972792,
+      "one_off_terms": [
+        "load unlearned",
+        "load finetuned"
+      ],
+      "standalone_seconds_total": 186.00050664460286,
+      "throughput_samples_per_second": 4.539239243686142,
+      "peak_gpu_mib": 3493.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pre-deletion checkpoint, retained after deletion",
+      "comparable_to_matched_access_baseline": true,
+      "note": "calibrated gradient magnitude: two backward passes, two checkpoints",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "log_grad_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 2,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "standalone_seconds_per_sample": 0.2203012325007876,
+      "marginal_seconds_per_sample": 0.11194375946979562,
+      "one_off_seconds": 9.759520643972792,
+      "one_off_terms": [
+        "load unlearned",
+        "load finetuned"
+      ],
+      "standalone_seconds_total": 186.00050664460286,
+      "throughput_samples_per_second": 4.539239243686142,
+      "peak_gpu_mib": 3493.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pre-deletion checkpoint, retained after deletion",
+      "comparable_to_matched_access_baseline": true,
+      "note": "log form of grad_ratio; identical cost and identical ranking",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "loss_delta",
+      "access": [
+        "unlearned_checkpoint",
+        "pretrained_base_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned",
+        "base"
+      ],
+      "standalone_seconds_per_sample": 0.06591602162370691,
+      "marginal_seconds_per_sample": 0.03290893984376453,
+      "one_off_seconds": 8.730995019956026,
+      "one_off_terms": [
+        "load unlearned",
+        "load base"
+      ],
+      "standalone_seconds_total": 61.463812318921555,
+      "throughput_samples_per_second": 15.170818495519558,
+      "peak_gpu_mib": 3428.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pretrained base (public)",
+      "comparable_to_matched_access_baseline": false,
+      "note": "additive form of loss_ratio; identical cost",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "loss_delta_vs_finetuned",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "standalone_seconds_per_sample": 0.06713747949834215,
+      "marginal_seconds_per_sample": 0.03413039771839976,
+      "one_off_seconds": 9.759520643972792,
+      "one_off_terms": [
+        "load unlearned",
+        "load finetuned"
+      ],
+      "standalone_seconds_total": 63.46950424264651,
+      "throughput_samples_per_second": 14.894809985005372,
+      "peak_gpu_mib": 3493.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pre-deletion checkpoint, retained after deletion",
+      "comparable_to_matched_access_baseline": true,
+      "note": "additive form of the matched-access baseline; identical cost",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "loss_ratio",
+      "access": [
+        "unlearned_checkpoint",
+        "pretrained_base_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned",
+        "base"
+      ],
+      "standalone_seconds_per_sample": 0.06591602162370691,
+      "marginal_seconds_per_sample": 0.03290893984376453,
+      "one_off_seconds": 8.730995019956026,
+      "one_off_terms": [
+        "load unlearned",
+        "load base"
+      ],
+      "standalone_seconds_total": 61.463812318921555,
+      "throughput_samples_per_second": 15.170818495519558,
+      "peak_gpu_mib": 3428.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pretrained base (public)",
+      "comparable_to_matched_access_baseline": false,
+      "note": "difficulty-calibrated membership baseline; the base model is public",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "loss_ratio_vs_finetuned",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 2,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "standalone_seconds_per_sample": 0.06713747949834215,
+      "marginal_seconds_per_sample": 0.03413039771839976,
+      "one_off_seconds": 9.759520643972792,
+      "one_off_terms": [
+        "load unlearned",
+        "load finetuned"
+      ],
+      "standalone_seconds_total": 63.46950424264651,
+      "throughput_samples_per_second": 14.894809985005372,
+      "peak_gpu_mib": 3493.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pre-deletion checkpoint, retained after deletion",
+      "comparable_to_matched_access_baseline": true,
+      "note": "THE MATCHED-ACCESS BASELINE. Two forward passes, no gradients, no displacement vector. Every gradient detector below must beat this to support a gradient-specific claim.",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "loss_unlearned",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss"
+      ],
+      "threat_band": "ordinary_black_box_user",
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 0,
+      "models_resident": [
+        "unlearned"
+      ],
+      "standalone_seconds_per_sample": 0.03300708177994238,
+      "marginal_seconds_per_sample": 0,
+      "one_off_seconds": 5.231631942966487,
+      "one_off_terms": [
+        "load unlearned"
+      ],
+      "standalone_seconds_total": 31.637297366920393,
+      "throughput_samples_per_second": 30.296528686388633,
+      "peak_gpu_mib": 3428.8,
+      "persistent_storage": "the published (post-deletion) checkpoint",
+      "comparable_to_matched_access_baseline": false,
+      "note": "the only detector here a party holding just the released model could compute, and then only with token-level output access",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "raw_cosine",
+      "access": [
+        "unlearned_checkpoint",
+        "finetuned_pre_unlearning_checkpoint",
+        "both_pre_and_post_checkpoints",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "global_model_displacement"
+      ],
+      "threat_band": "authorized_audit",
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned",
+        "finetuned"
+      ],
+      "standalone_seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "one_off_seconds": 9.763244487985503,
+      "one_off_terms": [
+        "load unlearned",
+        "load finetuned",
+        "build displacement"
+      ],
+      "standalone_seconds_total": 96.44922291277908,
+      "throughput_samples_per_second": 9.228712815349468,
+      "peak_gpu_mib": 3493.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; the pre-deletion checkpoint, retained after deletion",
+      "comparable_to_matched_access_baseline": true,
+      "note": "signed alignment with ghat. The displacement is a one-off subtraction of two checkpoints, so its per-sample cost is zero, but it requires holding both.",
+      "unmeasured_terms": false
+    },
+    {
+      "detector": "sif",
+      "access": [
+        "unlearned_checkpoint",
+        "logits_or_token_probabilities",
+        "labels_or_target_tokens",
+        "per_example_loss",
+        "per_example_gradients",
+        "fisher_or_curvature",
+        "auxiliary_training_data"
+      ],
+      "threat_band": "insider_or_checkpoint_compromise",
+      "forward_passes_per_sample": 1,
+      "backward_passes_per_sample": 1,
+      "models_resident": [
+        "unlearned"
+      ],
+      "standalone_seconds_per_sample": 0.10835747303099197,
+      "marginal_seconds_per_sample": 0,
+      "one_off_seconds": 26.90312654916488,
+      "one_off_terms": [
+        "load unlearned",
+        "Fisher curvature over 200 held-out samples"
+      ],
+      "standalone_seconds_total": 113.58910497395846,
+      "throughput_samples_per_second": 9.228712815349468,
+      "peak_gpu_mib": 3428.8,
+      "persistent_storage": "the published (post-deletion) checkpoint; a held-out curvature slice and its Fisher factors",
+      "comparable_to_matched_access_baseline": false,
+      "note": "adds a held-out curvature slice: auxiliary data the auditor must possess AND must keep disjoint from what it scores. At Fisher rank 200 the curvature term was inert in the exploratory runs and SIF tracked grad_norm_sq at rho = 0.9999.",
+      "unmeasured_terms": false
+    }
+  ],
+  "environment": {
+    "platform": "Linux-6.1.0-52-amd64-x86_64-with-glibc2.36",
+    "python": "3.12.13",
+    "gpu_processes": [
+      {
+        "pid": "1384",
+        "name": "<ANONYMIZED_HOME>/anonymous/Documents/genai_tooling/generative-ai/ComfyUI/venv/bin/python",
+        "used_memory": "202 MiB"
+      }
+    ],
+    "peak_host_bytes": 4285616128
+  }
+}

@@ -1,0 +1,57 @@
+{
+  "failed_runs": [
+    {
+      "seed": 42,
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "classification": "failed_run",
+      "criteria": {
+        "membership_removed": true,
+        "selective_forgetting": false,
+        "utility_preserved": false,
+        "collapse_guard_not_triggered": false
+      },
+      "conjunction": false,
+      "stop_reason": "collapse_guard",
+      "unevaluable_criteria": [],
+      "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+    },
+    {
+      "seed": 43,
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "classification": "failed_run",
+      "criteria": {
+        "membership_removed": true,
+        "selective_forgetting": false,
+        "utility_preserved": false,
+        "collapse_guard_not_triggered": false
+      },
+      "conjunction": false,
+      "stop_reason": "collapse_guard",
+      "unevaluable_criteria": [],
+      "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+    },
+    {
+      "seed": 44,
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "classification": "failed_run",
+      "criteria": {
+        "membership_removed": true,
+        "selective_forgetting": false,
+        "utility_preserved": false,
+        "collapse_guard_not_triggered": false
+      },
+      "conjunction": false,
+      "stop_reason": "collapse_guard",
+      "unevaluable_criteria": [],
+      "reason": "the run stopped with 'collapse_guard' rather than completing; its measurements are reported but describe a run that did not finish"
+    }
+  ],
+  "n_failed_runs": 3,
+  "runs_with_null_score_columns": [],
+  "populations_not_disjoint": [],
+  "lowprev_input_failures": [],
+  "policy": "every failed and collapsed run appears in the tables above with its classification; nothing is filtered from a summary for having failed"
+}

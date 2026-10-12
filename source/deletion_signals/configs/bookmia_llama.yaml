@@ -1,0 +1,102 @@
+# FACTORIAL CELL: BookMIA + Llama-3.2-1B.
+#
+# Purpose: de-confound corpus from model family. The study so far pairs
+# ArxivMIA with Llama-3.2-1B and BookMIA with Qwen2.5-1.5B, so every
+# cross-dataset difference -- including both headline findings -- confounds
+# corpus, model family and truncation regime. This cell and its sibling
+# (bookmia_llama.yaml) complete the 2x2.
+#
+# Only the EXACT-RETRAINING control is run in the new cells. Both headline
+# findings are measured on it: the membership null (where a perfect deletion
+# reads) and the matched-access detector comparison. The method verdicts stay at
+# two cells, since "no method passes" is a negative result that four cells would
+# not change the logical status of.
+#
+# SCORING IS NORMALISED ACROSS ALL FOUR CELLS: FUMA and Fisher-SIF off, no
+# curvature holdout, retain scored whole (800).
+#
+# EVERY BookMIA snippet exceeds max_length -- mean 710 tokens, 100% truncated at
+# 512. That is a property of the corpus, and it now appears in two cells rather
+# than one, which is exactly what lets truncation be separated from model family
+# in the analysis.
+
+training_mode: lora
+device: cuda
+seed: 42
+
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  torch_dtype: bfloat16
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "swj0419/BookMIA"
+  split: train
+  text_field: snippet
+  train_samples: 1000
+  test_samples: 1000
+  forget_ratio: 0.2
+  max_length: 512
+
+# Effective batch 32, as in every other cell. Kept at 4x8 rather than Llama's
+# original 8x4 so the four cells share one training schedule; only the memory
+# layout differs from the ArxivMIA+Llama study, not the optimiser's view.
+training:
+  epochs: 6
+  batch_size: 4
+  gradient_accumulation_steps: 8
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  max_grad_norm: 1.0
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+  max_samples_per_population:
+    test: 300
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  loss_vs_finetuned:
+    enabled: true
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    reference: finetuned_pre_unlearning
+  fuma:
+    enabled: false
+    denominator_source: none
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    enabled: false
+    method: gradient
+    damping: 1.0e-3
+    fisher_rank: 200
+    fisher_device: cpu
+    beta: 1.0
+
+evaluation:
+  seeds: [42, 43, 44]
+  n_bootstrap: 1000
+
+paths:
+  checkpoints: "./ds_factorial/bookmia_llama/checkpoints"
+  results: "./ds_factorial/bookmia_llama"

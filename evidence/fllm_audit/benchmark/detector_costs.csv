@@ -1,0 +1,14 @@
+detector,threat_band,forward_per_sample,backward_per_sample,models_resident,standalone_s_per_sample,marginal_s_per_sample,throughput_per_s,one_off_s,peak_gpu_mib,comparable_to_baseline
+alignment_cos_sq,authorized_audit,1,1,unlearned+finetuned,0.108357,0.000000,9.23,9.76,3493.8,True
+combined_log_score,authorized_audit,1,1,unlearned+finetuned,0.108357,0.000000,9.23,31.43,3493.8,True
+fuma_lora_ratio,insider_or_checkpoint_compromise,1,1,shadow_bf16,0.242061,0.242061,4.13,2.84,11545.1,False
+grad_norm_sq,insider_or_checkpoint_compromise,1,1,unlearned,0.108357,0.000000,9.23,5.23,3428.8,False
+grad_ratio,authorized_audit,2,2,unlearned+finetuned,0.220301,0.111944,4.54,9.76,3493.8,True
+log_grad_ratio,authorized_audit,2,2,unlearned+finetuned,0.220301,0.111944,4.54,9.76,3493.8,True
+loss_delta,authorized_audit,2,0,unlearned+base,0.065916,0.032909,15.17,8.73,3428.8,False
+loss_delta_vs_finetuned,authorized_audit,2,0,unlearned+finetuned,0.067137,0.034130,14.89,9.76,3493.8,True
+loss_ratio,authorized_audit,2,0,unlearned+base,0.065916,0.032909,15.17,8.73,3428.8,False
+loss_ratio_vs_finetuned,authorized_audit,2,0,unlearned+finetuned,0.067137,0.034130,14.89,9.76,3493.8,True
+loss_unlearned,ordinary_black_box_user,1,0,unlearned,0.033007,0.000000,30.30,5.23,3428.8,False
+raw_cosine,authorized_audit,1,1,unlearned+finetuned,0.108357,0.000000,9.23,9.76,3493.8,True
+sif,insider_or_checkpoint_compromise,1,1,unlearned,0.108357,0.000000,9.23,26.90,3428.8,False

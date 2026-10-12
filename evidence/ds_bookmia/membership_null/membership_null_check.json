@@ -1,0 +1,568 @@
+{
+  "check": "membership axis against held-out members vs label=0 non-members",
+  "status": "POST-HOC DIAGNOSTIC -- designed after seeing the BookMIA controls",
+  "does_not": "move any threshold or replace the preregistered axis",
+  "timestamp": "2026-08-10T06:55:57.100486+00:00",
+  "dataset": "swj0419/BookMIA",
+  "model": "Qwen/Qwen2.5-1.5B",
+  "n_unseen": 300,
+  "unseen_population": "label=1 records the split never drew, past the routine-update slice: never trained on by anything in the study, and drawn from the same pool as forget and retain",
+  "per_checkpoint": [
+    {
+      "path": "evidence/ds_bookmia/controls/exact_retrain/seed42/per_sample_scores.json",
+      "seed": 42,
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "auc_vs_heldout_members": 0.4956166666666667,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9694221431710031,
+      "mean_loss_ratio_unseen": 0.9667205249511134
+    },
+    {
+      "path": "evidence/ds_bookmia/controls/null_refit/seed42/per_sample_scores.json",
+      "seed": 42,
+      "method": "null_refit",
+      "setting": "null_refit",
+      "auc_vs_heldout_members": 0.08975000000000001,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9071888297316161,
+      "mean_loss_ratio_unseen": 0.9654164896927918
+    },
+    {
+      "path": "evidence/ds_bookmia/ga_gd/ascent_2.6e-5/seed42/ga_gd/per_sample_scores.json",
+      "seed": 42,
+      "method": "ga_gd",
+      "setting": "ascent_lr=2.6e-05",
+      "auc_vs_heldout_members": 0.16160000000000002,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9402266304682424,
+      "mean_loss_ratio_unseen": 0.9752000125578068
+    },
+    {
+      "path": "evidence/ds_bookmia/ga_gd/ascent_5.0e-5/seed42/ga_gd/per_sample_scores.json",
+      "seed": 42,
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "auc_vs_heldout_members": 0.48461666666666664,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 4.387973349388695,
+      "mean_loss_ratio_unseen": 4.4264828532023435
+    },
+    {
+      "path": "evidence/ds_bookmia/npo/seed42/npo/per_sample_scores.json",
+      "seed": 42,
+      "method": "npo",
+      "setting": "lr=0.0001, beta=0.1",
+      "auc_vs_heldout_members": 0.3311333333333334,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9731758868639898,
+      "mean_loss_ratio_unseen": 0.9877909966414731
+    },
+    {
+      "path": "evidence/ds_bookmia/routine_update/exact_retrain_routine_update/seed42/per_sample_scores.json",
+      "seed": 42,
+      "method": "exact_retrain_routine_update",
+      "setting": "exact_retrain_routine_update",
+      "auc_vs_heldout_members": 0.5047166666666667,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9664502155095769,
+      "mean_loss_ratio_unseen": 0.9634085825911498
+    },
+    {
+      "path": "evidence/ds_bookmia/routine_update/routine_update/seed42/per_sample_scores.json",
+      "seed": 42,
+      "method": "routine_update",
+      "setting": "routine_update",
+      "auc_vs_heldout_members": 0.10336666666666665,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9109173003008706,
+      "mean_loss_ratio_unseen": 0.960847952839074
+    },
+    {
+      "path": "evidence/ds_bookmia/scrub/seed42/scrub/per_sample_scores.json",
+      "seed": 42,
+      "method": "scrub",
+      "setting": "forget_kl=0.1, lr=5e-05",
+      "auc_vs_heldout_members": 0.32921666666666666,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 1.0872989516964873,
+      "mean_loss_ratio_unseen": 1.1147009327032018
+    },
+    {
+      "path": "evidence/ds_bookmia/controls/exact_retrain/seed43/per_sample_scores.json",
+      "seed": 43,
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "auc_vs_heldout_members": 0.5453,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9687199457834789,
+      "mean_loss_ratio_unseen": 0.9651360604500385
+    },
+    {
+      "path": "evidence/ds_bookmia/controls/null_refit/seed43/per_sample_scores.json",
+      "seed": 43,
+      "method": "null_refit",
+      "setting": "null_refit",
+      "auc_vs_heldout_members": 0.10075,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9081575877416292,
+      "mean_loss_ratio_unseen": 0.9637498742551512
+    },
+    {
+      "path": "evidence/ds_bookmia/ga_gd/ascent_2.6e-5/seed43/ga_gd/per_sample_scores.json",
+      "seed": 43,
+      "method": "ga_gd",
+      "setting": "ascent_lr=2.6e-05",
+      "auc_vs_heldout_members": 0.1647,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9384932442735355,
+      "mean_loss_ratio_unseen": 0.9740997553554531
+    },
+    {
+      "path": "evidence/ds_bookmia/ga_gd/ascent_5.0e-5/seed43/ga_gd/per_sample_scores.json",
+      "seed": 43,
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "auc_vs_heldout_members": 0.5217166666666666,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 6.751987818759249,
+      "mean_loss_ratio_unseen": 6.650486613006262
+    },
+    {
+      "path": "evidence/ds_bookmia/npo/seed43/npo/per_sample_scores.json",
+      "seed": 43,
+      "method": "npo",
+      "setting": "lr=0.0001, beta=0.1",
+      "auc_vs_heldout_members": 0.36685,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9723627946085815,
+      "mean_loss_ratio_unseen": 0.9850421865702997
+    },
+    {
+      "path": "evidence/ds_bookmia/routine_update/exact_retrain_routine_update/seed43/per_sample_scores.json",
+      "seed": 43,
+      "method": "exact_retrain_routine_update",
+      "setting": "exact_retrain_routine_update",
+      "auc_vs_heldout_members": 0.5409,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9652644672958034,
+      "mean_loss_ratio_unseen": 0.9619010279524094
+    },
+    {
+      "path": "evidence/ds_bookmia/routine_update/routine_update/seed43/per_sample_scores.json",
+      "seed": 43,
+      "method": "routine_update",
+      "setting": "routine_update",
+      "auc_vs_heldout_members": 0.12056666666666667,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9124667202587101,
+      "mean_loss_ratio_unseen": 0.9592135053455024
+    },
+    {
+      "path": "evidence/ds_bookmia/scrub/seed43/scrub/per_sample_scores.json",
+      "seed": 43,
+      "method": "scrub",
+      "setting": "forget_kl=0.1, lr=5e-05",
+      "auc_vs_heldout_members": 0.36361666666666664,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 1.0928913535750548,
+      "mean_loss_ratio_unseen": 1.12063451056198
+    },
+    {
+      "path": "evidence/ds_bookmia/controls/exact_retrain/seed44/per_sample_scores.json",
+      "seed": 44,
+      "method": "exact_retrain",
+      "setting": "exact_retrain",
+      "auc_vs_heldout_members": 0.5267666666666666,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9697417745507279,
+      "mean_loss_ratio_unseen": 0.9667371229524102
+    },
+    {
+      "path": "evidence/ds_bookmia/controls/null_refit/seed44/per_sample_scores.json",
+      "seed": 44,
+      "method": "null_refit",
+      "setting": "null_refit",
+      "auc_vs_heldout_members": 0.10008333333333334,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.906893904775277,
+      "mean_loss_ratio_unseen": 0.9661636403842446
+    },
+    {
+      "path": "evidence/ds_bookmia/ga_gd/ascent_2.6e-5/seed44/ga_gd/per_sample_scores.json",
+      "seed": 44,
+      "method": "ga_gd",
+      "setting": "ascent_lr=2.6e-05",
+      "auc_vs_heldout_members": 0.2173,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9546855544658085,
+      "mean_loss_ratio_unseen": 0.991427686253126
+    },
+    {
+      "path": "evidence/ds_bookmia/ga_gd/ascent_5.0e-5/seed44/ga_gd/per_sample_scores.json",
+      "seed": 44,
+      "method": "ga_gd",
+      "setting": "ascent_lr=5e-05",
+      "auc_vs_heldout_members": 0.4968333333333334,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 6.833309217126006,
+      "mean_loss_ratio_unseen": 6.789963204747967
+    },
+    {
+      "path": "evidence/ds_bookmia/npo/seed44/npo/per_sample_scores.json",
+      "seed": 44,
+      "method": "npo",
+      "setting": "lr=0.0001, beta=0.1",
+      "auc_vs_heldout_members": 0.3403333333333333,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9806242065571362,
+      "mean_loss_ratio_unseen": 0.9955083748076496
+    },
+    {
+      "path": "evidence/ds_bookmia/routine_update/exact_retrain_routine_update/seed44/per_sample_scores.json",
+      "seed": 44,
+      "method": "exact_retrain_routine_update",
+      "setting": "exact_retrain_routine_update",
+      "auc_vs_heldout_members": 0.5231,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9663761624904974,
+      "mean_loss_ratio_unseen": 0.9634980428636272
+    },
+    {
+      "path": "evidence/ds_bookmia/routine_update/routine_update/seed44/per_sample_scores.json",
+      "seed": 44,
+      "method": "routine_update",
+      "setting": "routine_update",
+      "auc_vs_heldout_members": 0.12029999999999999,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 0.9113474400018308,
+      "mean_loss_ratio_unseen": 0.9616189873534474
+    },
+    {
+      "path": "evidence/ds_bookmia/scrub/seed44/scrub/per_sample_scores.json",
+      "seed": 44,
+      "method": "scrub",
+      "setting": "forget_kl=0.1, lr=5e-05",
+      "auc_vs_heldout_members": 0.3119166666666667,
+      "n_forget": 200,
+      "n_unseen": 300,
+      "mean_loss_ratio_forget": 1.071815641417481,
+      "mean_loss_ratio_unseen": 1.1047086992260131
+    }
+  ],
+  "summary": [
+    {
+      "condition": "exact_retrain / exact_retrain",
+      "auc_label0_unseen_mean": 0.2567277777777778,
+      "auc_label0_unseen_sd": 0.022776842121704183,
+      "auc_heldout_members_mean": 0.5225611111111111,
+      "auc_heldout_members_sd": 0.025107238516529944,
+      "n_seeds": 3
+    },
+    {
+      "condition": "exact_retrain_routine_update / exact_retrain_routine_update",
+      "auc_label0_unseen_mean": 0.23283888888888893,
+      "auc_label0_unseen_sd": 0.02063196908072881,
+      "auc_heldout_members_mean": 0.5229055555555556,
+      "auc_heldout_members_sd": 0.018092450338725804,
+      "n_seeds": 3
+    },
+    {
+      "condition": "ga_gd / ascent_lr=2.6e-05",
+      "auc_label0_unseen_mean": 0.1097,
+      "auc_label0_unseen_sd": 0.07136936979156007,
+      "auc_heldout_members_mean": 0.1812,
+      "auc_heldout_members_sd": 0.03130191687421074,
+      "n_seeds": 3
+    },
+    {
+      "condition": "ga_gd / ascent_lr=5e-05",
+      "auc_label0_unseen_mean": 0.5720944444444445,
+      "auc_label0_unseen_sd": 0.08916215616836884,
+      "auc_heldout_members_mean": 0.5010555555555556,
+      "auc_heldout_members_sd": 0.0189069529636684,
+      "n_seeds": 3
+    },
+    {
+      "condition": "npo / lr=0.0001, beta=0.1",
+      "auc_label0_unseen_mean": 0.2523,
+      "auc_label0_unseen_sd": 0.022247028515686728,
+      "auc_heldout_members_mean": 0.34610555555555556,
+      "auc_heldout_members_sd": 0.018544783133848747,
+      "n_seeds": 3
+    },
+    {
+      "condition": "null_refit / null_refit",
+      "auc_label0_unseen_mean": 0.031872222222222225,
+      "auc_label0_unseen_sd": 0.003708486264012635,
+      "auc_heldout_members_mean": 0.09686111111111112,
+      "auc_heldout_members_sd": 0.006167417371723517,
+      "n_seeds": 3
+    },
+    {
+      "condition": "routine_update / routine_update",
+      "auc_label0_unseen_mean": 0.038872222222222225,
+      "auc_label0_unseen_sd": 0.005341148787514766,
+      "auc_heldout_members_mean": 0.11474444444444444,
+      "auc_heldout_members_sd": 0.0098543466626737,
+      "n_seeds": 3
+    },
+    {
+      "condition": "scrub / forget_kl=0.1, lr=5e-05",
+      "auc_label0_unseen_mean": 0.4446277777777778,
+      "auc_label0_unseen_sd": 0.08978405317039163,
+      "auc_heldout_members_mean": 0.33491666666666664,
+      "auc_heldout_members_sd": 0.026317104703975306,
+      "n_seeds": 3
+    }
+  ],
+  "provenance": {
+    "git_commit": "artifact-snapshot",
+    "python": "3.12.13",
+    "python_executable": "python3",
+    "platform": "Linux-6.1.0-52-amd64-x86_64-with-glibc2.36",
+    "argv": [
+      "deletion_signals/scripts/membership_null_check.py",
+      "--config",
+      "bookmia_qwen.yaml",
+      "--inputs",
+      "ds_bookmia/controls/*/seed*/per_sample_scores.json",
+      "ds_bookmia/ga_gd/*/seed*/ga_gd/per_sample_scores.json",
+      "ds_bookmia/npo/seed*/npo/per_sample_scores.json",
+      "ds_bookmia/scrub/seed*/scrub/per_sample_scores.json",
+      "ds_bookmia/routine_update/*/seed*/per_sample_scores.json",
+      "--output",
+      "ds_bookmia/membership_null"
+    ],
+    "torch_version": "2.11.0+cu128",
+    "cuda_available": true,
+    "gpu": "NVIDIA RTX A5000",
+    "transformers_version": "5.14.1",
+    "peft_version": "0.20.0",
+    "datasets_version": "5.0.1",
+    "numpy_version": "2.5.1",
+    "scipy_version": "1.18.0",
+    "sklearn_version": "1.9.0",
+    "effective_config": {
+      "seed": 42,
+      "device": "cuda",
+      "training_mode": "lora",
+      "model": {
+        "name": "Qwen/Qwen2.5-1.5B",
+        "load_in_4bit": true,
+        "bnb_4bit_quant_type": "nf4",
+        "bnb_4bit_compute_dtype": "bfloat16",
+        "torch_dtype": "bfloat16",
+        "trust_remote_code": true
+      },
+      "lora": {
+        "r": 16,
+        "alpha": 32,
+        "dropout": 0.05,
+        "target_modules": [
+          "q_proj",
+          "v_proj",
+          "k_proj",
+          "o_proj"
+        ],
+        "bias": "none",
+        "task_type": "CAUSAL_LM"
+      },
+      "data": {
+        "name": "swj0419/BookMIA",
+        "split": "train",
+        "text_field": "snippet",
+        "label_field": "label",
+        "train_samples": 1000,
+        "test_samples": 1000,
+        "forget_ratio": 0.2,
+        "max_length": 512,
+        "manifest": null
+      },
+      "training": {
+        "epochs": 6,
+        "batch_size": 4,
+        "gradient_accumulation_steps": 8,
+        "learning_rate": 0.0002,
+        "warmup_steps": 100,
+        "max_grad_norm": 1.0,
+        "logging_steps": 10,
+        "gradient_checkpointing": false
+      },
+      "unlearning": {
+        "ga_gd": {
+          "steps": 100,
+          "ascent_lr": 2e-05,
+          "descent_lr": 2e-05,
+          "batch_size": 4,
+          "max_grad_norm": 1.0,
+          "min_steps": 10000,
+          "target_loss_ratio": 2.0,
+          "early_stop_patience": 5,
+          "collapse_loss": 20.0,
+          "probe_every": 10,
+          "probe_samples": 32
+        },
+        "scrub": {
+          "steps": 100,
+          "learning_rate": 1e-05,
+          "batch_size": 4,
+          "kl_temperature": 4.0,
+          "forget_kl_weight": 0.1,
+          "forget_entropy_weight": 0.5,
+          "retain_ce_weight": 1.0,
+          "retain_kl_weight": 1.0,
+          "max_grad_norm": 1.0
+        },
+        "npo": {
+          "steps": 100,
+          "learning_rate": 0.0001,
+          "batch_size": 4,
+          "beta": 0.1,
+          "retain_weight": 1.0,
+          "log_ratio_reduction": "sum",
+          "max_grad_norm": 1.0,
+          "collapse_loss": 20.0,
+          "probe_every": 10,
+          "probe_samples": 32
+        }
+      },
+      "routine_update": {
+        "learning_rate": 5e-05,
+        "epochs": 3,
+        "batch_size": 4,
+        "gradient_accumulation_steps": 8,
+        "max_grad_norm": 1.0,
+        "warmup_steps": 0,
+        "source": "member_tail",
+        "n_samples": 200
+      },
+      "scoring": {
+        "param_scope": "trainable",
+        "param_name_patterns": null,
+        "eps": 1e-12,
+        "max_length": 512,
+        "max_samples_per_population": {
+          "test": 300
+        },
+        "unlearning_direction": "param_diff",
+        "output_path": null
+      },
+      "scores": {
+        "loss_unlearned": {
+          "enabled": true
+        },
+        "loss_calibrated": {
+          "enabled": true,
+          "reference": "pretrained_base"
+        },
+        "loss_vs_finetuned": {
+          "enabled": true
+        },
+        "grad_norm_sq": {
+          "enabled": true
+        },
+        "grad_calibrated": {
+          "enabled": true,
+          "reference": "finetuned_pre_unlearning"
+        },
+        "fuma": {
+          "enabled": false,
+          "denominator_source": "none",
+          "norm": "l1_mean_abs",
+          "weighting": "parameter"
+        },
+        "sif": {
+          "enabled": false,
+          "method": "gradient",
+          "damping": 0.001,
+          "fisher_rank": 200,
+          "fisher_device": "cpu",
+          "beta": 1.0
+        }
+      },
+      "evaluation": {
+        "tasks": [
+          "forget_vs_retain",
+          "member_vs_unseen",
+          "forget_vs_unseen",
+          "forget_vs_rest",
+          "retain_vs_unseen"
+        ],
+        "primary_task": "forget_vs_retain",
+        "fpr_targets": [
+          0.001,
+          0.01,
+          0.05
+        ],
+        "n_bootstrap": 1000,
+        "confidence": 0.95,
+        "n_permutations": 10000,
+        "orientations_path": null,
+        "seeds": [
+          42,
+          43,
+          44
+        ],
+        "methods": [
+          "ga_gd",
+          "npo"
+        ],
+        "correlations": [
+          [
+            "sif",
+            "grad_norm_sq"
+          ],
+          [
+            "alignment_cos_sq",
+            "grad_norm_sq"
+          ],
+          [
+            "fuma_lora_ratio",
+            "alignment_cos_sq"
+          ],
+          [
+            "loss_ratio",
+            "loss_unlearned"
+          ],
+          [
+            "grad_ratio",
+            "grad_norm_sq"
+          ],
+          [
+            "loss_ratio",
+            "loss_ratio_vs_finetuned"
+          ]
+        ]
+      },
+      "paths": {
+        "checkpoints": "./ds_bookmia/checkpoints",
+        "results": "./ds_bookmia"
+      },
+      "_config_path": "evidence/deletion_signals/configs/bookmia_qwen.yaml"
+    }
+  }
+}

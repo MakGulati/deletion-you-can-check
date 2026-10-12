@@ -1,0 +1,114 @@
+# NPO (Component A of the FLLM audit) -- ArxivMIA + Llama-3.2-1B QLoRA.
+#
+# Governed by configs/preregistration_v3_fllm.yaml.
+#
+# Everything outside the `unlearning.npo` block is copied verbatim from
+# arxivmia_confirm.yaml. That is the point: NPO must differ from the GA+GD and
+# SCRUB confirmatory runs in the unlearning objective and in NOTHING else --
+# same LoRA scope, same populations, same batching, same truncation policy, same
+# scoring configuration, same fine-tuned checkpoints. A comparison in which the
+# methods also differed in how they were scored would measure the scoring.
+#
+# Scoring keeps FUMA and Fisher-SIF ON, because the preregistration's detector
+# list requires them in the matched-access comparison and NPO rows sit in the
+# same table as the controls.
+#
+# The learning rate below is a PLACEHOLDER: the sweep driver sets it per cell
+# from the preregistered grid [1.0e-5, 2.0e-5, 2.8e-5, 5.0e-5, 1.0e-4] via
+# --set unlearning.npo.learning_rate=...
+
+training_mode: lora
+device: cuda
+seed: 42
+
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  torch_dtype: bfloat16
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "zhliu/ArxivMIA"
+  split: train
+  text_field: text
+  train_samples: 2000
+  test_samples: 1000
+  forget_ratio: 0.2
+  max_length: 512
+
+training:
+  epochs: 6
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  max_grad_norm: 1.0
+
+unlearning:
+  npo:
+    steps: 100              # matched to the GA+GD confirmatory runs
+    learning_rate: 2.8e-5   # per-cell override; see the grid above
+    batch_size: 4           # matched
+    beta: 0.1               # published default, FIXED across the sweep
+    retain_weight: 1.0      # lambda -- this is NPO-RT, not bare NPO
+    log_ratio_reduction: sum  # the paper's sequence-level form
+    max_grad_norm: 1.0      # matched; this is what makes NPO's and GA's
+                            # first steps identical rather than proportional
+    collapse_loss: 20.0     # NaN protection; a trip is a data point
+    probe_every: 10         # trajectory: does the NPO weight actually decay?
+    probe_samples: 32
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+  # Scored populations: forget 200, retain 600 (after the 200-sample Fisher
+  # curvature holdout), test 300. Identical to the control runs, so the
+  # negative counts -- and therefore the FPR resolution -- match row for row.
+  max_samples_per_population:
+    test: 300
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  loss_vs_finetuned:
+    enabled: true
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    reference: finetuned_pre_unlearning
+  fuma:
+    enabled: true
+    denominator_source: shadow_bf16
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    enabled: true
+    method: fisher
+    damping: 1.0e-3
+    fisher_rank: 200
+    fisher_device: cpu
+    beta: 1.0
+
+evaluation:
+  seeds: [42, 43, 44]
+  methods: [npo]
+  n_bootstrap: 1000
+
+paths:
+  checkpoints: "./ds_checkpoints"
+  results: "./fllm_audit/npo"

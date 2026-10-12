@@ -1,0 +1,21 @@
+{
+  "method": "scrub",
+  "hyperparameters": {
+    "steps": 100,
+    "learning_rate": 5e-05,
+    "batch_size": 4,
+    "kl_temperature": 4.0,
+    "forget_kl_weight": 1.0,
+    "forget_entropy_weight": 0.5,
+    "retain_ce_weight": 1.0,
+    "retain_kl_weight": 1.0,
+    "max_grad_norm": 1.0
+  },
+  "steps_configured": 100,
+  "steps_taken": 100,
+  "stop_reason": "completed",
+  "final_retain_ce": 2.9251160621643066,
+  "final_forget_kl": 2.3132810592651367,
+  "final_forget_entropy": 8.410688400268555,
+  "save_path": "evidence/ds_confirm/scrub/kl1.0_lr5e-5/seed42/scrub/unlearned_model"
+}

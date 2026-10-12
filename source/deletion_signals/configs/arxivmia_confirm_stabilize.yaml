@@ -1,0 +1,155 @@
+# CONFIRMATORY study -- ArxivMIA + Llama-3.2-1B QLoRA.
+#
+# Governed by configs/preregistration_v2.yaml and docs/PREREGISTRATION_V2.md.
+# Everything outside the marked blocks matches arxivmia_lora.yaml, so the
+# confirmatory runs remain comparable with the exploratory ones sample by
+# sample -- they reuse the same split manifests and the same fine-tuned
+# checkpoints.
+#
+# BLOCK C (stabilised GA+GD). FUMA and SIF off, as for the transition sweep:
+# this block asks about the three axes, not about detector ranking, and keeping
+# the scoring identical makes C's control arm directly comparable with B's 5e-5.
+#
+# This config is for the families where the DETECTOR COMPARISON matters: the
+# two controls (Block A) and any setting whose detector ranking is quoted. FUMA
+# and the Fisher SIF are on here because the preregistration requires them in
+# that comparison. The dense transition sweep uses
+# arxivmia_confirm_transition.yaml, which switches both off -- see there for
+# why that is a scoping decision rather than a saving.
+
+training_mode: lora
+device: cuda
+seed: 42
+
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  torch_dtype: bfloat16
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "zhliu/ArxivMIA"
+  split: train
+  text_field: text
+  train_samples: 2000
+  test_samples: 1000
+  forget_ratio: 0.2
+  max_length: 512
+
+# Matched to the original fine-tune exactly. The controls are only controls if
+# they were produced by the same procedure the pre-deletion model was; the one
+# permitted difference is which samples they see (exact_retrain) or which RNG
+# stream they draw (null_refit).
+training:
+  epochs: 6
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  max_grad_norm: 1.0
+
+unlearning:
+  # Block C. Applied at 5.0e-5, which collapsed on 3/3 seeds in Block B, so the
+  # question is "can a constraint rescue a collapsing setting" rather than "does
+  # a gentler setting behave better" -- Block B already answers the latter.
+  # Each knob is switched on ALONE via --set; with all four off this loop is
+  # plain GA+GD, which is the control arm.
+  ga_gd_stabilized:
+    steps: 100
+    ascent_lr: 5.0e-5
+    descent_lr: 2.0e-5
+    batch_size: 4
+    max_grad_norm: 1.0        # S3 tightens to 0.1
+    collapse_loss: 20.0
+    probe_every: 5            # the utility guard reads these probes
+    probe_samples: 32
+    kl_temperature: 2.0
+    retain_kl_weight: 0.0     # S1
+    trust_region_radius: 0.0  # S2 -- set to 0.747 from Block B displacements
+    utility_guard_ratio: 0.0  # S4
+  ga_gd:
+    steps: 100
+    ascent_lr: 2.0e-5
+    descent_lr: 2.0e-5
+    batch_size: 4
+    min_steps: 10000        # early stopping disabled; it fires on the swept quantity
+    collapse_loss: 20.0     # NaN protection; a trip is a data point
+    probe_every: 10         # trajectory: where does collapse begin?
+    probe_samples: 32
+  scrub:
+    steps: 100
+    learning_rate: 1.0e-5
+    batch_size: 4
+    kl_temperature: 4.0
+    forget_kl_weight: 0.1
+    forget_entropy_weight: 0.5
+    retain_ce_weight: 1.0
+    retain_kl_weight: 1.0
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+  # D_test is the membership control and the largest population; forget and
+  # retain carry the primary comparison and stay whole. Scored populations:
+  # forget 200, retain 600 (after the 200-sample Fisher holdout), test 300.
+  max_samples_per_population:
+    test: 300
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  loss_vs_finetuned:
+    enabled: true          # the primary detector's numerator and denominator
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    reference: finetuned_pre_unlearning
+  fuma:
+    # OFF for the transition sweep. FUMA's bf16 shadow model costs an extra
+    # backward pass through an unquantised 1.2B-parameter copy on every sample,
+    # and it scored ~0.53 on the primary task throughout the exploratory sweep.
+    # The transition sweep asks where the remember/collapse boundary lies, not
+    # how detectors rank; the detector ranking is measured on the families that
+    # run with arxivmia_confirm.yaml. Declared here rather than decided later.
+    enabled: false
+    denominator_source: shadow_bf16
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    # Required by the preregistration's detector list. Reported together with
+    # its Spearman correlation against grad_norm_sq, which was 0.9999 in the
+    # exploratory runs: at this rank the curvature term is inert and SIF is the
+    # gradient norm rescaled. Kept as a declared negative result.
+    # OFF for the same reason, plus one of its own: sif is rank-correlated with
+    # grad_norm_sq at 0.9999, so on this sweep it would add a 200-sample
+    # curvature build per run to reproduce a column already present.
+    enabled: false
+    method: fisher
+    damping: 1.0e-3
+    fisher_rank: 200
+    fisher_device: cpu
+    beta: 1.0
+
+evaluation:
+  seeds: [42, 43, 44]
+  methods: [ga_gd]
+  n_bootstrap: 1000
+
+paths:
+  checkpoints: "./ds_checkpoints"
+  results: "./ds_confirm"

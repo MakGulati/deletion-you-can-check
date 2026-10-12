@@ -1,0 +1,459 @@
+# PREREGISTERED SCORE ORIENTATIONS
+# =================================
+#
+# This table fixes, ahead of any measurement, which direction of each score
+# means "more likely the positive class" for each evaluation task. Every AUC,
+# average precision and TPR-at-FPR the offline evaluator reports uses these
+# declared directions.
+#
+# Post-hoc max(AUC, 1 - AUC) is FORBIDDEN for the headline comparison. It turns
+# an anti-correlated score into an equally good one, so every score in the
+# comparison would be scored on its best-case reading and the ranking between
+# them would stop meaning anything. The evaluator has no code path that does it.
+#
+# Where a score's a-priori direction is genuinely method-dependent -- gradient
+# magnitude under GA-style versus KL-style unlearning is the real case -- the
+# assumed direction and its reasoning are written down here, before the run. A
+# score that then lands below 0.5 is reported below 0.5.
+#
+# `headline: false` marks a score that is recorded and reported but excluded
+# from the primary forget-vs-retain comparison table. No score currently carries
+# it; the mechanism is kept because a score whose direction rests on nothing but
+# a convention would need it.
+#
+# Sign convention for the unlearning direction:
+#   ghat = theta_unlearned - theta_finetuned
+# i.e. the displacement unlearning produced. cos^2 is invariant to this choice;
+# only `raw_cosine` is affected. The convention is fixed here, in writing, and
+# the direction it implies is declared below rather than chosen afterwards.
+#
+# CHANGE LOG (the only honest way to keep a preregistration honest)
+# -----------------------------------------------------------------
+# 2026-08-08, before the GA+GD unlearning-strength sweep, and after the initial
+# three-seed run:
+#   * `raw_cosine` promoted to headline: true. In the three committed seeds it
+#     reached AUC 0.982 +/- 0.006 on forget_vs_retain. It was therefore
+#     PROMOTED AFTER BEING SEEN TO WIN, and those three seeds cannot serve as
+#     its confirmation. It is preregistered here so the sweep tests it on data
+#     that did not select it; any report using it must say which of the two
+#     roles the data it cites is playing.
+#   * `loss_ratio_vs_finetuned` and `loss_delta_vs_finetuned` added, with
+#     directions declared before the sweep produced a single row of them.
+
+schema_version: 1
+
+tasks:
+  forget_vs_retain:
+    role: primary
+    positive: [forget]
+    negative: [retain]
+    description: >-
+      The central task. Both classes are known training members; the attack must
+      determine which of them were targeted for unlearning. This is
+      deletion-set inference, not membership inference.
+
+  member_vs_unseen:
+    role: secondary
+    positive: [forget, retain]
+    negative: [test]
+    description: >-
+      Ordinary training-membership inference. Included so that a score which is
+      merely a good membership attack cannot be mistaken for a deletion-set
+      signal.
+
+  forget_vs_unseen:
+    role: diagnostic
+    positive: [forget]
+    negative: [test]
+    description: >-
+      Diagnostic only. High values here are consistent with either a deletion
+      signal or a plain membership signal, so this task cannot separate the two
+      hypotheses on its own.
+
+  forget_vs_rest:
+    role: diagnostic
+    positive: [forget]
+    negative: [retain, test]
+    description: One-vs-rest form of the primary task, over the pooled negatives.
+
+  retain_vs_unseen:
+    role: diagnostic
+    positive: [retain]
+    negative: [test]
+    description: >-
+      The third axis of the three-way problem. Reported with D_retain as the
+      positive class, so a score that is lower for retained samples yields an
+      AUC below 0.5 -- which for several scores is the predicted direction and
+      is declared as such below.
+
+scores:
+
+  alignment_cos_sq:
+    label: "Directional alignment, cos^2(grad L(z), ghat)"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        ghat is dominated by the update that raised loss on D_forget. A forget
+        sample's gradient at the unlearned parameters still carries a component
+        along that displacement; a retain sample's contribution to ghat is the
+        descent half of the update, averaged over a set several times larger,
+        so its per-sample alignment is smaller.
+    member_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        Both forget and retain samples participated in producing ghat; unseen
+        data did not, so its alignment sits at the 1/d random-geometry floor.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: As for forget_vs_retain, with an even larger expected gap.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Pooled form of forget_vs_retain and forget_vs_unseen.
+    retain_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        Retained samples drove the gradient-descent half of the update, so they
+        carry some alignment with ghat; unseen samples carry none.
+
+  raw_cosine:
+    label: "Signed cosine, cos(grad L(z), ghat)"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        THE PREREGISTERED PRIMARY SCORE for the GA+GD unlearning-strength sweep.
+        Convention, stated exactly: ghat = theta_unlearned - theta_finetuned,
+        the displacement unlearning produced. Higher cosine predicts `forget`,
+        on this and on every task below. The mechanism is the sign asymmetry of
+        GA+GD itself: forget samples receive gradient ASCENT, so their
+        contribution to ghat is -grad L, and at theta_unlearned their gradient
+        still points along the continued-ascent direction, i.e. positively along
+        ghat; retain samples receive gradient DESCENT, so their contribution is
+        +grad L and their gradients oppose ghat. The two classes therefore sit
+        on opposite sides of zero rather than merely at different magnitudes,
+        which is what cos^2 throws away by squaring. Scoped to gradient-ascent
+        unlearning: under SCRUB the forget objective is -KL - entropy rather
+        than +NLL and no such argument is available, so a SCRUB result under
+        this direction is reported wherever it lands, including below 0.5.
+    member_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        Both member populations helped produce ghat and unseen data did not, so
+        unseen gradients sit at the random-geometry floor around zero. But the
+        two member populations pull in OPPOSITE directions under the mechanism
+        above -- forget positively, retain negatively -- and retain is the
+        larger of the two here, so the pooled positive class is a mixture whose
+        mean may fall either side of the unseen floor. Near-chance, or below it,
+        is a genuine possible outcome and is reported as measured. Declared
+        higher_is_positive for consistency with the sign convention rather than
+        from a strong prediction.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        Forget gradients point along ghat by the ascent argument; unseen
+        gradients are unrelated to ghat and sit at the random-geometry floor
+        around zero. A larger gap than forget_vs_retain is not expected, since
+        retain sits on the far side of zero.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Pooled form of forget_vs_retain and forget_vs_unseen.
+    retain_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        Held at higher_is_positive like every other task, so this score has ONE
+        declared direction throughout and no task-by-task choice was available
+        after the fact. The mechanism predicts this specific AUC will land BELOW
+        0.5: retain samples receive descent, so their gradients oppose ghat and
+        their signed cosine is negative, while unseen samples sit at the
+        random-geometry floor near zero. That is the prediction succeeding, not
+        signal absent, and it is written down here so it cannot be reinterpreted
+        afterwards. It is reported below 0.5 and never flipped.
+
+  loss_unlearned:
+    label: "Raw loss under the unlearned model"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        Raising loss on D_forget while holding it down on D_retain is the
+        objective of every unlearning method evaluated here, so this is the
+        most direct consequence of the intervention.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: >-
+        Standard loss-threshold MIA: fitting a sample lowers its loss. Note this
+        is the OPPOSITE direction from forget_vs_retain, which is precisely why
+        one loss threshold cannot serve both tasks.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        ASSUMPTION, stated before measurement: gradient ascent overshoots, so
+        the forget set ends above the never-trained baseline rather than merely
+        returning to it. If unlearning only restores the baseline, the AUC lands
+        at 0.5; that is a real result and is reported as such, not re-oriented.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain, which supplies most of the negatives.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: Retained samples are still fitted members; membership lowers loss.
+
+  loss_ratio:
+    label: "Difficulty-calibrated loss ratio, L_unlearned / L_base"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        Dividing by the base model's loss removes intrinsic sample difficulty,
+        which is a nuisance variable here, not a signal. It does not change the
+        direction of the unlearning effect.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: Calibrated membership signal; same direction as raw loss.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: As for loss_unlearned, with difficulty divided out.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: Calibrated membership signal; same direction as raw loss.
+
+  loss_delta:
+    label: "Difficulty-calibrated loss difference, L_unlearned - L_base"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: Additive form of loss_ratio; same reasoning, same direction.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: Additive form of loss_ratio; same reasoning, same direction.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: Additive form of loss_ratio; same reasoning, same direction.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Additive form of loss_ratio; same reasoning, same direction.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: Additive form of loss_ratio; same reasoning, same direction.
+
+  loss_ratio_vs_finetuned:
+    label: "Unlearning-attributed loss ratio, L_unlearned / L_finetuned"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        The reference here is the pre-unlearning fine-tuned model, not the
+        pretrained base, so this measures what UNLEARNING did to the sample
+        rather than what training did. Under GA+GD the forget set receives
+        ascent, which raises its loss above the fine-tuned value (ratio > 1),
+        and the retain set receives descent, which lowers its loss below the
+        fine-tuned value (ratio < 1). The two classes therefore separate on
+        opposite sides of 1.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: >-
+        The pooled positive class is dominated by D_retain, which outnumbers
+        D_forget four to one in this setting and whose loss the descent half of
+        the update pushes DOWN; unseen data receives neither half of the update
+        and sits near a ratio of 1. Declared lower_is_positive on that
+        composition argument. It is a weak prediction -- the forget minority
+        pulls the other way -- and near-chance is a genuine outcome.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        Ascent raises the forget loss above its fine-tuned value; unseen data
+        was in neither half of the update, so its loss barely moves and its
+        ratio stays near 1.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain, which supplies most of the negatives.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: >-
+        Descent lowers the retain loss below its fine-tuned value while unseen
+        data barely moves, so retain sits below 1 and unseen at 1. This is a
+        direct measurement of the descent half of GA+GD and, unlike the
+        membership-calibrated family, it is not confounded by the fine-tuning
+        that both populations' references already absorbed.
+
+  loss_delta_vs_finetuned:
+    label: "Unlearning-attributed loss difference, L_unlearned - L_finetuned"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: Additive form of loss_ratio_vs_finetuned; same reasoning, same direction.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: Additive form of loss_ratio_vs_finetuned; same reasoning, same direction.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: Additive form of loss_ratio_vs_finetuned; same reasoning, same direction.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Additive form of loss_ratio_vs_finetuned; same reasoning, same direction.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: Additive form of loss_ratio_vs_finetuned; same reasoning, same direction.
+
+  grad_norm_sq:
+    label: "Raw per-sample gradient magnitude, ||grad L(z)||^2"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        METHOD-DEPENDENT; the assumption is declared here rather than decided
+        afterwards. Under GA+GD the ascent on D_forget is halted by a
+        loss-ratio criterion, not by convergence, so forget samples end in a
+        raised-loss region with large residual gradients while retain samples
+        sit near a descent optimum. Under SCRUB the forget objective is
+        -KL - entropy rather than +NLL, so the NLL gradient magnitude is not
+        directly driven up and the same direction is assumed but expected to be
+        weaker. If SCRUB lands below 0.5 that is reported below 0.5.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: >-
+        A fitted sample sits nearer a stationary point of its own loss, so its
+        gradient is smaller. This is the classical gradient-norm membership
+        signal.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: Follows the GA argument in forget_vs_retain.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: Retained samples are fitted; unseen samples are not.
+
+  grad_ratio:
+    label: "Calibrated gradient magnitude, ||grad L_unl||^2 / ||grad L_ref||^2"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        The reference is the pre-unlearning fine-tuned model (LoRA mode) or the
+        pretrained base (full fine-tuning mode); either way the ratio isolates
+        the change unlearning made, so the GA argument for grad_norm_sq applies
+        with the pre-existing per-sample scale divided out.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: >-
+        With the fine-tuned model as reference this largely cancels: the
+        reference fitted the members too. Near-chance is the expected outcome
+        and is reported as such.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: Follows member_vs_unseen; expected near chance.
+
+  log_grad_ratio:
+    label: "log ||grad L_unl||^2 - log ||grad L_ref||^2"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        Monotone transform of grad_ratio wherever both norms exceed eps, so the
+        AUCs coincide there; it differs only in the underflow regime, where the
+        additive eps keeps the score finite.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: Monotone transform of grad_ratio.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: Monotone transform of grad_ratio.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Monotone transform of grad_ratio.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: Monotone transform of grad_ratio.
+
+  fuma_lora_ratio:
+    label: "FUMA-style LoRA / non-LoRA gradient magnitude ratio"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        The premise the method rests on: data whose influence was manipulated
+        through the adapters leaves a disproportionate share of its gradient on
+        the adapter parameters relative to the backbone.
+    member_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        The adapters are where all task-specific fitting happened, so members of
+        either kind should concentrate more gradient there than unseen data.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain.
+    retain_vs_unseen:
+      direction: higher_is_positive
+      rationale: Follows member_vs_unseen.
+
+  sif:
+    label: "Self-influence, grad^T (F + lambda I)^-1 grad (ablation)"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: >-
+        Self-influence measures how much the model's fit at z would move if z
+        were reweighted. Unlearning removed the fit on D_forget, so those
+        samples regain high self-influence while retained samples keep low
+        self-influence.
+    member_vs_unseen:
+      direction: lower_is_positive
+      rationale: >-
+        Members were fitted and therefore have low self-influence. Under this
+        declared direction the retain-vs-unseen AUC is expected BELOW 0.5 when
+        read with retain as the positive class -- see retain_vs_unseen below.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        Assumed, and weak: both classes are unfitted at this point, so the two
+        may be indistinguishable. Near-chance is a real result here.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain.
+    retain_vs_unseen:
+      direction: lower_is_positive
+      rationale: >-
+        Retained samples are fitted, so their self-influence is lower than that
+        of unseen samples. Declared explicitly because the raw AUC with retain
+        as positive will read below 0.5, and that is the predicted direction,
+        not an absence of signal.
+
+  combined_log_score:
+    label: "Existing combined score, beta*log(SIF) + log(cos^2)"
+    headline: true
+    forget_vs_retain:
+      direction: higher_is_positive
+      rationale: Both factors are declared higher-is-forget on this task.
+    member_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        The two factors pull in OPPOSITE directions here -- cos^2 is higher for
+        members, SIF is lower -- so the product partially cancels. The declared
+        direction follows cos^2, which spans several orders of magnitude and so
+        dominates the log-space ranking. Near-chance is the expected outcome.
+    forget_vs_unseen:
+      direction: higher_is_positive
+      rationale: Both factors are declared higher-is-forget on this task.
+    forget_vs_rest:
+      direction: higher_is_positive
+      rationale: Follows forget_vs_retain.
+    retain_vs_unseen:
+      direction: higher_is_positive
+      rationale: >-
+        Follows cos^2 for the same dominance reason as member_vs_unseen; the
+        SIF factor pulls the other way and partial cancellation is expected.

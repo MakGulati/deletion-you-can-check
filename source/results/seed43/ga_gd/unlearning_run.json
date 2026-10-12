@@ -1,0 +1,20 @@
+{
+  "method": "ga_gd",
+  "hyperparameters": {
+    "steps": 100,
+    "ascent_lr": 1e-05,
+    "descent_lr": 2e-05,
+    "batch_size": 4,
+    "max_grad_norm": 1.0,
+    "min_steps": 20,
+    "target_loss_ratio": 2.0,
+    "early_stop_patience": 5,
+    "collapse_loss": 5.0
+  },
+  "steps_configured": 100,
+  "steps_taken": 100,
+  "stop_reason": "completed",
+  "final_forget_loss": 1.9795581102371216,
+  "final_retain_loss": 1.4209022521972656,
+  "save_path": "<ANONYMIZED_HOME>/anonymous/Documents/Code/smol/ds_results/seed43/ga_gd/unlearned_model"
+}

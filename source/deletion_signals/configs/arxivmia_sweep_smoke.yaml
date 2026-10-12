@@ -1,0 +1,100 @@
+# Smoke gate for the GA+GD unlearning-strength sweep.
+#
+# arxivmia_sweep.yaml with the run shrunk until it costs minutes instead of
+# hours: 20 unlearning steps, 40 scored samples per population, SIF off (the
+# Fisher path holds a 200 x 3.4M float32 matrix and needs a 200-sample retain
+# holdout that 40 samples cannot supply).
+#
+# It is not a measurement of anything. It answers only: does every new column
+# come out present and finite, does every orientation resolve, are the
+# populations disjoint, and -- the one that matters -- does the strength knob
+# actually bite between the bottom and the top of the sweep range.
+#
+# Driven by scripts/sweep_smoke_gate.py, which asserts all of that.
+
+training_mode: lora
+device: cuda
+seed: 42
+
+model:
+  name: "meta-llama/Llama-3.2-1B"
+  load_in_4bit: true
+  bnb_4bit_quant_type: nf4
+  bnb_4bit_compute_dtype: bfloat16
+  torch_dtype: bfloat16
+
+lora:
+  r: 16
+  alpha: 32
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+  bias: none
+  task_type: CAUSAL_LM
+
+data:
+  name: "zhliu/ArxivMIA"
+  split: train
+  text_field: text
+  train_samples: 2000
+  test_samples: 1000
+  forget_ratio: 0.2
+  max_length: 512
+
+training:
+  epochs: 6
+  batch_size: 8
+  gradient_accumulation_steps: 4
+  learning_rate: 2.0e-4
+  warmup_steps: 100
+  max_grad_norm: 1.0
+
+unlearning:
+  ga_gd:
+    steps: 20
+    ascent_lr: 1.0e-5     # set per cell on the command line
+    descent_lr: 2.0e-5
+    batch_size: 4
+    min_steps: 10000
+    collapse_loss: 20.0
+
+scoring:
+  param_scope: trainable
+  eps: 1.0e-12
+  max_length: 512
+  unlearning_direction: param_diff
+  max_samples_per_population: 40
+
+scores:
+  loss_unlearned:
+    enabled: true
+  loss_calibrated:
+    enabled: true
+    reference: pretrained_base
+  loss_vs_finetuned:
+    enabled: true
+  grad_norm_sq:
+    enabled: true
+  grad_calibrated:
+    enabled: true
+    reference: finetuned_pre_unlearning
+  fuma:
+    enabled: true
+    denominator_source: shadow_bf16
+    norm: l1_mean_abs
+    weighting: parameter
+  sif:
+    enabled: false
+    method: fisher
+    damping: 1.0e-3
+    fisher_rank: 200
+    fisher_device: cpu
+    beta: 1.0
+
+evaluation:
+  seeds: [42]
+  methods: [ga_gd]
+  n_bootstrap: 200
+
+paths:
+  checkpoints: "./ds_checkpoints"
+  results: "./ds_sweep_smoke"
